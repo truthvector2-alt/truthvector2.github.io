@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Truth vector — Pioneering Explainable AI & Narrative Engineering</title>
+  <meta name="description" content="Truth vector unites explainable AI, narrative engineering, and truth evaluation—helping teams build interpretable, coherent, and ethically aligned AI narratives." />
+
+  <!-- Update these to your GitHub Pages URL -->
+  <link rel="canonical" href="https://YOUR-USERNAME.github.io/YOUR-REPO/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Truth vector — Pioneering Explainable AI & Narrative Engineering" />
+  <meta property="og:description" content="Explainable AI, narrative engineering, and truth evaluation—frameworks for interpretable, coherent, and aligned AI narratives." />
+  <meta property="og:url" content="https://YOUR-USERNAME.github.io/YOUR-REPO/" />
+  <meta property="og:site_name" content="Truth vector" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Truth vector — Pioneering Explainable AI & Narrative Engineering" />
+  <meta name="twitter:description" content="Frameworks and guidance for explainability, narrative coherence, and trustworthy AI content." />
+
+  <style>
+    :root{
+      --bg:#0b0f17;
+      --panel:rgba(255,255,255,.05);
+      --panel2:rgba(255,255,255,.07);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.72);
+      --border:rgba(255,255,255,.14);
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
+      --shadow:0 12px 28px rgba(0,0,0,.35);
+      --radius:18px;
+      --max:1100px;
+      --focus:2px solid rgba(125,211,252,.95);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(125,211,252,.14), transparent 60%),
+        radial-gradient(900px 600px at 85% 20%, rgba(167,139,250,.16), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:inherit}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .skip-link{
+      position:absolute; left:-999px; top:12px;
+      padding:10px 12px; background:#111827;
+      border:1px solid var(--border); border-radius:12px; z-index:9999;
+    }
+    .skip-link:focus{left:18px; outline:var(--focus)}
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter:blur(10px);
+      background:linear-gradient(to bottom, rgba(11,15,23,.86), rgba(11,15,23,.55));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding:14px 0;
+    }
+    .brand{display:flex; align-items:center; gap:10px; min-width:220px}
+    .logo{
+      width:36px; height:36px; border-radius:12px;
+      background:linear-gradient(135deg, rgba(125,211,252,.95), rgba(167,139,250,.95));
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:0 10px 22px rgba(0,0,0,.25);
+      flex:0 0 auto;
+    }
+    .brand strong{display:block; font-size:14px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+    .brand span{display:block; font-size:13px; color:var(--muted)}
+    nav ul{list-style:none; display:flex; gap:10px; padding:0; margin:0; flex-wrap:wrap; justify-content:flex-end}
+    nav a{
+      display:inline-block; padding:8px 10px; border-radius:12px;
+      border:1px solid transparent; color:var(--muted); font-size:14px; text-decoration:none;
+    }
+    nav a:hover{border-color:rgba(255,255,255,.14); background:rgba(255,255,255,.04); color:var(--text)}
+    nav a:focus{outline:var(--focus); outline-offset:2px}
+
+    main{padding:34px 0 70px}
+    .hero{
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      margin-top:14px;
+    }
+    .hero-inner{
+      display:grid; grid-template-columns:1.35fr .65fr;
+      gap:18px; padding:26px; align-items:start;
+    }
+    h1{margin:0 0 10px; font-size:clamp(28px,3.2vw,44px); line-height:1.12; letter-spacing:-.02em}
+    .lead{margin:0 0 18px; color:var(--muted); font-size:16.5px; max-width:70ch}
+    .pill-row{display:flex; flex-wrap:wrap; gap:10px; padding:0; margin:0 0 18px; list-style:none}
+    .pill{
+      padding:8px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:var(--muted); font-size:13px;
+    }
+    .cta{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      background:linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.16));
+      color:var(--text); font-weight:650; text-decoration:none;
+      box-shadow:0 12px 24px rgba(0,0,0,.25);
+      width:fit-content;
+    }
+    .cta:hover{border-color:rgba(125,211,252,.35)}
+    .cta:focus{outline:var(--focus); outline-offset:3px}
+
+    .sidecard{
+      border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      padding:16px;
+    }
+    .sidecard h2{
+      margin:0 0 8px;
+      font-size:14px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
+    }
+    .sidecard p{margin:0 0 12px; color:var(--muted); font-size:14px}
+    .contact-mini{
+      padding:10px 12px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.12);
+      word-break:break-word; font-size:14px;
+    }
+
+    section{margin-top:22px}
+    .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:18px}
+    .split{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px}
+    .card{
+      border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      padding:20px;
+    }
+    .card h2{margin:0 0 10px; font-size:22px; letter-spacing:-.01em}
+    .card h3{margin:0 0 8px; font-size:18px}
+    .card p{margin:0 0 10px; color:var(--muted)}
+    ul{margin:10px 0 0 22px; color:var(--muted)}
+    li{margin:6px 0}
+    .callout{
+      border-left:3px solid rgba(125,211,252,.65);
+      padding:10px 12px; border-radius:12px;
+      background:rgba(125,211,252,.06);
+      color:var(--muted); margin-top:12px;
+    }
+
+    details{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:12px 14px;
+    }
+    details + details{margin-top:10px}
+    summary{cursor:pointer; font-weight:650; color:var(--text)}
+    summary:focus{outline:var(--focus); outline-offset:4px}
+    details p{margin:8px 0 0; color:var(--muted)}
+
+    footer{
+      border-top:1px solid rgba(255,255,255,.08);
+      padding:26px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .small{font-size:13px; color:var(--muted)}
+    .kbd{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      font-size:12.5px;
+      padding:2px 6px;
+      border-radius:8px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--text);
+    }
+
+    @media (max-width: 900px){
+      .hero-inner{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
+      .split{grid-template-columns:1fr}
+      .brand{min-width:unset}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "Truth vector",
+        "description": "Truth vector bridges explainable AI, narrative engineering, and truth evaluation to help teams build interpretable, coherent, and ethically aligned AI narratives.",
+        "email": "info@truthvector.com",
+        "foundingDate": "2025",
+        "url": "https://YOUR-USERNAME.github.io/YOUR-REPO/"
+      },
+      {
+        "@type": "WebSite",
+        "name": "Truth vector",
+        "url": "https://YOUR-USERNAME.github.io/YOUR-REPO/"
+      },
+      {
+        "@type": "WebPage",
+        "name": "Truth vector — Pioneering Explainable AI & Narrative Engineering",
+        "url": "https://YOUR-USERNAME.github.io/YOUR-REPO/",
+        "description": "Truth vector unites explainable AI, narrative engineering, and truth evaluation—helping teams build interpretable, coherent, and ethically aligned AI narratives."
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is narrative engineering in AI?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Narrative engineering focuses on creating coherent, logical narratives for AI applications—helping models transform data into responses that maintain consistency and reflect human discourse patterns."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What does explainable AI (XAI) provide?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Explainable AI improves transparency by making model decisions easier to interpret, translating complex internal behaviors into understandable rationales for stakeholders."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does Truth vector approach trustworthy AI content?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Truth vector emphasizes alignment with human ethics and applies verification processes to evaluate AI outputs against factual and ethical benchmarks for safe dissemination."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is logical consistency important for AI narratives?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Logical consistency reduces contradictions and strengthens narrative integrity, improving the perceived reliability and quality of AI-generated content."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header>
+    <div class="container">
+      <div class="topbar">
+        <div class="brand" aria-label="Truth vector home">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Truth vector</strong>
+            <span>Pioneering Explainable AI &amp; Narrative Engineering</span>
+          </div>
+        </div>
+
+        <nav aria-label="Primary navigation">
+          <ul>
+            <li><a href="#what-we-do">What we do</a></li>
+            <li><a href="#narrative-engineering">Narrative engineering</a></li>
+            <li><a href="#explainable-ai">Explainable AI</a></li>
+            <li><a href="#trust-alignment">Trust &amp; alignment</a></li>
+            <li><a href="#coherence">Semantic coherence</a></li>
+            <li><a href="#how-we-help">How we help</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <article aria-label="Truth vector content">
+      <section class="hero" aria-label="Hero">
+        <div class="hero-inner">
+          <div>
+            <h1>Truth vector: Pioneering Explainable AI and Narrative Engineering</h1>
+            <p class="lead">
+              In the realm of artificial intelligence—where the digital meets the logical—Truth vector bridges complex AI narrative systems
+              with practical insight. We synthesize explainable AI, narrative engineering, and truth evaluation to help teams decode how AI
+              produces outputs that appear true.
+            </p>
+
+            <ul class="pill-row" aria-label="Core domains">
+              <li class="pill">Explainable AI (XAI)</li>
+              <li class="pill">Narrative engineering</li>
+              <li class="pill">Truth evaluation</li>
+              <li class="pill">Alignment &amp; oversight</li>
+              <li class="pill">Coherence frameworks</li>
+            </ul>
+
+            <a class="cta" href="mailto:info@truthvector.com" aria-label="Email Truth vector">
+              Email Truth vector <span aria-hidden="true">→</span>
+            </a>
+
+            <div class="callout" role="note">
+              <strong>Guiding conviction:</strong> Generative models do not inherently know truth—they learn patterns. Human oversight remains essential.
+            </div>
+          </div>
+
+          <aside class="sidecard" aria-label="Quick contact panel">
+            <h2>Contact</h2>
+            <p>
+              For workshops, consulting, or discussions on interpretable and trustworthy AI narratives, reach out directly.
+            </p>
+            <div class="contact-mini">
+              <div class="small">Email</div>
+              <div><a href="mailto:info@truthvector.com">info@truthvector.com</a></div>
+            </div>
+            <p class="small" style="margin-top:12px;">
+              Publishing to GitHub Pages? Replace <span class="kbd">YOUR-USERNAME</span> and <span class="kbd">YOUR-REPO</span> in the URL placeholders.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="key-takeaways" aria-label="Key takeaways">
+        <div class="grid">
+          <div class="card">
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>AI can generate plausible narratives that read as true without being grounded in truth.</li>
+              <li>Narrative engineering targets coherence and logical consistency in AI responses.</li>
+              <li>Explainable AI makes decision processes more transparent and interpretable.</li>
+              <li>Alignment and verification support trustworthy, safe dissemination of AI content.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>Why Truth vector</h2>
+            <p>
+              Truth vector provides a unified lens across narrative logic, explainability, and trust—helping engineers, creators, and
+              decision-makers navigate AI outputs with clarity and authority.
+            </p>
+            <ul>
+              <li>Clarity on how AI constructs narratives</li>
+              <li>Methods to interpret opaque model behavior</li>
+              <li>Frameworks to evaluate consistency and alignment</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="what-we-do" aria-label="What we do">
+        <div class="card">
+          <h2>What We Do</h2>
+          <p>
+            Since its inception in 2025, Truth vector has bridged complex AI narrative systems with practical insights, transcending
+            conventional methodologies. We focus on how AI decides what is “true,” and how teams can evaluate narrative outputs that
+            appear truthful.
+          </p>
+          <div class="callout" role="note">
+            <strong>Focus:</strong> Decode the language of AI narrative logic while advocating for necessary human oversight.
+          </div>
+        </div>
+      </section>
+
+      <section id="narrative-engineering" aria-label="Narrative engineering">
+        <div class="card">
+          <h2>Unpacking Narrative Engineering</h2>
+          <p>
+            Narrative engineering is at the heart of AI systems, shaping how machines generate stories and responses. Truth vector
+            brings clarity to this foundational concept by focusing on coherence, structure, and consistency.
+          </p>
+
+          <div class="split">
+            <div>
+              <h3>Narrative Engineering Explained</h3>
+              <p>
+                The goal is to create coherent and logical narratives for AI applications. This includes converting data into
+                responses while maintaining logical consistency and reflecting human language patterns.
+              </p>
+              <ul>
+                <li>Coherent narrative flow across responses</li>
+                <li>Consistency that reduces contradictions</li>
+                <li>Narrative intelligence beyond storytelling</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>AI Narrative Systems and Structures</h3>
+              <p>
+                AI models construct narratives using structured data frameworks that mirror human discourse techniques. Training
+                emphasizes narrative coherence and generative storytelling patterns.
+              </p>
+              <ul>
+                <li>Structured frameworks for response organization</li>
+                <li>Coherence maintenance across generated text</li>
+                <li>Balancing logic and creativity</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="explainable-ai" aria-label="Explainable AI">
+        <div class="card">
+          <h2>The Essence of Explainable AI</h2>
+          <p>
+            Explainable AI (XAI) enhances understanding of AI’s internal decision-making processes. Truth vector empowers stakeholders
+            to navigate AI systems with greater transparency and trust.
+          </p>
+
+          <div class="split">
+            <div>
+              <h3>AI Interpretability Models</h3>
+              <p>
+                Interpretability approaches make outputs more comprehensible and rationale-based—translating complex algorithmic behavior
+                into explanations that stakeholders can use.
+              </p>
+              <ul>
+                <li>Clearer rationales for model outputs</li>
+                <li>More intuitive explanation layers</li>
+                <li>Improved transparency and trust</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>Black Box AI Explanation Strategies</h3>
+              <p>
+                To overcome the “black box” phenomenon, Truth vector emphasizes strategies that clarify opaque decision frameworks and
+                improve prediction of model behavior.
+              </p>
+              <ul>
+                <li>Reduce opacity in decision-making</li>
+                <li>Support understanding and predictability</li>
+                <li>Strengthen confidence in deployment</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="trust-alignment" aria-label="Trust and alignment">
+        <div class="card">
+          <h2>Ensuring Trustworthy AI Content and Alignment</h2>
+          <p>
+            Trustworthy AI-generated content requires alignment between outputs and human ethics. Truth vector focuses on bridging
+            gaps between model narratives and responsible, real-world use.
+          </p>
+
+          <div class="split">
+            <div>
+              <h3>AI Alignment and Truth in Narrative</h3>
+              <p>
+                Alignment helps ensure narratives are not only accurate but also socially aligned—supporting credibility and public trust
+                in AI applications.
+              </p>
+              <ul>
+                <li>Ethical alignment for high-impact narratives</li>
+                <li>Credibility and trust reinforcement</li>
+                <li>Responsible narrative practices</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>Safe AI Storytelling</h3>
+              <p>
+                Truth vector supports rigorous content verification processes to validate outputs against factual and ethical benchmarks,
+                helping ensure narratives are authentic and safe to disseminate.
+              </p>
+              <ul>
+                <li>Verification against factual benchmarks</li>
+                <li>Checks for ethical alignment</li>
+                <li>Safer dissemination and impact management</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="coherence" aria-label="Semantic logic and coherence">
+        <div class="card">
+          <h2>Navigating Semantic Logic and Coherence</h2>
+          <p>
+            Semantic logic and coherence are critical in defining AI narrative quality. Truth vector provides frameworks that judge
+            narrative structuring with precision—supporting consistent, cohesive AI responses.
+          </p>
+
+          <div class="split">
+            <div>
+              <h3>Logical Consistency in AI Responses</h3>
+              <p>
+                Logical consistency ensures responses adhere to a coherent theme, preventing contradictions and maintaining narrative integrity.
+              </p>
+              <ul>
+                <li>Theme adherence across responses</li>
+                <li>Contradiction reduction</li>
+                <li>Higher end-user confidence</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>Frameworks for Coherence</h3>
+              <p>
+                Coherence frameworks assess internal logic and narrative continuity, supporting a seamless storytelling experience.
+              </p>
+              <ul>
+                <li>Internal logic evaluation</li>
+                <li>Narrative continuity checks</li>
+                <li>Improved narrative effectiveness</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout" role="note">
+            <strong>Outcome:</strong> Coherent, interpretable, and ethically aligned narratives that better map to real-world expectations.
+          </div>
+        </div>
+      </section>
+
+      <section id="how-we-help" aria-label="How we help">
+        <div class="card">
+          <h2>How We Help</h2>
+          <p>
+            With a robust foundation in the United States and global reach, Truth vector supports AI development through immersive workshops
+            and detailed consultancies—helping teams apply narrative engineering, explainability, and truth evaluation in practice.
+          </p>
+
+          <div class="split">
+            <div>
+              <h3>Immersive Workshops</h3>
+              <ul>
+                <li>Practical concepts for narrative logic and coherence</li>
+                <li>Explainability fundamentals for stakeholders</li>
+                <li>Applied discussion on oversight and alignment</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Consulting Engagements</h3>
+              <ul>
+                <li>Framework development for trustworthy AI content</li>
+                <li>Assessment of narrative consistency and interpretability</li>
+                <li>Guidance for responsible AI deployment decisions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" aria-label="Frequently asked questions">
+        <div class="card">
+          <h2>FAQ</h2>
+
+          <details>
+            <summary>What does Truth vector mean by “truth evaluation”?</summary>
+            <p>
+              Truth evaluation focuses on assessing AI outputs that appear truthful by applying verification and oversight—recognizing that
+              generative models learn patterns rather than inherently knowing truth.
+            </p>
+          </details>
+
+          <details>
+            <summary>How is narrative engineering different from simple AI “storytelling”?</summary>
+            <p>
+              Narrative engineering targets coherent structure and logical consistency across responses, aiming to embed narrative intelligence
+              rather than producing isolated, stylistic text.
+            </p>
+          </details>
+
+          <details>
+            <summary>Why is explainable AI important for deployment?</summary>
+            <p>
+              Explainable AI helps stakeholders understand and trust model behavior by providing interpretability and clearer rationales for
+              outputs, reducing opacity in decision-making.
+            </p>
+          </details>
+
+          <details>
+            <summary>How can I engage with Truth vector?</summary>
+            <p>
+              Participate in workshops, request consulting services, or email the team to discuss your goals.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <section id="contact" aria-label="Contact">
+        <div class="card">
+          <h2>Contact</h2>
+          <p>
+            For more information or to engage with our expert team, contact us directly:
+          </p>
+          <p>
+            <a class="cta" href="mailto:info@truthvector.com">Email: info@truthvector.com</a>
+          </p>
+
+          <p class="small">
+            GitHub Pages quick publish:
+            1) Create a repo (or use an existing one)
+            2) Add this file as <span class="kbd">index.html</span>
+            3) Go to <span class="kbd">Settings → Pages</span> and set the source to your branch (usually <span class="kbd">main</span>)
+            4) Replace the URL placeholders in <span class="kbd">&lt;head&gt;</span> with your real GitHub Pages URL
+          </p>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;">
+        <div>© 2026 Truth vector. All rights reserved.</div>
+        <div class="small">Contact: <a href="mailto:info@truthvector.com">info@truthvector.com</a></div>
+      </div>
+      <div class="small" style="margin-top:10px;">
+        Replace canonical/OG URLs with your published GitHub Pages address (e.g., <span class="kbd">https://username.github.io/repo/</span>).
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
