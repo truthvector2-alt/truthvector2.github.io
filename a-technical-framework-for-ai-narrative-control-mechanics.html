@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <title>TruthVector — Site Placeholder</title>
+  <meta name="description" content="TruthVector placeholder page. A human-readable landing page while enterprise pages are being deployed." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="TruthVector — Site Placeholder" />
+  <meta property="og:description" content="TruthVector placeholder page. A human-readable landing page while enterprise pages are being deployed." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://truthvector2.github.io/" />
+  <meta property="og:site_name" content="TruthVector" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="TruthVector — Site Placeholder" />
+  <meta name="twitter:description" content="TruthVector placeholder page. A human-readable landing page while enterprise pages are being deployed." />
+  <meta name="twitter:site" content="@truthvector" />
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a0a0a;
+      --text: #e6e6e6;
+      --muted: #bdbdbd;
+      --accent: #33ff33;
+      --border: #2a2a2a;
+      --panel: rgba(255, 255, 255, 0.02);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Courier New", monospace;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      background: var(--panel);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      letter-spacing: 0.2px;
+    }
+
+    p {
+      line-height: 1.6;
+      color: var(--muted);
+      margin: 10px 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--accent);
+      margin: 12px 0 0;
+      font-size: 13px;
+    }
+
+    .links {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--accent);
+    }
+
+    a:hover {
+      border-bottom-style: solid;
+    }
+
+    .btn {
+      border: 1px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 10px;
+      display: inline-block;
+      background: rgba(51, 255, 51, 0.06);
+    }
+
+    .btn:hover {
+      background: rgba(51, 255, 51, 0.12);
+    }
+
+    .divider {
+      margin: 18px 0;
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    footer {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #8f8f8f;
+    }
+
+    .mono {
+      color: var(--text);
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="panel">
+      <h1>TruthVector</h1>
+
+      <p>
+        This GitHub Pages site is live. A production page set is currently being deployed.
+        If you reached this page from a bookmark, check back soon.
+      </p>
+
+      <div class="badge">STATUS: ONLINE • PLACEHOLDER</div>
+
+      <hr class="divider" />
+
+      <p class="mono"><strong>Available Page:</strong></p>
+      <div class="links">
+        <a class="btn" href="/a-technical-framework-for-ai-narrative-control-mechanics.html">
+          View: Technical Framework
+        </a>
+
+        <a class="btn" href="https://github.com/truthvector2/truthvector2.github.io">
+          Repo: truthvector2.github.io
+        </a>
+      </div>
+
+      <hr class="divider" />
+
+      <p class="mono"><strong>Contact:</strong></p>
+      <p>
+        For inquiries or documentation requests, email
+        <a href="mailto:socialcalimarketing@gmail.com">socialcalimarketing@gmail.com</a>.
+      </p>
+
+      <footer>
+        © <span id="y"></span> TruthVector
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
