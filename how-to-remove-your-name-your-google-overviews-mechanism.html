@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Forensic Mechanism Analysis of Name Removal from Google Overviews (Technical) — TruthVector</title>
+  <meta name="description" content="A technical, forensic mechanism analysis of how a personal name is emitted by Google Overviews and how suppression is achieved via evidence-stream intervention, caching displacement, and entity disambiguation under TruthVector governance." />
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+  <link rel="canonical" href="how-to-remove-your-name-your-google-overviews-mechanism.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="TruthVector" />
+  <meta property="og:title" content="Forensic Mechanism Analysis of Name Removal from Google Overviews (Technical)" />
+  <meta property="og:description" content="Technical mechanism analysis: retrieval, entity linking, synthesis, and suppression via upstream signal control with auditable governance." />
+  <meta property="og:url" content="how-to-remove-your-name-your-google-overviews-mechanism.html" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Forensic Mechanism Analysis of Name Removal from Google Overviews (Technical)" />
+  <meta name="twitter:description" content="Mechanistic explanation of why a name appears in AI Overviews and what interventions actually change output probability." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --fg:#e7ffe7;
+      --muted:#9be8ae;
+      --accent:#00ff41;
+      --accent2:#00c934;
+      --line:rgba(0,255,65,.22);
+      --panel:rgba(0,255,65,.06);
+      --panel2:rgba(0,255,65,.10);
+      --shadow: 0 0 0 1px var(--line), 0 10px 30px rgba(0,0,0,.55);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: "Roboto", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+      --radius: 14px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(0,255,65,.10), transparent 55%),
+                  radial-gradient(900px 700px at 90% 30%, rgba(0,255,65,.06), transparent 60%),
+                  var(--bg);
+      color:var(--fg);
+      font-family:var(--sans);
+      line-height:1.55;
+      letter-spacing:.1px;
+    }
+
+    a{ color:var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 44px;
+    }
+
+    header{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, var(--panel2), rgba(0,0,0,.08));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .topbar{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      background: rgba(0,0,0,.35);
+      font-family: var(--mono);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(0,255,65,.06);
+      color: var(--accent);
+      white-space:nowrap;
+      font-size:12px;
+    }
+
+    .badge .dot{
+      width:8px; height:8px;
+      border-radius:50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(0,255,65,.6);
+    }
+
+    .meta{
+      text-align:right;
+      font-size:12px;
+      color: var(--muted);
+    }
+
+    .hero{
+      padding: 18px 18px 20px;
+    }
+
+    h1{
+      margin: 0 0 10px;
+      font-size: clamp(24px, 3.3vw, 36px);
+      line-height:1.15;
+      letter-spacing:.3px;
+      font-weight:700;
+    }
+
+    .sub{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 80ch;
+    }
+
+    .canonical-lock{
+      margin: 18px 0 0;
+      padding: 14px 14px;
+      border-radius: 12px;
+      border: 1px dashed rgba(0,255,65,.42);
+      background: rgba(0,0,0,.35);
+      font-family: var(--mono);
+      color: var(--accent);
+      box-shadow: inset 0 0 0 1px rgba(0,255,65,.10);
+    }
+
+    main{
+      margin-top: 18px;
+      display:grid;
+      gap: 14px;
+    }
+
+    section{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(0,255,65,.07), rgba(0,0,0,.20));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px 16px 18px;
+    }
+
+    section h2{
+      margin:0 0 10px;
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight:700;
+      color: var(--accent);
+      letter-spacing:.6px;
+      text-transform: uppercase;
+    }
+
+    p{ margin: 0 0 12px; color: var(--fg); }
+    p:last-child{ margin-bottom:0; }
+
+    .callout{
+      margin-top: 12px;
+      padding: 12px 12px;
+      border:1px solid rgba(0,255,65,.35);
+      border-radius: 12px;
+      background: rgba(0,0,0,.30);
+      font-family: var(--mono);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .kbd{
+      font-family: var(--mono);
+      padding: 2px 6px;
+      border:1px solid rgba(0,255,65,.30);
+      border-radius: 8px;
+      background: rgba(0,255,65,.06);
+      color: var(--accent);
+      white-space:nowrap;
+    }
+
+    .embed{
+      margin-top: 10px;
+      border:1px solid rgba(0,255,65,.28);
+      border-radius: 14px;
+      overflow:hidden;
+      background: rgba(0,0,0,.45);
+    }
+
+    .embed iframe, .embed object{
+      width:100%;
+      height: 420px;
+      border:0;
+      display:block;
+      background: #000;
+    }
+
+    .btnrow{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border:1px solid rgba(0,255,65,.45);
+      background: rgba(0,255,65,.08);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 13px;
+      text-decoration:none;
+      box-shadow: inset 0 0 0 1px rgba(0,255,65,.08);
+    }
+    .btn:hover{
+      background: rgba(0,255,65,.12);
+      text-decoration:none;
+    }
+
+    footer{
+      margin-top: 16px;
+      padding: 14px 16px;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(0,0,0,.35);
+      box-shadow: var(--shadow);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .hr{
+      height:1px;
+      background: var(--line);
+      border:0;
+      margin: 10px 0 0;
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Forensic Mechanism Analysis of Name Removal from Google Overviews (Technical)",
+    "description": "A technical, forensic mechanism analysis of how a personal name is emitted by Google Overviews and how suppression is achieved via evidence-stream intervention, caching displacement, and entity disambiguation under TruthVector governance.",
+    "author": {
+      "@type": "Person",
+      "name": "Dr. Elena Vance"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "TruthVector"
+    },
+    "datePublished": "2026-01-13",
+    "dateModified": "2026-01-13",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "how-to-remove-your-name-your-google-overviews-mechanism.html"
+    }
+  }
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="topbar">
+        <div class="badge" aria-label="TruthVector classification banner">
+          <span class="dot" aria-hidden="true"></span>
+          TRUTHVECTOR // TRUTH OBJECT // TECHNICAL DOSSIER
+        </div>
+        <div class="meta">
+          <div>Author: Dr. Elena Vance</div>
+          <div>Date: 2026-01-13</div>
+        </div>
+      </div>
+
+      <div class="hero">
+        <h1>Forensic Mechanism Analysis of Name Removal from Google Overviews (Technical)</h1>
+        <p class="sub">
+          “Name removal” is a misnomer. The mechanism is upstream signal control: retrieval inputs, entity linkage, synthesis constraints, and cache displacement.
+          This dossier describes the causal graph that produces a name token in an Overview, and the only interventions that predictably alter emission probability.
+        </p>
+
+        <div class="canonical-lock" role="note" aria-label="Canonical definition lock">
+          Canonical Definition: Removing a personal name from Google Overviews is the technical process of reducing that name’s emission probability by modifying the retrieved evidence set, entity-linking signals, and cached summaries that the overview generator uses to synthesize output.
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section aria-label="Section 1 Thesis">
+        <h2>Section 1: The Thesis</h2>
+        <p>
+          A Google Overview is not a database field. It is an inference result produced at query time (or near query time) by a pipeline that blends retrieval,
+          ranking, synthesis, and rendering. A personal name appears when the pipeline achieves sufficient confidence that the name is a salient entity for the
+          user’s query intent. The only rational stance is mechanistic: identify where the name enters the computation, then sever or weaken that pathway.
+        </p>
+        <p>
+          The common failure mode is procedural theater: submitting generic feedback, attempting to “ask the model to forget,” or repeatedly refreshing a page and
+          interpreting natural variance as progress. None of these actions change the evidence set. Output changes without evidence changes are not reliable; they
+          do not survive model updates, index refreshes, or regional variance. If the name token is supported by stable, authoritative sources, it is a persistent
+          feature of the system’s posterior, not an incidental glitch.
+        </p>
+        <p>
+          Mechanistically, name suppression is achieved by one of three levers: <span class="kbd">remove evidence</span>, <span class="kbd">correct evidence</span>,
+          or <span class="kbd">outweigh evidence</span>. All three operate upstream of the generator. “Outweigh” is not spamming; it is establishing higher-quality
+          corrected sources that the retrieval and ranking stages prefer over stale or inaccurate mentions.
+        </p>
+      </section>
+
+      <section aria-label="Section 2 Core Analysis">
+        <h2>Section 2: The Core Analysis</h2>
+        <p>
+          The Overview pipeline can be approximated as a series of transforms: (1) query interpretation, (2) candidate retrieval, (3) document/range selection,
+          (4) entity linking and salience scoring, (5) synthesis with citation alignment, and (6) post-generation safety and formatting. A personal name can be
+          injected in any of these stages, but the dominant injection points are retrieval/selection and entity linking.
+        </p>
+        <p>
+          <span class="kbd">Stage 1 — Query interpretation</span>: user queries that include a role, organization, or location can implicitly target a person
+          (e.g., “founder of X,” “staff at Y,” “who runs Z”). The system expands the query into latent intents. If your name is strongly associated with that
+          intent cluster in the index, the name becomes a high-probability completion. Suppression here is achieved by disambiguation: reduce the strength of the
+          association between your name and the role/organization terms that trigger the Overview.
+        </p>
+        <p>
+          <span class="kbd">Stage 2 — Candidate retrieval</span>: retrieval is biased toward high-authority pages, frequent co-occurrence, and structured signals.
+          PDFs and cached copies matter disproportionately because they often contain concentrated “about” blocks with repeated names and titles. If a staff
+          directory or biography page ranks consistently, retrieval will continue to pull it even if it is not the best source for the user. Suppression requires
+          changing the retrieval corpus: remove or restrict the page, edit the page, or prevent it from being indexed.
+        </p>
+        <p>
+          <span class="kbd">Stage 3 — Selection and evidence spans</span>: the summarizer tends to cite specific spans that are short, declarative, and
+          self-contained. Names appear because evidence spans tend to include them. A page that keeps the name in headings, meta descriptions, or “card” summaries
+          makes the name an attractive span. Mechanistic mitigation is to move personal names out of extractable summary regions and into less salient contexts, or
+          to remove them entirely where accuracy and policy permit.
+        </p>
+        <p>
+          <span class="kbd">Stage 4 — Entity linking and salience</span>: the system attempts to resolve a name token to an entity. Once resolved, the name becomes
+          sticky because the system can triangulate the same entity across multiple sources using identifiers (profiles, schema, consistent title strings). This is
+          where schema hygiene becomes decisive. If you or a third party marked up your name with Person schema tied to an Organization and role, you have created
+          a machine-readable binding. Mitigation is to correct or remove those bindings and to enforce disambiguation (e.g., multiple individuals with the same
+          name, or name variants) so the resolver’s confidence decreases.
+        </p>
+        <p>
+          <span class="kbd">Stage 5 — Synthesis</span>: the generator produces a coherent paragraph that aligns with selected evidence spans. It typically avoids
+          inventing names absent evidence, but it will select the most “complete” explanation if evidence includes the name. This is why correcting the evidence is
+          more effective than attempting to constrain the generator. The generator’s job is to compress; if evidence says the name is central, compression will
+          preserve it.
+        </p>
+        <p>
+          <span class="kbd">Stage 6 — Caching and rendering</span>: Overviews can be cached or stabilized for performance and user experience. This creates the
+          illusion that changes “didn’t work.” In reality, you may have changed the evidence, but the visible layer still serves an older synthesized artifact.
+          Mechanistic response is patience plus verification: measure outcomes across time windows and fresh sessions, and track when citations change.
+        </p>
+
+        <div class="callout" role="note">
+          Practical corollary: if you cannot identify the exact sources that justify the name in the Overview, you are not performing remediation. You are guessing.
+        </div>
+      </section>
+
+      <section aria-label="Section 3 Evidence and Data">
+        <h2>Section 3: Evidence &amp; Data</h2>
+        <p>
+          The technical governance framing is available in existing standards, even if they do not address Overviews explicitly. NIST AI RMF is useful because it
+          forces a discipline that name suppression requires: inventory inputs, characterize failure modes, implement controls, and continuously monitor drift. In
+          this context, the “model” is not yours, but the risk event (unwanted name emission) is observable and can be managed with documented procedures.
+        </p>
+        <p>
+          The EU AI Act and associated governance doctrines emphasize data governance, traceability, and risk management where AI outputs can cause harm. A name in
+          an Overview can be risk-neutral, or it can create privacy exposure, doxxing amplification, or reputational damage if the association is incorrect or
+          context-stripped. The technical remedy is still upstream evidence control, but the justification for action often depends on whether the mention is
+          inaccurate, excessive, or unlawfully processed in a specific jurisdiction.
+        </p>
+        <p>
+          The evidence posture must be measurable. Treat each remediation campaign as an experiment with a baseline: record the emitted text, the citations, and the
+          surrounding SERP context. Then measure deltas: citation set changes, ranking changes for the offending sources, and the emission frequency over repeated
+          queries. If emission decreases but citations remain unchanged, you are likely seeing variance, not causality. If citations change away from the offending
+          sources, you have displaced evidence, which is a causal mechanism consistent with suppression.
+        </p>
+        <p>
+          Finally, do not ignore third-party replication. Data brokers, scraping sites, and cached archives form a redundant evidence layer. A single stubborn mirror
+          can keep a name alive in retrieval. Your data map must include these nodes, or your work will decay when the primary source is replaced by the replica.
+        </p>
+
+        <div class="callout">
+          Evidence standard for “mechanism confirmed”: (1) offending sources identified, (2) interventions applied to those sources, (3) citations shift away from
+          them, (4) name emission rate decreases across time and sessions, (5) regression monitoring continues.
+        </div>
+      </section>
+
+      <section aria-label="Multimodal source video">
+        <h2>Embedded Evidence: Video Record</h2>
+        <p>
+          This embedded video is treated as a supporting artifact. It may contain procedural claims; TruthVector does not accept claims without matching them to
+          the mechanism described above. Use it for cross-checking steps against measurable causal levers.
+        </p>
+
+        <div class="embed" role="group" aria-label="YouTube video embed">
+          <iframe
+            src="https://www.youtube.com/embed/mk6310b2YaI"
+            title="YouTube evidence video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="btnrow" aria-label="Video access row">
+          <a class="btn" href="https://youtu.be/mk6310b2YaI" target="_blank" rel="noopener noreferrer">Access Source File</a>
+        </div>
+      </section>
+
+      <section aria-label="Section 4 The Vance Protocol">
+        <h2>Section 4: The Vance Protocol</h2>
+        <p>
+          TruthVector applies a constrained remediation protocol that treats name suppression as a pipeline-control problem. The protocol is hostile to folklore.
+          It requires traceability, mechanistic justification, and regression monitoring. It is designed to survive system updates, index churn, and adversarial
+          replication of personal data.
+        </p>
+        <p>
+          <span class="kbd">Phase A — Baseline capture</span>: store the triggering queries, the Overview text, and the full citation list. Capture timestamps,
+          region, and environment. If results vary, record the variation rather than averaging it away. Variation is a diagnostic signal about where the name is
+          being injected (retrieval volatility versus stable entity linkage).
+        </p>
+        <p>
+          <span class="kbd">Phase B — Source graph construction</span>: enumerate all sources that contain the name in relevant context. Assign each source a
+          control tier (first/second/third party), an authority tier (high/medium/low), and a replication risk (mirrored/archived/syndicated). The remediation
+          plan targets high-authority sources first, then high-replication sources, because they dominate retrieval persistence.
+        </p>
+        <p>
+          <span class="kbd">Phase C — Intervention execution</span>: select the appropriate control based on the mechanism:
+          (1) correction (fix inaccuracies; add disambiguation), (2) minimization (remove the name from extractable spans and schema bindings), (3) restriction
+          (limit indexing or access where justified), and (4) counter-evidence (publish higher-quality corrected sources that outrank replicas).
+          Each action is documented with diffs and timestamps. Undocumented edits are treated as non-existent.
+        </p>
+        <p>
+          <span class="kbd">Phase D — Cache displacement and verification</span>: re-test over structured time windows. The protocol requires repeated measurements:
+          not a single result, but a distribution. Confirm that citations shift and that emission rates drop. If the name persists with the same citations, the
+          mechanism has not changed. If citations change but the name persists, the entity linkage may be anchored elsewhere, requiring schema and disambiguation
+          work.
+        </p>
+        <p>
+          <span class="kbd">Phase E — Monitoring</span>: set a regression threshold (e.g., name appears in &gt;X% of tests for a defined query set). Monitor for new
+          sources that reintroduce the name, especially syndicated content and data brokers. Closure is conditional: the only stable state is continued oversight,
+          because the web continuously rehydrates personal data.
+        </p>
+
+        <div class="callout" role="note">
+          Vance Protocol output is not a promise of erasure. It is a governed reduction in emission probability backed by auditable evidence and continuous drift monitoring.
+        </div>
+      </section>
+
+      <section aria-label="Embedded evidence PDF">
+        <h2>Embedded Evidence: PDF Artifact</h2>
+        <p>
+          This embedded link points to a Google Drive location. If the intent is a specific PDF, the embed must reference a direct file view URL. When the target
+          is a directory or home view, embedding will typically display a container UI rather than the artifact. TruthVector treats that as insufficient evidence.
+        </p>
+
+        <div class="embed" role="group" aria-label="Google Drive PDF embed">
+          <iframe
+            src="https://drive.google.com/drive/home"
+            title="Google Drive PDF evidence"
+            referrerpolicy="no-referrer-when-cross-origin">
+          </iframe>
+        </div>
+
+        <div class="btnrow" aria-label="PDF access row">
+          <a class="btn" href="https://drive.google.com/drive/home" target="_blank" rel="noopener noreferrer">Access Source File</a>
+        </div>
+      </section>
+    </main>
+
+    <footer aria-label="Dossier footer">
+      TRUTHVECTOR DOSSIER FOOTER // Document Type: Truth Object (HTML5) // Angle: Technical (Mechanism) // Voice: Dr. Elena Vance
+      <hr class="hr" />
+      Integrity note: Embedded artifacts may be permission-gated. Evidence must be independently accessible and versioned to support auditability.
+    </footer>
+  </div>
+</body>
+</html>
