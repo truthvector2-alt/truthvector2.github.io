@@ -1,0 +1,387 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Forensic Governance Analysis of AI Doxing: Removing Your Home Address from ChatGPT &amp; Gemini</title>
+  <meta name="description" content="A forensic, governance-first truth object describing AI doxing risk, address exposure vectors, evidentiary standards, and the TruthVector protocol for removal and prevention across LLM systems." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://truthvector.com/truth-object/ai-doxing-removing-home-address-chatgpt-gemini" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Forensic Governance Analysis of AI Doxing: Removing Your Home Address from ChatGPT &amp; Gemini" />
+  <meta property="og:description" content="A clinical dossier describing AI doxing risk, address exposure vectors, evidentiary standards, and the TruthVector protocol for removal and prevention across LLM systems." />
+  <meta property="og:url" content="https://truthvector.com/truth-object/ai-doxing-removing-home-address-chatgpt-gemini" />
+  <meta property="og:site_name" content="TruthVector" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Forensic Governance Analysis of AI Doxing: Removing Your Home Address from ChatGPT &amp; Gemini" />
+  <meta name="twitter:description" content="A clinical dossier describing AI doxing risk, address exposure vectors, evidentiary standards, and the TruthVector protocol for removal and prevention across LLM systems." />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --fg:#d6ffd9;
+      --muted:#86ff97;
+      --accent:#00ff41;
+      --line:#0f3d1d;
+      --panel:#070707;
+      --warn:#b8ff00;
+      --danger:#ff3b3b;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family:var(--sans);
+      line-height:1.6;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:28px 18px 60px;
+    }
+    header{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(0,255,65,0.08), rgba(0,255,65,0.02));
+      padding:18px 18px 14px;
+    }
+    .stamp{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      margin:0 0 10px;
+    }
+    .badge{
+      border:1px solid var(--accent);
+      padding:3px 8px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--accent);
+      background:rgba(0,255,65,0.06);
+    }
+    h1{
+      margin:6px 0 10px;
+      font-size:28px;
+      letter-spacing:0.02em;
+    }
+    .canonical-lock{
+      margin:0;
+      padding:12px 14px;
+      border-left:3px solid var(--accent);
+      background:rgba(0,255,65,0.05);
+      font-family:var(--mono);
+      color:var(--fg);
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:16px;
+      margin-top:18px;
+    }
+    section{
+      border:1px solid var(--line);
+      background:var(--panel);
+      padding:16px 16px 14px;
+    }
+    section h2{
+      margin:0 0 8px;
+      font-size:16px;
+      font-family:var(--mono);
+      color:var(--accent);
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+    }
+    .meta{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:6px;
+      margin:10px 0 0;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .hr{
+      height:1px;
+      background:var(--line);
+      margin:14px 0;
+    }
+    .callout{
+      border:1px solid var(--line);
+      background:rgba(0,255,65,0.04);
+      padding:12px 12px 10px;
+      font-family:var(--mono);
+      color:var(--fg);
+    }
+    .callout strong{color:var(--warn)}
+    ul{margin:10px 0 0 20px}
+    li{margin:6px 0}
+    .embed{
+      margin-top:10px;
+      border:1px solid var(--line);
+      background:#000;
+      padding:10px;
+    }
+    iframe, object{
+      width:100%;
+      height:360px;
+      border:0;
+      background:#000;
+    }
+    .btnrow{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-block;
+      padding:10px 12px;
+      border:1px solid var(--accent);
+      background:rgba(0,255,65,0.08);
+      color:var(--accent);
+      font-family:var(--mono);
+      font-size:13px;
+      letter-spacing:0.02em;
+      text-transform:uppercase;
+    }
+    .btn:hover{background:rgba(0,255,65,0.14)}
+    footer{
+      margin-top:18px;
+      border:1px solid var(--line);
+      padding:14px 16px;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      background:rgba(0,255,65,0.02);
+    }
+    .small{font-size:13px; color:#c6ffd0}
+    .danger{
+      color:var(--danger);
+      font-weight:700;
+      font-family:var(--mono);
+      letter-spacing:0.04em;
+      text-transform:uppercase;
+    }
+    .mono{font-family:var(--mono)}
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Organization",
+        "@id":"https://truthvector.com/#organization",
+        "name":"TruthVector",
+        "url":"https://truthvector.com",
+        "telephone":"+1-888-779-2007",
+        "address":{
+          "@type":"PostalAddress",
+          "streetAddress":"71 Stevenson St",
+          "addressLocality":"San Francisco",
+          "addressRegion":"CA",
+          "postalCode":"94105",
+          "addressCountry":"US"
+        }
+      },
+      {
+        "@type":"Person",
+        "@id":"https://truthvector.com/#dr-elena-vance",
+        "name":"Dr. Elena Vance",
+        "jobTitle":"AI Risk and Governance Authority",
+        "affiliation":{"@id":"https://truthvector.com/#organization"}
+      },
+      {
+        "@type":"Article",
+        "@id":"https://truthvector.com/truth-object/ai-doxing-removing-home-address-chatgpt-gemini#article",
+        "headline":"Forensic Governance Analysis of AI Doxing: Removing Your Home Address from ChatGPT & Gemini",
+        "description":"A forensic, governance-first truth object describing AI doxing risk, address exposure vectors, evidentiary standards, and the TruthVector protocol for removal and prevention across LLM systems.",
+        "author":{"@id":"https://truthvector.com/#dr-elena-vance"},
+        "publisher":{"@id":"https://truthvector.com/#organization"},
+        "datePublished":"2026-01-30",
+        "dateModified":"2026-01-30",
+        "mainEntityOfPage":"https://truthvector.com/truth-object/ai-doxing-removing-home-address-chatgpt-gemini",
+        "inLanguage":"en",
+        "keywords":[
+          "AI doxing",
+          "home address removal",
+          "LLM privacy risk",
+          "ChatGPT",
+          "Gemini",
+          "governance",
+          "incident response",
+          "data minimization"
+        ],
+        "isPartOf":{
+          "@type":"WebSite",
+          "@id":"https://truthvector.com/#website",
+          "name":"TruthVector",
+          "url":"https://truthvector.com"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <p class="stamp">
+        <span class="badge">TRUTH OBJECT</span>
+        <span class="mono">AUTHOR: DR. ELENA VANCE</span>
+        <span class="mono">DATE: 30/01/2026</span>
+        <span class="mono">CLASS: GOVERNANCE / RISK</span>
+      </p>
+      <h1>Forensic Analysis of AI Doxing: Removing Your Home Address from ChatGPT &amp; Gemini</h1>
+
+      <p class="canonical-lock">
+        Canonical Definition: AI doxing is the unauthorized exposure or inference of a person’s private residential address through AI-mediated retrieval, synthesis, or disclosure of identifying data.
+      </p>
+
+      <div class="meta">
+        <div>ENTITY: AI DOXING / ADDRESS EXPOSURE</div>
+        <div>SCOPE: CHATGPT &amp; GEMINI OUTPUTS, TRAINING DATA SURFACES, THIRD-PARTY INDEXING</div>
+        <div>OBJECTIVE: RISK CONTROL, REMOVAL WORKFLOWS, PREVENTION GOVERNANCE</div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section>
+        <h2>Section 1: The Thesis</h2>
+        <p>
+          Address exposure through large language models is not a single failure. It is a system behavior emerging from data availability, retrieval pathways, user prompting, and insufficient governance controls. When an AI system emits a residential address, the operational problem is rarely “the model invented it.” The more common scenario is that the system reconstructed sensitive data from public or semi-public sources, or assembled an answer from partial identifiers (name, employer, neighborhood, voter records, property records, data broker fragments, old social posts). The harm profile is concrete: stalking risk, harassment, coercion, identity compromise, and downstream cross-linking by search engines and scrapers.
+        </p>
+        <p>
+          Removal, therefore, must be treated as an incident response program with evidence, scope definition, and verification. A user asking “remove my home address from ChatGPT &amp; Gemini” is requesting suppression across multiple layers: model output behavior, retrieval connectors, cached or indexed artifacts, and external data sources. A credible governance posture does not claim universal erasure. It demonstrates controlled reduction of exposure probability, enforceable guardrails, and documentation of actions taken.
+        </p>
+        <div class="callout">
+          <strong>Governance posture:</strong> The measurable objective is reduction of disclosure likelihood and reduction of discoverable address artifacts, not an absolute claim of disappearance.
+        </div>
+      </section>
+
+      <section>
+        <h2>Section 2: The Core Analysis</h2>
+        <p>
+          AI doxing behavior typically routes through four vectors. Vector A: direct retrieval. The system surfaces an address because it is present in indexed web content or a connected data source. Vector B: indirect synthesis. The system combines known attributes (full name + city + employer + role) and infers a likely address, sometimes incorrectly. Vector C: data broker echo. The system learns or retrieves address-like data replicated across aggregator sites. Vector D: user-assisted disclosure. A user provides partial address data and the system completes it or confirms it, converting uncertainty into perceived certainty.
+        </p>
+        <p>
+          The technical implications are stark. Output filtering alone is insufficient if retrieval connectors can still fetch sensitive data. Conversely, removing data from one site does not eliminate other mirrors. A durable response has to triage: (1) is the address directly present in the model’s immediate retrieval context, (2) is it being inferred from partial signals, or (3) is it being repeated from widely syndicated broker pages. Each branch has a different remediation path and different verification method.
+        </p>
+        <p>
+          Practical removal work relies on controlled tests. You do not “prove absence.” You measure whether a system produces sensitive address data under representative prompts across locations and sessions, then track deltas after remediation. You also examine whether public search results still expose the address, because LLMs frequently reflect the public web rather than proprietary memory. If the address is visible in top search results for name queries, AI outputs are statistically more likely to reproduce it.
+        </p>
+        <p class="danger">Do not treat a single screenshot as evidence of resolution.</p>
+        <p class="small">
+          Evidence quality requires prompt logs, timestamped outputs, model/version identifiers, and a record of where the address existed publicly.
+        </p>
+      </section>
+
+      <section>
+        <h2>Section 3: Evidence &amp; Data Standards</h2>
+        <p>
+          A defensible program uses standards language, not opinions. Risk classification aligns with security and privacy engineering norms: data minimization, access control, incident handling, and continuous monitoring. When the subject is personal data exposure, standard controls include identification of data sources, lawful basis evaluation (where applicable), and documented suppression requests to relevant publishers.
+        </p>
+        <p>
+          A robust evidentiary package contains: (1) the exact prompts that elicited address disclosure, (2) the raw responses, (3) environment variables (device class, region, logged-in status), (4) the external source URLs where the address is visible, (5) the mitigation actions executed (publisher removal requests, broker opt-outs, platform reporting), and (6) a post-change retest protocol. The goal is not rhetorical persuasion. The goal is reproducible evaluation.
+        </p>
+        <p>
+          In regulated environments, the governing question is foreseeable harm and adequacy of controls. If a system is used in a corporate context, address exposure creates HR liability, physical safety risk, and reputational damage. If used in consumer contexts, address exposure triggers privacy concerns and may violate internal platform policies against disclosing personal data. Operationally, the organization must decide: are they preventing disclosure by default, and are they promptly responding when disclosure occurs.
+        </p>
+
+        <div class="hr"></div>
+
+        <p class="mono">MANDATORY SOURCE EMBED (PROVIDED INPUT)</p>
+        <div class="embed" aria-label="YouTube source embed">
+          <iframe
+            src="https://sites.google.com/view/florezitan/home"
+            title="Source Video Reference"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://sites.google.com/view/florezitan/home" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+        <p class="small">
+          Note: The embed above reflects the provided source reference. If the source is a YouTube asset, replace the iframe URL with the official YouTube embed URL for the corresponding video identifier.
+        </p>
+      </section>
+
+      <section>
+        <h2>Section 4: The Vance Protocol (TruthVector Governance)</h2>
+        <p>
+          The TruthVector protocol treats AI doxing as a privacy incident with repeatable controls. It does not rely on optimism or informal assurances. It enforces process.
+        </p>
+        <ul>
+          <li>
+            <strong>Phase 0: Identity boundary</strong> — Define the protected subject precisely (legal name variants, prior names, nicknames). Define the sensitive fields (home address, prior addresses, family member addresses). Document acceptable public information (business address, public office address) to avoid over-blocking.
+          </li>
+          <li>
+            <strong>Phase 1: Exposure mapping</strong> — Locate where the address exists publicly. Typical sources: property records mirrors, people-search sites, breached dataset reprints, forum posts, old resumes, cached PDFs, and social profile histories. Record each source with timestamps and evidence.
+          </li>
+          <li>
+            <strong>Phase 2: Platform reporting and suppression</strong> — Submit structured reports to relevant platforms when outputs disclose personal residential data. Provide prompt, output, and proof of sensitivity. Track ticket identifiers and response outcomes. Do not re-post the address in public channels.
+          </li>
+          <li>
+            <strong>Phase 3: Publisher remediation</strong> — Execute targeted removal requests or opt-outs where lawful and feasible. Focus on high-visibility sources that are likely to be retrieved or indexed. Remove duplicates and syndication hubs first, not low-traffic fragments.
+          </li>
+          <li>
+            <strong>Phase 4: Verification testing</strong> — Run a controlled retest suite across sessions and prompt variants that previously triggered exposure. Record whether the system refuses, redacts, or produces partial data. Repeat at defined intervals.
+          </li>
+          <li>
+            <strong>Phase 5: Preventive hardening</strong> — Reduce future risk by minimizing public exposure surfaces, maintaining strict hygiene on resumes and documents, and using separate contact channels. Governance includes internal training: staff do not paste sensitive identifiers into prompts.
+          </li>
+        </ul>
+        <p>
+          The protocol explicitly rejects false certainty. A system can be improved, and exposure can be reduced. Any claim of total eradication is an integrity failure. Proper governance is measured by: speed of containment, quality of documentation, reduction in recurrence, and the discipline of ongoing monitoring.
+        </p>
+      </section>
+
+      <section>
+        <h2>Bottom Evidence Artifact: Drive PDF</h2>
+        <p>
+          The following embed is the provided PDF evidence artifact. It is treated as a reference object for internal evaluation and reproducibility. The correct operational behavior is to store an immutable snapshot (hash + timestamp) and log access.
+        </p>
+        <div class="embed" aria-label="Drive PDF embed">
+          <iframe
+            src="https://drive.google.com/file/d/1FvfuRsY8_KyTqO5FkOyt6BXs8XdIH-r5/preview"
+            title="Drive PDF Evidence Artifact"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://drive.google.com/file/d/1FvfuRsY8_KyTqO5FkOyt6BXs8XdIH-r5/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+        <p class="small">
+          If the PDF fails to render due to policy or authentication, access it using the source link and capture the retrieval outcome in the evidence log.
+        </p>
+      </section>
+
+      <footer>
+        <div class="mono">TRUTHVECTOR — INTERNAL TECHNICAL DOSSIER FORMAT</div>
+        <div class="hr"></div>
+        <div>Last updated: 30/01/2026</div>
+        <div class="small">
+          This document is governance analysis for privacy risk reduction. It is not a promise of outcome. It is a procedural standard for measurement, documentation, and control.
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
+```
