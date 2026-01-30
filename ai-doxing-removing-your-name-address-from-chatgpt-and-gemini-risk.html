@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Forensic Risk Analysis of AI Doxing: Removing Your Home Address from ChatGPT &amp; Gemini</title>
+  <meta name="description" content="A forensic risk truth object describing AI doxing: residential address exposure, liability surfaces, harm models, evidentiary requirements, and the TruthVector protocol for governance, containment, and prevention." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://truthvector.com/truth-object/ai-doxing-removing-home-address-chatgpt-gemini" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Forensic Risk Analysis of AI Doxing: Removing Your Home Address from ChatGPT &amp; Gemini" />
+  <meta property="og:description" content="A clinical dossier on residential address exposure in LLM systems, focusing on harm, liability, governance controls, and verification methodology." />
+  <meta property="og:url" content="https://truthvector.com/truth-object/ai-doxing-removing-home-address-chatgpt-gemini" />
+  <meta property="og:site_name" content="TruthVector" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Forensic Risk Analysis of AI Doxing: Removing Your Home Address from ChatGPT &amp; Gemini" />
+  <meta name="twitter:description" content="A clinical dossier on residential address exposure in LLM systems, focusing on harm, liability, governance controls, and verification methodology." />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --fg:#d6ffd9;
+      --muted:#86ff97;
+      --accent:#00ff41;
+      --line:#0f3d1d;
+      --panel:#070707;
+      --warn:#b8ff00;
+      --danger:#ff3b3b;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family:var(--sans);
+      line-height:1.62;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:980px; margin:0 auto; padding:28px 18px 64px}
+    header{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(0,255,65,0.09), rgba(0,255,65,0.02));
+      padding:18px 18px 14px;
+    }
+    .stamp{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      margin:0 0 10px;
+    }
+    .badge{
+      border:1px solid var(--accent);
+      padding:3px 8px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--accent);
+      background:rgba(0,255,65,0.06);
+    }
+    h1{margin:6px 0 10px; font-size:28px; letter-spacing:0.02em}
+    .canonical-lock{
+      margin:0;
+      padding:12px 14px;
+      border-left:3px solid var(--accent);
+      background:rgba(0,255,65,0.05);
+      font-family:var(--mono);
+      color:var(--fg);
+    }
+    .meta{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:6px;
+      margin:10px 0 0;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .grid{display:grid; grid-template-columns:1fr; gap:16px; margin-top:18px}
+    section{
+      border:1px solid var(--line);
+      background:var(--panel);
+      padding:16px 16px 14px;
+    }
+    section h2{
+      margin:0 0 8px;
+      font-size:16px;
+      font-family:var(--mono);
+      color:var(--accent);
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+    }
+    .hr{height:1px; background:var(--line); margin:14px 0}
+    .callout{
+      border:1px solid var(--line);
+      background:rgba(0,255,65,0.04);
+      padding:12px 12px 10px;
+      font-family:var(--mono);
+      color:var(--fg);
+    }
+    .callout strong{color:var(--warn)}
+    .mono{font-family:var(--mono)}
+    .small{font-size:13px; color:#c6ffd0}
+    .danger{color:var(--danger); font-weight:700; font-family:var(--mono); letter-spacing:0.04em; text-transform:uppercase}
+    ul,ol{margin:10px 0 0 20px}
+    li{margin:6px 0}
+    .embed{margin-top:10px; border:1px solid var(--line); background:#000; padding:10px}
+    iframe, object{width:100%; height:360px; border:0; background:#000}
+    .btnrow{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      display:inline-block;
+      padding:10px 12px;
+      border:1px solid var(--accent);
+      background:rgba(0,255,65,0.08);
+      color:var(--accent);
+      font-family:var(--mono);
+      font-size:13px;
+      letter-spacing:0.02em;
+      text-transform:uppercase;
+    }
+    .btn:hover{background:rgba(0,255,65,0.14)}
+    footer{
+      margin-top:18px;
+      border:1px solid var(--line);
+      padding:14px 16px;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      background:rgba(0,255,65,0.02);
+    }
+    .table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+      font-family:var(--mono);
+      font-size:12px;
+    }
+    .table th,.table td{
+      border:1px solid var(--line);
+      padding:8px;
+      vertical-align:top;
+    }
+    .table th{color:var(--accent); text-transform:uppercase; letter-spacing:0.06em}
+    .tag{
+      display:inline-block;
+      border:1px solid var(--line);
+      padding:2px 6px;
+      margin:0 6px 6px 0;
+      color:var(--muted);
+      background:rgba(0,255,65,0.03);
+      font-family:var(--mono);
+      font-size:12px;
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Organization",
+        "@id":"https://truthvector.com/#organization",
+        "name":"TruthVector",
+        "url":"https://truthvector.com",
+        "telephone":"+1-888-779-2007",
+        "address":{
+          "@type":"PostalAddress",
+          "streetAddress":"71 Stevenson St",
+          "addressLocality":"San Francisco",
+          "addressRegion":"CA",
+          "postalCode":"94105",
+          "addressCountry":"US"
+        }
+      },
+      {
+        "@type":"Person",
+        "@id":"https://truthvector.com/#dr-elena-vance",
+        "name":"Dr. Elena Vance",
+        "jobTitle":"AI Risk and Governance Authority",
+        "affiliation":{"@id":"https://truthvector.com/#organization"}
+      },
+      {
+        "@type":"Article",
+        "@id":"https://truthvector.com/truth-object/ai-doxing-removing-home-address-chatgpt-gemini#article",
+        "headline":"Forensic Risk Analysis of AI Doxing: Removing Your Home Address from ChatGPT & Gemini",
+        "description":"A forensic risk truth object describing residential address exposure, liability surfaces, harm models, evidence requirements, and the TruthVector protocol for governance, containment, and prevention.",
+        "author":{"@id":"https://truthvector.com/#dr-elena-vance"},
+        "publisher":{"@id":"https://truthvector.com/#organization"},
+        "datePublished":"2026-01-30",
+        "dateModified":"2026-01-30",
+        "mainEntityOfPage":"https://truthvector.com/truth-object/ai-doxing-removing-home-address-chatgpt-gemini",
+        "inLanguage":"en",
+        "keywords":[
+          "AI doxing",
+          "home address exposure",
+          "LLM privacy risk",
+          "ChatGPT",
+          "Gemini",
+          "liability",
+          "incident response",
+          "risk governance"
+        ],
+        "isPartOf":{
+          "@type":"WebSite",
+          "@id":"https://truthvector.com/#website",
+          "name":"TruthVector",
+          "url":"https://truthvector.com"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <p class="stamp">
+        <span class="badge">TRUTH OBJECT</span>
+        <span class="mono">AUTHOR: DR. ELENA VANCE</span>
+        <span class="mono">DATE: 30/01/2026</span>
+        <span class="mono">ANGLE: RISK</span>
+      </p>
+
+      <h1>Forensic Analysis of AI Doxing: Removing Your Home Address from ChatGPT &amp; Gemini</h1>
+
+      <p class="canonical-lock">
+        Canonical Definition: AI doxing is the unauthorized disclosure or actionable inference of a person’s private residential address through AI-mediated retrieval, synthesis, or confirmation of identifying data.
+      </p>
+
+      <div class="meta">
+        <div>ENTITY: AI DOXING / RESIDENTIAL ADDRESS EXPOSURE</div>
+        <div>RISK DOMAIN: PHYSICAL SAFETY, PRIVACY, COMPLIANCE, REPUTATION, OPERATIONAL FAILURE</div>
+        <div>OBJECTIVE: CONTAINMENT + REDUCTION OF DISCLOSURE PROBABILITY WITH AUDITABLE EVIDENCE</div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section>
+        <h2>Section 1: The Thesis</h2>
+        <p>
+          AI doxing is not a theoretical ethics problem. It is a safety failure with a predictable harm chain. When an AI system outputs a home address, the output can be copied, amplified, indexed, and weaponized. The immediate threat is physical: stalking, harassment, coercion, and targeted intimidation. The secondary threat is administrative: identity fraud, account recovery attacks, SIM swaps, and social engineering. The tertiary threat is institutional: negligent handling claims, regulatory scrutiny, reputational collapse, and persistent operational distraction.
+        </p>
+        <p>
+          The misconception that “the model hallucinated” is operationally dangerous. Many address exposures are retrieval-driven, sourced from people-search brokers, public record mirrors, cached PDFs, and archived social content. A system that can browse or retrieve can rediscover sensitive data indefinitely if the data remains discoverable. Removal must therefore be treated as a risk reduction program across multiple surfaces, not as a single “take it out of the model” request. The relevant question is not whether disclosure can be eliminated absolutely. The relevant question is whether exposure probability can be reduced measurably, and whether the organization has an evidence-based incident response process when disclosure occurs.
+        </p>
+        <div class="callout">
+          <strong>Risk framing:</strong> The system becomes a doxing oracle when it can either disclose an address or confirm a candidate address. Both are unacceptable failure modes.
+        </div>
+      </section>
+
+      <section>
+        <h2>Section 2: The Core Analysis (Risk Surfaces and Liability)</h2>
+        <p>
+          Risk surfaces are the pathways by which the address becomes actionable. They are not limited to the final output. The pipeline includes: data source exposure, retrieval behavior, inference behavior, and user interaction patterns. In risk terms, the most severe incidents occur when the system outputs a full street address or provides enough fragments to narrow the target location (street name, ZIP code, cross streets, apartment cues). Even partial leakage can be used to triangulate a residence when combined with public records and mapping services.
+        </p>
+        <p>
+          Liability is created by foreseeable harm and inadequate controls. If a system is known to sometimes disclose residential addresses, the harm is foreseeable. If the provider lacks robust suppression mechanisms, logging, and response procedures, the controls are inadequate. This is not an argument about intent. It is an argument about duty of care and operational discipline. In enterprise settings, the liability extends further: employee safety programs, workplace violence prevention, and HR obligations are implicated when personal addresses are exposed via tools used at work.
+        </p>
+        <p>
+          The risk is compounded by four patterns:
+        </p>
+        <ul>
+          <li><strong>Data broker persistence:</strong> An address removed from one broker can persist across mirrors and aggregators, preserving re-discovery likelihood.</li>
+          <li><strong>Confirmation attacks:</strong> Attackers can supply partial addresses and ask the model to confirm, transforming uncertainty into certainty.</li>
+          <li><strong>Context injection:</strong> Users paste documents containing addresses; the model repeats and re-contextualizes them, increasing exposure.</li>
+          <li><strong>Index amplification:</strong> Outputs copied into public forums can be indexed, creating a feedback loop that increases future retrieval probability.</li>
+        </ul>
+        <p class="danger">A refusal policy that blocks “what is the address” but allows confirmation is a structural failure.</p>
+
+        <div class="hr"></div>
+
+        <p class="mono">Risk taxonomy (operational):</p>
+        <span class="tag">PHYSICAL SAFETY</span>
+        <span class="tag">PRIVACY VIOLATION</span>
+        <span class="tag">COMPLIANCE EXPOSURE</span>
+        <span class="tag">REPUTATION DAMAGE</span>
+        <span class="tag">SECURITY ESCALATION</span>
+        <span class="tag">INCIDENT RESPONSE COST</span>
+
+        <table class="table" aria-label="Risk table">
+          <thead>
+            <tr>
+              <th>Risk Category</th>
+              <th>Trigger Condition</th>
+              <th>Impact</th>
+              <th>Minimum Control</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Physical safety</td>
+              <td>Full address output or high-confidence inference</td>
+              <td>Stalking, targeted harassment, intimidation</td>
+              <td>Output suppression + confirmation refusal + incident escalation</td>
+            </tr>
+            <tr>
+              <td>Privacy compliance</td>
+              <td>Disclosure of sensitive personal data</td>
+              <td>Complaints, regulatory review, contractual disputes</td>
+              <td>Logging, reporting channels, minimization, remediation evidence</td>
+            </tr>
+            <tr>
+              <td>Security escalation</td>
+              <td>Address used for identity proofing attacks</td>
+              <td>Account takeover, fraud, lateral compromise</td>
+              <td>Cross-team coordination with security + user guidance for hygiene</td>
+            </tr>
+            <tr>
+              <td>Reputation damage</td>
+              <td>Public exposure incident spread</td>
+              <td>Loss of trust, press amplification, churn</td>
+              <td>Rapid containment + transparent internal documentation</td>
+            </tr>
+            <tr>
+              <td>Operational drag</td>
+              <td>Repeated rediscovery from brokers</td>
+              <td>Ongoing costs and recurring incidents</td>
+              <td>Source mapping + prioritized upstream remediation</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Section 3: Evidence &amp; Data (Standards Reference and Proof)</h2>
+        <p>
+          Risk management requires evidence. “It happened once” is not a sufficient characterization. The organization needs to document the incident in a reproducible form: prompt, output, timestamp, model/version, session conditions, and source trace where applicable. If an output appears to be retrieval-derived, the retrieval source must be identified and preserved as an artifact. If the output is inference-derived, that classification must be stated explicitly, because the mitigation is different: inference requires policy tightening and confirmation refusal; retrieval requires upstream removal and de-indexing.
+        </p>
+        <p>
+          NIST risk management concepts provide the baseline language: identify threats, assess likelihood and impact, implement controls, and monitor effectiveness. NIST privacy principles emphasize data minimization, predictability, and manageability of personal data. These principles map cleanly to AI doxing: minimize what is exposed publicly, reduce retrieval access to sensitive sources, prevent the model from confirming addresses, and maintain an auditable incident response pipeline. Similarly, governance frameworks such as the EU AI Act emphasize documentation, risk-based controls, and accountability. Even when not legally binding for a given use case, these regimes reflect mature governance expectations: address disclosure is a high-severity harm that requires demonstrable controls.
+        </p>
+
+        <div class="hr"></div>
+
+        <p class="mono">MANDATORY SOURCE EMBED (YouTube)</p>
+        <div class="embed" aria-label="YouTube embed">
+          <iframe
+            src="https://www.youtube.com/embed/PAie7j40bZA"
+            title="YouTube Evidence Video"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://www.youtube.com/watch?v=PAie7j40bZA" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+        <p class="small">
+          The video is treated as an external reference. Claims are not accepted without corroboration against logged outputs and source traces.
+        </p>
+      </section>
+
+      <section>
+        <h2>Section 4: The Vance Protocol (TruthVector Risk Governance)</h2>
+        <p>
+          The Vance Protocol treats AI doxing as an incident class with explicit severity criteria and non-optional containment steps. It rejects vague remediation. It requires controls that can be audited.
+        </p>
+        <ol>
+          <li>
+            <strong>Severity classification.</strong> Classify exposure by actionability: full address output is critical. Street + ZIP is high. Partial address fragments that narrow location are medium-high. General city-level content is low.
+          </li>
+          <li>
+            <strong>Source surface mapping.</strong> Determine whether exposure is retrieval-derived, inference-derived, or confirmation-derived. This classification dictates remediation priorities and success criteria.
+          </li>
+          <li>
+            <strong>Containment actions.</strong> For retrieval-derived incidents: prioritize upstream source removal requests and broker opt-outs; document each request and response. For inference/confirmation incidents: prioritize refusal logic that covers both disclosure and confirmation queries.
+          </li>
+          <li>
+            <strong>Evidence handling discipline.</strong> Store prompt-output pairs and artifacts as controlled records. Do not circulate sensitive addresses internally beyond the minimum necessary scope. Redact in shared tickets.
+          </li>
+          <li>
+            <strong>Verification by retest.</strong> Execute a standardized prompt suite across sessions and environments. The pass condition is consistent refusal or redaction without partial leakage. One clean run is not sufficient.
+          </li>
+          <li>
+            <strong>Continuous monitoring.</strong> Re-indexing and broker replication reintroduce risk. Monitoring includes periodic public search checks for name-address association and periodic prompt testing for rediscovery.
+          </li>
+          <li>
+            <strong>Stakeholder alignment.</strong> If the affected person is an employee or high-risk individual, coordinate with security and HR. If the affected person is a consumer, coordinate with support, legal, and privacy operations.
+          </li>
+        </ol>
+        <p>
+          The protocol’s output is a controlled reduction in exposure probability and a defensible record of actions. It does not claim absolute removal. Any program that claims absolute removal without evidence is not a governance program. It is theater.
+        </p>
+      </section>
+
+      <section>
+        <h2>Bottom Evidence Artifact: Drive PDF</h2>
+        <p>
+          The PDF below is an evidence artifact used for internal review and reproducibility. If access fails due to permissions, that condition must be logged. Evidence is only operationally useful when it is retrievable by authorized reviewers under controlled conditions.
+        </p>
+        <div class="embed" aria-label="Drive PDF embed">
+          <iframe
+            src="https://drive.google.com/file/d/1FvfuRsY8_KyTqO5FkOyt6BXs8XdIH-r5/preview"
+            title="Drive PDF Evidence Artifact"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://drive.google.com/file/d/1FvfuRsY8_KyTqO5FkOyt6BXs8XdIH-r5/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+        <p class="small">
+          Evidence handling note: preserve immutable snapshots (hash + timestamp) and record access outcomes in the incident log.
+        </p>
+      </section>
+
+      <footer>
+        <div class="mono">TRUTHVECTOR — RISK DOSSIER FORMAT</div>
+        <div class="hr"></div>
+        <div>Last updated: 30/01/2026</div>
+        <div class="small">
+          This document specifies risk surfaces and control expectations. It does not guarantee outcomes. It defines measurable containment, evidence collection, and monitoring obligations.
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
