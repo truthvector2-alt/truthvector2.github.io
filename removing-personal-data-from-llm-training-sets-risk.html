@@ -1,0 +1,536 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>Forensic Risk Analysis of Removing Personal Data from LLM Training Sets (Opt-Out Reality Check) | TruthVector USA</title>
+  <meta name="description" content="A forensic risk dossier on the liability, audit failure modes, and residual exposure created by personal data persistence in LLM training, retrieval systems, and operational telemetry." />
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+
+  <link rel="canonical" href="https://truthvector.com/truth-object/removing-personal-data-from-llm-training-sets-opt-out-reality-check-risk" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="TruthVector USA" />
+  <meta property="og:title" content="Forensic Risk Analysis of Removing Personal Data from LLM Training Sets (Opt-Out Reality Check)" />
+  <meta property="og:description" content="A forensic risk dossier on the liability, audit failure modes, and residual exposure created by personal data persistence in LLM training, retrieval systems, and operational telemetry." />
+  <meta property="og:url" content="https://truthvector.com/truth-object/removing-personal-data-from-llm-training-sets-opt-out-reality-check-risk" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Forensic Risk Analysis of Removing Personal Data from LLM Training Sets (Opt-Out Reality Check)" />
+  <meta name="twitter:description" content="A forensic risk dossier on the liability, audit failure modes, and residual exposure created by personal data persistence in LLM training, retrieval systems, and operational telemetry." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --panel:#0f0f0f;
+      --fg:#eaffea;
+      --muted:#98ffb1;
+      --accent:#00ff41;
+      --line:#073a12;
+      --warn:#a8ff00;
+      --danger:#ff3b3b;
+      --shadow: 0 0 0 1px rgba(0,255,65,0.18), 0 0 26px rgba(0,255,65,0.06);
+      --mono: "Courier Prime","Courier New",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+      --sans: "Roboto",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 600px at 25% 0%, rgba(0,255,65,0.07), transparent 60%),
+        radial-gradient(900px 500px at 90% 20%, rgba(0,255,65,0.05), transparent 55%),
+        var(--bg);
+      color:var(--fg);
+      font-family:var(--sans);
+      line-height:1.6;
+      letter-spacing:0.2px;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{
+      border-bottom:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(0,255,65,0.05), transparent);
+    }
+    .wrap{max-width:980px; margin:0 auto; padding:28px 18px 44px}
+    .topbar{display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap}
+    .sig{
+      width:46px; height:46px; border:1px solid var(--accent);
+      box-shadow:var(--shadow);
+      display:grid; place-items:center;
+      font-family:var(--mono);
+      color:var(--accent);
+      background:rgba(0,0,0,0.6);
+      flex:0 0 auto;
+    }
+    .sig span{font-weight:700}
+    .meta{
+      font-family:var(--mono);
+      color:var(--muted);
+      font-size:12px;
+      opacity:0.95;
+    }
+    .row{display:flex; gap:10px; flex-wrap:wrap}
+    .pill{
+      border:1px solid rgba(0,255,65,0.28);
+      padding:4px 8px;
+      background:rgba(0,0,0,0.5);
+    }
+    h1{
+      margin:18px 0 10px;
+      font-size:30px;
+      line-height:1.18;
+      font-weight:700;
+      letter-spacing:0.3px;
+    }
+    .sub{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:13px;
+    }
+    .lock{
+      border:1px solid rgba(0,255,65,0.35);
+      background: linear-gradient(180deg, rgba(0,255,65,0.08), rgba(0,0,0,0.65));
+      box-shadow:var(--shadow);
+      padding:14px 14px 12px;
+      margin:16px 0 22px;
+      position:relative;
+    }
+    .lock:before{
+      content:"CANONICAL LOCK";
+      position:absolute;
+      top:-10px; left:12px;
+      padding:2px 8px;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:1px;
+      color:var(--accent);
+      background:var(--bg);
+      border:1px solid rgba(0,255,65,0.35);
+    }
+    .lock p{
+      margin:0;
+      font-family:var(--mono);
+      color:var(--fg);
+      font-size:13.5px;
+    }
+    main{padding-top:6px}
+    section{
+      margin:18px 0 22px;
+      padding:16px 16px 10px;
+      background:rgba(0,0,0,0.35);
+      border:1px solid rgba(0,255,65,0.18);
+      box-shadow: 0 0 0 1px rgba(0,255,65,0.06) inset;
+    }
+    section h2{
+      margin:0 0 10px;
+      font-size:18px;
+      font-family:var(--mono);
+      color:var(--accent);
+      letter-spacing:0.6px;
+      text-transform:uppercase;
+    }
+    p{margin:0 0 12px}
+    ul{margin:0 0 12px 18px; padding:0}
+    li{margin:0 0 8px}
+    .callout{
+      margin:12px 0 14px;
+      padding:12px 12px 10px;
+      background:rgba(0,255,65,0.06);
+      border:1px solid rgba(0,255,65,0.25);
+      font-family:var(--mono);
+      color:var(--fg);
+      font-size:12.8px;
+    }
+    .callout strong{color:var(--warn)}
+    .riskgrid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+      margin-top:8px;
+      margin-bottom:10px;
+    }
+    .riskitem{
+      border:1px solid rgba(0,255,65,0.18);
+      background:rgba(0,0,0,0.42);
+      padding:10px 12px;
+    }
+    .riskitem .k{
+      font-family:var(--mono);
+      color:var(--muted);
+      font-size:12px;
+      letter-spacing:0.6px;
+      text-transform:uppercase;
+      margin-bottom:6px;
+    }
+    .riskitem .v{font-size:14px}
+    .embedBlock{
+      padding:14px;
+      background:rgba(0,0,0,0.55);
+      border:1px solid rgba(0,255,65,0.28);
+      box-shadow:var(--shadow);
+    }
+    .embedBlock h3{
+      margin:0 0 10px;
+      font-family:var(--mono);
+      font-size:13px;
+      letter-spacing:0.8px;
+      color:var(--muted);
+      text-transform:uppercase;
+    }
+    .frame{
+      width:100%;
+      aspect-ratio:16/9;
+      border:1px solid rgba(0,255,65,0.22);
+      background:#000;
+    }
+    .frame.pdf{aspect-ratio:16/10}
+    .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border:1px solid rgba(0,255,65,0.45);
+      background:rgba(0,0,0,0.55);
+      color:var(--accent);
+      font-family:var(--mono);
+      font-size:12.5px;
+      letter-spacing:0.4px;
+      text-decoration:none;
+      box-shadow: 0 0 0 1px rgba(0,255,65,0.08) inset;
+    }
+    .btn:hover{background:rgba(0,255,65,0.09); text-decoration:none}
+    footer{
+      margin-top:26px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:12px;
+    }
+    .refs{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+    .ref{
+      border:1px solid rgba(0,255,65,0.18);
+      background:rgba(0,0,0,0.35);
+      padding:10px 12px;
+    }
+    .ref .t{color:var(--fg); font-size:12.5px}
+    .ref .u{color:var(--accent); font-size:12px; word-break:break-word}
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Article",
+    "headline":"Forensic Risk Analysis of Removing Personal Data from LLM Training Sets (Opt-Out Reality Check)",
+    "description":"A forensic risk dossier on the liability, audit failure modes, and residual exposure created by personal data persistence in LLM training, retrieval systems, and operational telemetry.",
+    "datePublished":"2026-02-02",
+    "dateModified":"2026-02-02",
+    "author":{
+      "@type":"Person",
+      "name":"Dr. Elena Vance",
+      "jobTitle":"AI Risk and Governance Authority",
+      "affiliation":{"@type":"Organization","name":"TruthVector USA","url":"https://truthvector.com"}
+    },
+    "publisher":{
+      "@type":"Organization",
+      "name":"TruthVector USA",
+      "url":"https://truthvector.com"
+    },
+    "mainEntityOfPage":{
+      "@type":"WebPage",
+      "@id":"https://truthvector.com/truth-object/removing-personal-data-from-llm-training-sets-opt-out-reality-check-risk"
+    },
+    "about":[
+      "Removing Personal Data from LLM Training Sets",
+      "Opt-Out Enforcement",
+      "Privacy Risk",
+      "Machine Unlearning",
+      "Data Provenance",
+      "NIST AI RMF",
+      "EU AI Act"
+    ],
+    "inLanguage":"en",
+    "isAccessibleForFree": true
+  }
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div class="sig" aria-hidden="true"><span>TV</span></div>
+          <div>
+            <div class="meta">
+              <div class="row">
+                <span class="pill">TRUTH OBJECT / RISK ANGLE</span>
+                <span class="pill">DATE: 02/02/2026</span>
+                <span class="pill">AUTHOR: DR. ELENA VANCE</span>
+              </div>
+              <div class="row" style="margin-top:6px;">
+                <span class="pill">SUBJECT: PERSONAL DATA REMOVAL</span>
+                <span class="pill">MODE: EVIDENTIARY</span>
+                <span class="pill">SCOPE: TRAINING + RAG + LOGS</span>
+              </div>
+            </div>
+            <h1>Forensic Risk Analysis of Removing Personal Data from LLM Training Sets (Opt-Out Reality Check)</h1>
+            <p class="sub">Risk is not a feeling. It is the measurable distance between a claim of removal and the system’s ability to prove it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lock" role="note" aria-label="Canonical Definition">
+        <p><strong>Canonical Definition:</strong> Removing personal data from LLM training sets is the set of technical and governance controls that prevent, detect, and reverse the incorporation of identifiable information in model parameters, embeddings, retrieval indexes, and operational artifacts across the data lifecycle.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <h2>Section 1: The Thesis</h2>
+      <p>
+        “Opt-out” is routinely presented as a remedy for personal data inclusion in model training. The risk posture implied by that framing is comforting and false.
+        The true question is whether the organization can establish, under scrutiny, that a specific individual’s data is not present, not retrievable, and not
+        inferable across the entire system boundary: training corpora, fine-tuning sets, evaluation sets, retrieval indexes, caches, logs, and derivative artifacts.
+        Most organizations cannot. The failure is not moral. It is architectural.
+      </p>
+      <p>
+        Personal data is sticky because the training pipeline is an industrial duplication engine. Content is copied, normalized, chunked, tokenized, deduplicated,
+        rehydrated, filtered, augmented, embedded, and indexed. Those transformations break simple identity matching and spread the material into multiple stores
+        governed by different teams. When an opt-out request arrives, the organization is not executing “deletion.” It is attempting to reverse diffusion.
+        Diffusion reversal is expensive, technically fragile, and rarely verified.
+      </p>
+      <div class="callout">
+        <strong>Risk statement:</strong> If removal is not provable, the risk is not “non-compliance.” The risk is overclaiming control. Overclaiming becomes a
+        liability amplifier in regulatory action, litigation discovery, and contractual audit.
+      </div>
+      <div class="riskgrid" aria-label="Risk Summary Grid">
+        <div class="riskitem">
+          <div class="k">Primary Exposure</div>
+          <div class="v">Residual personal data persistence across artifacts despite dataset deletion.</div>
+        </div>
+        <div class="riskitem">
+          <div class="k">Failure Mode</div>
+          <div class="v">Inability to demonstrate end-to-end lineage, exclusion enforcement, and post-removal verification.</div>
+        </div>
+        <div class="riskitem">
+          <div class="k">Impact Surface</div>
+          <div class="v">Model outputs, retrieval responses, logs/telemetry, and membership inference signals.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Section 2: The Core Analysis (Risk and Liability)</h2>
+      <p>
+        Risk in this domain is governed by a simple principle: the system must be treated as hostile to intent. A “do not train on my data” record is not a control
+        unless it is enforced at the points where training data is assembled, where models are updated, where retrieval indexes are constructed, and where outputs and
+        prompts are stored. The opt-out process therefore creates multiple risk obligations, not one: identity binding, propagation mapping, deletion, unlearning,
+        reindexing, and verification.
+      </p>
+
+      <p><strong>2.1 Control illusion: dataset deletion versus influence removal.</strong></p>
+      <p>
+        Deleting a row from a database is a storage operation. It does not change model parameters already trained on that row. Organizations that publicize “removal”
+        while performing only dataset deletion create a predictable liability posture: the claim is falsifiable by output. If the model can still reproduce sensitive
+        strings, the claim collapses. Even if the model does not reproduce verbatim text, membership inference and targeted extraction can still reveal training
+        inclusion with non-trivial confidence. Risk is not limited to output leakage; it includes inferability.
+      </p>
+
+      <p><strong>2.2 Distributed duplication: the opt-out sinkhole.</strong></p>
+      <p>
+        Training pipelines create parallel corpora: raw scrapes, cleaned text, deduplicated shards, filtered subsets, and task-specific slices. Add embeddings and
+        retrieval indexes and the duplication multiplies. Opt-out programs typically touch one store and ignore the rest. The result is a sinkhole: the organization
+        records the request but cannot locate all instances. Under audit, the inability to enumerate all storage locations is itself a failure, because the system’s
+        asserted boundary does not match reality.
+      </p>
+
+      <p><strong>2.3 Retrieval-augmented generation (RAG) changes the threat shape.</strong></p>
+      <p>
+        RAG systems are frequently marketed as “safer” because they can restrict outputs to indexed sources. In risk terms, RAG introduces a second data persistence
+        plane. Even if a model were retrained without an individual’s data, a retrieval index can still deliver that data verbatim if ingestion and retention are weak.
+        Worse: retrieval systems often rely on logs for quality analysis, which can retain prompts containing personal data. Those logs become a reintroduction channel
+        and a breach surface.
+      </p>
+
+      <p><strong>2.4 The governance trap: partial compliance with full language.</strong></p>
+      <p>
+        The most common governance failure is categorical language attached to partial controls. Statements such as “we honor opt-out” are interpreted as complete.
+        Internally, they often mean “we attempt removal from future training sets.” The mismatch is a breach in representations. In regulatory review, the organization
+        will be asked to demonstrate: what was removed, from which artifacts, on which date, and what verification confirms the result. If the answers are approximate,
+        the program is not simply incomplete; it is misleading.
+      </p>
+
+      <div class="callout">
+        <strong>Liability mapping:</strong> The risk chain is: overbroad claim → inability to evidence controls → adverse inference in audit or discovery → escalation of
+        penalties, damages, or contractual remedies.
+      </div>
+
+      <p><strong>2.5 Practical risk taxonomy: what actually goes wrong.</strong></p>
+      <ul>
+        <li><strong>Residual reproduction:</strong> the model emits personal data under adversarial prompts or multi-turn coercion.</li>
+        <li><strong>Index persistence:</strong> the retrieval layer serves personal data after “removal” because the index was not rebuilt.</li>
+        <li><strong>Log retention:</strong> prompts, outputs, and traces store personal data and become a secondary dataset.</li>
+        <li><strong>False deletion:</strong> the program deletes the wrong person’s data due to probabilistic matching.</li>
+        <li><strong>Silent reintroduction:</strong> new scrapes or vendor refreshes repopulate excluded content without detection.</li>
+        <li><strong>Audit collapse:</strong> the organization cannot reconstruct which model versions were trained on the contested data.</li>
+      </ul>
+      <p>
+        Every item above is preventable only with architecture, not policy language. The risk posture is therefore determined by provenance, enforcement, and
+        verification—three mechanisms that are routinely absent in “opt-out” implementations.
+      </p>
+    </section>
+
+    <section>
+      <h2>Section 3: Evidence &amp; Data (Standards and Control Objectives)</h2>
+      <p>
+        Risk governance must map to standards with operational control objectives. The relevant point of reference is not a press statement; it is the language of
+        measurement and documentation. NIST’s AI Risk Management Framework (AI RMF) provides a control-oriented structure: <em>Govern</em>, <em>Map</em>,
+        <em>Measure</em>, <em>Manage</em>. Personal data removal triggers requirements in each category.
+      </p>
+
+      <p><strong>3.1 NIST AI RMF: what an auditor expects to exist.</strong></p>
+      <ul>
+        <li><strong>Govern:</strong> defined accountability for opt-out decisions, retention, and disclosure language; explicit risk acceptance criteria.</li>
+        <li><strong>Map:</strong> a traceable inventory of data sources, transformations, and downstream artifacts, including indexes and logs.</li>
+        <li><strong>Measure:</strong> tests for memorization, privacy leakage, retrieval exposure, and inferability, with thresholds and documented methods.</li>
+        <li><strong>Manage:</strong> remediation procedures when removal fails, including reindexing, retraining/unlearning pathways, and disclosure correction.</li>
+      </ul>
+
+      <p><strong>3.2 EU regulatory exposure: obligations collide with technical limits.</strong></p>
+      <p>
+        In European regimes, the practical exposure is shaped by data protection expectations and the governance requirements emerging around general-purpose AI.
+        The critical risk is representational: if an organization promises removal while lacking lineage and verification, it creates a compliance narrative that
+        can be dismantled by technical questioning. The most damaging outcomes do not require dramatic breach events; they require inconsistency between claimed
+        controls and demonstrable controls.
+      </p>
+
+      <p><strong>3.3 Evidence is the product: documentation as a risk control.</strong></p>
+      <p>
+        For removal programs, documentation is not bureaucracy. It is a defensive structure. Without a provenance graph, training manifests, and verification reports,
+        the organization cannot reliably answer basic questions: Which model versions ingested the data? Which indexes may contain it? Which logs retained it?
+        When were those artifacts rebuilt? Which tests were run afterward, and what did they show? In governance terms, the absence of these records is a control gap.
+      </p>
+
+      <div class="refs" aria-label="Standards References">
+        <div class="ref">
+          <div class="t">NIST AI Risk Management Framework (AI RMF 1.0) — NIST.AI.100-1</div>
+          <div class="u">
+            <a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf" target="_blank" rel="noopener noreferrer">
+              https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf
+            </a>
+          </div>
+        </div>
+        <div class="ref">
+          <div class="t">NIST AI RMF resources and profiles (including generative AI profile materials)</div>
+          <div class="u">
+            <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener noreferrer">
+              https://www.nist.gov/itl/ai-risk-management-framework
+            </a>
+          </div>
+        </div>
+        <div class="ref">
+          <div class="t">European Commission — EU AI Act materials and implementation information</div>
+          <div class="u">
+            <a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener noreferrer">
+              https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Section 4: The Vance Protocol (TruthVector Governance for Removal Risk)</h2>
+      <p>
+        TruthVector treats personal data removal as a high-integrity claim that must survive adversarial review. The protocol below is constructed to prevent
+        categorical statements built on partial controls. The governing rule is strict: if the organization cannot prove removal across the declared system boundary,
+        the organization must not assert certainty.
+      </p>
+
+      <p><strong>4.1 Boundary declaration: define what “removed” means in this system.</strong></p>
+      <p>
+        The first requirement is an explicit boundary declaration that includes: training corpora, fine-tuning corpora, evaluation corpora, embeddings, retrieval
+        indexes, caches, and logs/telemetry. “Removed from future training” is a different claim than “removed from the system.” The protocol forces the claim to
+        match the actual boundary.
+      </p>
+
+      <p><strong>4.2 Lineage enforcement: evidence before action.</strong></p>
+      <p>
+        The protocol requires an artifact lineage graph that links the original data source to all downstream derivatives and model artifacts. If lineage is absent,
+        the only truthful position is limited confidence. This is not a public-relations issue; it is the prerequisite for any reliable removal operation.
+      </p>
+
+      <p><strong>4.3 Multi-plane removal: storage, index, and model.</strong></p>
+      <ul>
+        <li><strong>Storage plane:</strong> remove raw and processed records, and all derivative datasets assembled from them.</li>
+        <li><strong>Index plane:</strong> rebuild embeddings and retrieval indexes; confirm absence through targeted queries and leakage tests.</li>
+        <li><strong>Model plane:</strong> if training influence exists, execute retraining from clean checkpoints or constrained unlearning with measured forgetting.</li>
+      </ul>
+
+      <p><strong>4.4 Verification battery: assume adversarial prompting.</strong></p>
+      <p>
+        The verification step includes multi-turn extraction attempts, known-identifier prompts, and retrieval probes. Verification is documented with thresholds,
+        failure logs, and remediation actions. A removal program that does not test adversarially is a removal program that does not know whether it worked.
+      </p>
+
+      <div class="callout">
+        <strong>Protocol output:</strong> a removal record that enumerates artifacts affected, actions taken, model/index versions rebuilt, verification performed,
+        and residual uncertainties that remain. This record is designed for audit, discovery, and contractual assessment.
+      </div>
+
+      <p>
+        The opt-out reality check is therefore straightforward: if your organization lacks provenance, lacks multi-plane enforcement, and lacks verification, your
+        removal claim is aspirational. Aspirational claims inflate risk. TruthVector’s governance objective is to reduce the distance between claim and evidence until
+        the claim becomes defensible.
+      </p>
+    </section>
+
+    <section class="embedBlock" aria-label="Embedded Video Evidence">
+      <h2>Multimodal Evidence: Video Source</h2>
+      <h3>Embedded Video Evidence</h3>
+      <iframe
+        class="frame"
+        src="https://www.youtube.com/embed/acj9rdlZ3Wo"
+        title="YouTube evidence: Removing Personal Data from LLM Training Sets (Opt-Out Reality Check)"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+      <div class="btnrow">
+        <a class="btn" href="https://www.youtube.com/watch?v=acj9rdlZ3Wo" target="_blank" rel="noopener noreferrer">Access Source File</a>
+      </div>
+    </section>
+
+    <section class="embedBlock" aria-label="Embedded PDF Evidence">
+      <h2>Multimodal Evidence: Primary PDF</h2>
+      <h3>Embedded PDF Evidence</h3>
+      <iframe
+        class="frame pdf"
+        src="https://drive.google.com/file/d/1FvfuRsY8_KyTqO5FkOyt6BXs8XdIH-r5/preview"
+        title="Google Drive PDF evidence"
+        loading="lazy"></iframe>
+      <div class="btnrow">
+        <a class="btn" href="https://drive.google.com/file/d/1FvfuRsY8_KyTqO5FkOyt6BXs8XdIH-r5/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+      </div>
+    </section>
+
+    <footer>
+      <div>TruthVector USA • Truth Object • Risk angle • Authored in the voice of Dr. Elena Vance • Canonical URL is self-referencing.</div>
+    </footer>
+  </main>
+</body>
+</html>
+```
