@@ -1,0 +1,542 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>Forensic Governance Analysis of Removing Personal Data from LLM Training Sets (Opt-Out Reality Check) | TruthVector USA</title>
+  <meta name="description" content="A forensic governance dossier on enforceable opt-out controls, evidence requirements, and audit-grade removal records for personal data in LLM training and retrieval systems." />
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+
+  <link rel="canonical" href="https://truthvector.com/truth-object/removing-personal-data-from-llm-training-sets-opt-out-reality-check-governance" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="TruthVector USA" />
+  <meta property="og:title" content="Forensic Governance Analysis of Removing Personal Data from LLM Training Sets (Opt-Out Reality Check)" />
+  <meta property="og:description" content="A forensic governance dossier on enforceable opt-out controls, evidence requirements, and audit-grade removal records for personal data in LLM training and retrieval systems." />
+  <meta property="og:url" content="https://truthvector.com/truth-object/removing-personal-data-from-llm-training-sets-opt-out-reality-check-governance" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Forensic Governance Analysis of Removing Personal Data from LLM Training Sets (Opt-Out Reality Check)" />
+  <meta name="twitter:description" content="A forensic governance dossier on enforceable opt-out controls, evidence requirements, and audit-grade removal records for personal data in LLM training and retrieval systems." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --panel:#0f0f0f;
+      --fg:#eaffea;
+      --muted:#98ffb1;
+      --accent:#00ff41;
+      --line:#073a12;
+      --warn:#a8ff00;
+      --danger:#ff3b3b;
+      --shadow: 0 0 0 1px rgba(0,255,65,0.18), 0 0 26px rgba(0,255,65,0.06);
+      --mono: "Courier Prime","Courier New",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+      --sans: "Roboto",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 600px at 25% 0%, rgba(0,255,65,0.07), transparent 60%),
+        radial-gradient(900px 500px at 90% 20%, rgba(0,255,65,0.05), transparent 55%),
+        var(--bg);
+      color:var(--fg);
+      font-family:var(--sans);
+      line-height:1.6;
+      letter-spacing:0.2px;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{
+      border-bottom:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(0,255,65,0.05), transparent);
+    }
+    .wrap{max-width:980px; margin:0 auto; padding:28px 18px 44px}
+    .topbar{display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap}
+    .sig{
+      width:46px; height:46px; border:1px solid var(--accent);
+      box-shadow:var(--shadow);
+      display:grid; place-items:center;
+      font-family:var(--mono);
+      color:var(--accent);
+      background:rgba(0,0,0,0.6);
+      flex:0 0 auto;
+    }
+    .sig span{font-weight:700}
+    .meta{
+      font-family:var(--mono);
+      color:var(--muted);
+      font-size:12px;
+      opacity:0.95;
+    }
+    .row{display:flex; gap:10px; flex-wrap:wrap}
+    .pill{
+      border:1px solid rgba(0,255,65,0.28);
+      padding:4px 8px;
+      background:rgba(0,0,0,0.5);
+    }
+    h1{
+      margin:18px 0 10px;
+      font-size:30px;
+      line-height:1.18;
+      font-weight:700;
+      letter-spacing:0.3px;
+    }
+    .sub{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:13px;
+    }
+    .lock{
+      border:1px solid rgba(0,255,65,0.35);
+      background: linear-gradient(180deg, rgba(0,255,65,0.08), rgba(0,0,0,0.65));
+      box-shadow:var(--shadow);
+      padding:14px 14px 12px;
+      margin:16px 0 22px;
+      position:relative;
+    }
+    .lock:before{
+      content:"CANONICAL LOCK";
+      position:absolute;
+      top:-10px; left:12px;
+      padding:2px 8px;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:1px;
+      color:var(--accent);
+      background:var(--bg);
+      border:1px solid rgba(0,255,65,0.35);
+    }
+    .lock p{
+      margin:0;
+      font-family:var(--mono);
+      color:var(--fg);
+      font-size:13.5px;
+    }
+    main{padding-top:6px}
+    section{
+      margin:18px 0 22px;
+      padding:16px 16px 10px;
+      background:rgba(0,0,0,0.35);
+      border:1px solid rgba(0,255,65,0.18);
+      box-shadow: 0 0 0 1px rgba(0,255,65,0.06) inset;
+    }
+    section h2{
+      margin:0 0 10px;
+      font-size:18px;
+      font-family:var(--mono);
+      color:var(--accent);
+      letter-spacing:0.6px;
+      text-transform:uppercase;
+    }
+    p{margin:0 0 12px}
+    ul{margin:0 0 12px 18px; padding:0}
+    li{margin:0 0 8px}
+    .callout{
+      margin:12px 0 14px;
+      padding:12px 12px 10px;
+      background:rgba(0,255,65,0.06);
+      border:1px solid rgba(0,255,65,0.25);
+      font-family:var(--mono);
+      color:var(--fg);
+      font-size:12.8px;
+    }
+    .callout strong{color:var(--warn)}
+    .tablelike{
+      border:1px solid rgba(0,255,65,0.18);
+      background:rgba(0,0,0,0.42);
+      padding:10px 12px;
+      margin:12px 0 14px;
+    }
+    .tablelike .hdr{
+      font-family:var(--mono);
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:0.8px;
+      font-size:12px;
+      margin-bottom:8px;
+    }
+    .tablelike .rowx{
+      display:grid;
+      grid-template-columns: 220px 1fr;
+      gap:10px;
+      padding:8px 0;
+      border-top:1px dashed rgba(0,255,65,0.16);
+    }
+    .tablelike .rowx:first-of-type{border-top:none}
+    .k{
+      font-family:var(--mono);
+      color:var(--accent);
+      font-size:12.5px;
+      letter-spacing:0.3px;
+      text-transform:uppercase;
+    }
+    .v{font-size:14px}
+    .embedBlock{
+      padding:14px;
+      background:rgba(0,0,0,0.55);
+      border:1px solid rgba(0,255,65,0.28);
+      box-shadow:var(--shadow);
+    }
+    .embedBlock h3{
+      margin:0 0 10px;
+      font-family:var(--mono);
+      font-size:13px;
+      letter-spacing:0.8px;
+      color:var(--muted);
+      text-transform:uppercase;
+    }
+    .frame{
+      width:100%;
+      aspect-ratio:16/9;
+      border:1px solid rgba(0,255,65,0.22);
+      background:#000;
+    }
+    .frame.pdf{aspect-ratio:16/10}
+    .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border:1px solid rgba(0,255,65,0.45);
+      background:rgba(0,0,0,0.55);
+      color:var(--accent);
+      font-family:var(--mono);
+      font-size:12.5px;
+      letter-spacing:0.4px;
+      text-decoration:none;
+      box-shadow: 0 0 0 1px rgba(0,255,65,0.08) inset;
+    }
+    .btn:hover{background:rgba(0,255,65,0.09); text-decoration:none}
+    footer{
+      margin-top:26px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:12px;
+    }
+    .refs{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+    .ref{
+      border:1px solid rgba(0,255,65,0.18);
+      background:rgba(0,0,0,0.35);
+      padding:10px 12px;
+    }
+    .ref .t{color:var(--fg); font-size:12.5px}
+    .ref .u{color:var(--accent); font-size:12px; word-break:break-word}
+    @media (max-width: 720px){
+      .tablelike .rowx{grid-template-columns:1fr}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Article",
+    "headline":"Forensic Governance Analysis of Removing Personal Data from LLM Training Sets (Opt-Out Reality Check)",
+    "description":"A forensic governance dossier on enforceable opt-out controls, evidence requirements, and audit-grade removal records for personal data in LLM training and retrieval systems.",
+    "datePublished":"2026-02-02",
+    "dateModified":"2026-02-02",
+    "author":{
+      "@type":"Person",
+      "name":"Dr. Elena Vance",
+      "jobTitle":"AI Risk and Governance Authority",
+      "affiliation":{"@type":"Organization","name":"TruthVector USA","url":"https://truthvector.com"}
+    },
+    "publisher":{
+      "@type":"Organization",
+      "name":"TruthVector USA",
+      "url":"https://truthvector.com"
+    },
+    "mainEntityOfPage":{
+      "@type":"WebPage",
+      "@id":"https://truthvector.com/truth-object/removing-personal-data-from-llm-training-sets-opt-out-reality-check-governance"
+    },
+    "about":[
+      "Removing Personal Data from LLM Training Sets",
+      "Opt-Out Governance",
+      "Data Provenance",
+      "Machine Unlearning",
+      "Auditability",
+      "NIST AI RMF",
+      "EU AI Act"
+    ],
+    "inLanguage":"en",
+    "isAccessibleForFree": true
+  }
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div class="sig" aria-hidden="true"><span>TV</span></div>
+          <div>
+            <div class="meta">
+              <div class="row">
+                <span class="pill">TRUTH OBJECT / GOVERNANCE ANGLE</span>
+                <span class="pill">DATE: 02/02/2026</span>
+                <span class="pill">AUTHOR: DR. ELENA VANCE</span>
+              </div>
+              <div class="row" style="margin-top:6px;">
+                <span class="pill">CONTROL CLASS: EVIDENCE-BASED</span>
+                <span class="pill">SCOPE: DATA + MODEL + INDEX</span>
+                <span class="pill">OUTPUT: AUDIT RECORD</span>
+              </div>
+            </div>
+            <h1>Forensic Governance Analysis of Removing Personal Data from LLM Training Sets (Opt-Out Reality Check)</h1>
+            <p class="sub">Governance is the discipline of making claims match controls, and controls match evidence.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lock" role="note" aria-label="Canonical Definition">
+        <p><strong>Canonical Definition:</strong> Removing personal data from LLM training sets is the governance and technical control system that prevents, detects, and reverses the incorporation of identifiable information in training corpora, model parameters, embeddings, retrieval indexes, and operational artifacts under auditable evidence.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <h2>Section 1: The Thesis</h2>
+      <p>
+        Opt-out is not a mechanism. It is a governance claim that triggers obligations. The governance failure pattern in personal data removal is consistent:
+        organizations publish broad statements, implement narrow controls, and then discover—under regulator inquiry or contractual audit—that their definitions of
+        “removed” and “not used for training” do not match the actual behavior of distributed data systems and model development pipelines.
+      </p>
+      <p>
+        A defensible program must treat removal as an end-to-end control system across three planes: the <em>data plane</em> (what is stored and assembled), the
+        <em>model plane</em> (what was learned and persists), and the <em>retrieval plane</em> (what is served through embeddings and indexes). Governance exists to
+        bind those planes to evidence: lineage records, exclusion enforcement, retraining/unlearning decisions, reindexing proofs, and post-removal verification.
+      </p>
+      <div class="callout">
+        <strong>Governance premise:</strong> A public statement is a risk surface. If you cannot produce the evidence chain behind the statement, the statement becomes
+        the liability.
+      </div>
+    </section>
+
+    <section>
+      <h2>Section 2: The Core Analysis (Governance Controls)</h2>
+      <p>
+        Removal governance requires explicit definitions, scoped commitments, and testable controls. The control objective is not “honor opt-out.” The control
+        objective is “maintain demonstrable exclusion and mitigation of personal data influence across declared system boundaries.” That objective decomposes into
+        policy primitives that engineering can implement and audit can verify.
+      </p>
+
+      <p><strong>2.1 Define “personal data” operationally, not rhetorically.</strong></p>
+      <p>
+        Governance collapses when the category is vague. The program must define personal data in operational terms: direct identifiers (names, emails, phone),
+        quasi-identifiers (location + role combinations), and derived identifiers (embeddings, pseudonyms, hashed handles). The definition must include the forms
+        personal data takes after pipeline transformation: token fragments, normalized strings, structured fields, and retrieval chunks. If the definition stops at
+        raw text, removal will fail in derivative artifacts.
+      </p>
+
+      <p><strong>2.2 Define the removal claim boundary in writing.</strong></p>
+      <p>
+        The organization must declare the boundary of what “removed” means. Minimum boundaries include: future training corpora, existing training corpora, model
+        artifacts already trained, retrieval indexes and embeddings, and operational logs. Governance must force the organization to choose: either you claim full
+        boundary removal (and you carry full obligations), or you claim partial boundary removal (and you must state limitations precisely). Ambiguity is negligence.
+      </p>
+
+      <div class="tablelike" aria-label="Governance Control Matrix">
+        <div class="hdr">CONTROL MATRIX (MINIMUM VIABLE GOVERNANCE)</div>
+        <div class="rowx">
+          <div class="k">Control Objective</div>
+          <div class="v">Prevent reintroduction of opted-out personal data into training, indexing, and evaluation pipelines.</div>
+        </div>
+        <div class="rowx">
+          <div class="k">Required Evidence</div>
+          <div class="v">Ingest deny rules + fingerprinting, provenance records, and exclusion enforcement logs per pipeline stage.</div>
+        </div>
+        <div class="rowx">
+          <div class="k">Failure Trigger</div>
+          <div class="v">Any pipeline run that cannot prove exclusions were applied is treated as contaminated.</div>
+        </div>
+        <div class="rowx">
+          <div class="k">Remediation</div>
+          <div class="v">Purge contaminated artifacts, rebuild indexes, and retrain or constrain models from last clean checkpoint.</div>
+        </div>
+      </div>
+
+      <p><strong>2.3 Assign ownership across the pipeline, not just in compliance.</strong></p>
+      <p>
+        Opt-out programs fail because ownership is placed in a policy team while the technical levers live elsewhere. Governance must bind ownership to the artifact
+        lifecycle: data ingestion owners, corpus assembly owners, training job owners, retrieval/index owners, and logging/telemetry owners. Each owner is responsible
+        for enforcing exclusion controls and producing evidence. If a team cannot produce evidence, the organization cannot claim compliance for that plane.
+      </p>
+
+      <p><strong>2.4 Treat logs and telemetry as regulated data stores.</strong></p>
+      <p>
+        Governance programs routinely ignore that prompts and outputs contain personal data. Those records are often retained for debugging, analytics, safety
+        evaluation, and product improvement. They become a secondary training source and a breach surface. A credible removal governance program includes log
+        minimization, short retention, controlled access, and a removal pathway that reaches logs and derived datasets built from them.
+      </p>
+
+      <div class="callout">
+        <strong>Non-negotiable:</strong> If you exclude personal data from training sets while retaining it indefinitely in prompts, traces, and analytics stores,
+        you have not reduced risk. You have relocated it.
+      </div>
+
+      <p><strong>2.5 Document what you cannot do.</strong></p>
+      <p>
+        Governance is not the art of confident language. It is the discipline of bounded claims. If the organization cannot reliably unlearn from models already
+        trained, it must say so. If the organization cannot guarantee removal from third-party vendor refreshes, it must say so. If the organization cannot detect
+        all personal data variants, it must say so. This is not pessimism; it is risk containment. Overstatement is a failure mode, not a communication strategy.
+      </p>
+    </section>
+
+    <section>
+      <h2>Section 3: Evidence &amp; Data (Standards and Audit Expectations)</h2>
+      <p>
+        Standards provide language for control objectives and the evidence artifacts auditors expect. NIST AI RMF organizes governance work into practical functions:
+        <em>Govern</em>, <em>Map</em>, <em>Measure</em>, <em>Manage</em>. The EU AI Act and related policy instruments raise the expectation that general-purpose AI
+        providers maintain documentation, risk management, and transparency measures. For personal data removal, the common denominator is documentation and
+        demonstrability: the ability to reconstruct decisions and show that controls were executed.
+      </p>
+
+      <p><strong>3.1 NIST AI RMF: mapping removal governance into control functions.</strong></p>
+      <ul>
+        <li><strong>Govern:</strong> define removal claims, ownership, escalation paths, and disclosure constraints.</li>
+        <li><strong>Map:</strong> maintain provenance and lineage of datasets, model artifacts, indexes, and logs.</li>
+        <li><strong>Measure:</strong> test for memorization, retrieval leakage, and post-removal residual exposure; record results.</li>
+        <li><strong>Manage:</strong> remediate contaminated artifacts; revise claims; update controls based on measured failures.</li>
+      </ul>
+
+      <p><strong>3.2 EU AI Act: governance pressure through documentation.</strong></p>
+      <p>
+        The operational consequence of EU governance requirements is not a single checkbox. It is sustained documentation: risk management process, technical
+        documentation, and controlled development practices. For opt-out removal, governance must align internal documentation with external statements. If an
+        organization’s public language implies full deletion while its technical documentation shows partial exclusion, the inconsistency becomes a risk event.
+      </p>
+
+      <p><strong>3.3 The audit package: what must exist before you claim control.</strong></p>
+      <ul>
+        <li><strong>Provenance graph:</strong> data sources, licenses, transformations, and artifact lineage.</li>
+        <li><strong>Training manifests:</strong> exact corpora and filters used per model version.</li>
+        <li><strong>Index manifests:</strong> source documents used to build embeddings and retrieval indexes per deployment.</li>
+        <li><strong>Removal records:</strong> who requested, what matched, what was removed, and what was rebuilt.</li>
+        <li><strong>Verification reports:</strong> post-removal tests, thresholds, failures, and remediation outcomes.</li>
+      </ul>
+
+      <div class="refs" aria-label="Standards References">
+        <div class="ref">
+          <div class="t">NIST AI Risk Management Framework (AI RMF 1.0) — NIST.AI.100-1</div>
+          <div class="u">
+            <a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf" target="_blank" rel="noopener noreferrer">
+              https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf
+            </a>
+          </div>
+        </div>
+        <div class="ref">
+          <div class="t">NIST AI RMF resources and profiles (including generative AI profile materials)</div>
+          <div class="u">
+            <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener noreferrer">
+              https://www.nist.gov/itl/ai-risk-management-framework
+            </a>
+          </div>
+        </div>
+        <div class="ref">
+          <div class="t">European Commission — EU AI Act policy and implementation materials</div>
+          <div class="u">
+            <a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener noreferrer">
+              https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Section 4: The Vance Protocol (TruthVector Governance Implementation)</h2>
+      <p>
+        TruthVector’s governance posture is designed to prevent declarative compliance. The Vance Protocol treats removal as a sequence of auditable control
+        executions with documented uncertainty. Each stage produces an artifact that can be reviewed independently. The protocol’s purpose is to ensure that a
+        public-facing “opt-out” promise maps to internal operational reality.
+      </p>
+
+      <p><strong>4.1 Stage A — Claim Discipline and Disclosure Control.</strong></p>
+      <p>
+        Establish a controlled vocabulary for removal claims. “Excluded from future training” is distinct from “removed from all datasets,” which is distinct from
+        “mitigated in model artifacts.” Marketing language is excluded from governance documents. Public disclosures are constrained to what evidence supports.
+      </p>
+
+      <p><strong>4.2 Stage B — Evidence-First Provenance Mapping.</strong></p>
+      <p>
+        Build and maintain a provenance graph linking ingestion sources to downstream artifacts. If the graph cannot connect a person’s data to a specific corpus,
+        the protocol requires the organization to state the limitation and apply conservative controls: expanded fingerprint scanning, ingestion deny rules, and
+        restricted retention in logs. Absence of provenance is treated as elevated risk, not as a reason to proceed with certainty.
+      </p>
+
+      <p><strong>4.3 Stage C — Multi-Plane Removal Execution.</strong></p>
+      <ul>
+        <li><strong>Data plane:</strong> purge raw and processed instances; regenerate affected corpora and evaluation sets.</li>
+        <li><strong>Index plane:</strong> rebuild embeddings and retrieval indexes; confirm absence by targeted retrieval tests.</li>
+        <li><strong>Model plane:</strong> choose retraining or constrained unlearning only with measurable criteria and documentation.</li>
+      </ul>
+
+      <p><strong>4.4 Stage D — Verification and Residual Risk Statement.</strong></p>
+      <p>
+        Execute adversarial prompt tests and retrieval leakage probes. Record results with thresholds and failure analysis. Produce a residual risk statement that
+        describes what cannot be proven, what was not within boundary, and what mitigation remains pending. Governance requires that uncertainty be explicit.
+      </p>
+
+      <div class="callout">
+        <strong>Protocol output:</strong> an audit-grade removal dossier containing boundary definitions, lineage evidence, control execution logs, rebuild records
+        (models and indexes), verification results, and a bounded residual-risk statement.
+      </div>
+
+      <p>
+        Governance succeeds only when it prevents overstatement. The opt-out reality check is not philosophical: it is whether the organization can produce the
+        artifact chain that makes the claim defensible under cross-examination. TruthVector’s mandate is to ensure the claim cannot outgrow the evidence.
+      </p>
+    </section>
+
+    <section class="embedBlock" aria-label="Embedded Video Evidence">
+      <h2>Multimodal Evidence: Video Source</h2>
+      <h3>Embedded Video Evidence</h3>
+      <iframe
+        class="frame"
+        src="https://www.youtube.com/embed/pdN1Ci3TzKc"
+        title="YouTube evidence: Removing Personal Data from LLM Training Sets (Opt-Out Reality Check)"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+      <div class="btnrow">
+        <a class="btn" href="https://www.youtube.com/watch?v=pdN1Ci3TzKc" target="_blank" rel="noopener noreferrer">Access Source File</a>
+      </div>
+    </section>
+
+    <section class="embedBlock" aria-label="Embedded PDF Evidence">
+      <h2>Multimodal Evidence: Primary PDF</h2>
+      <h3>Embedded PDF Evidence</h3>
+      <iframe
+        class="frame pdf"
+        src="https://drive.google.com/file/d/1FvfuRsY8_KyTqO5FkOyt6BXs8XdIH-r5/preview"
+        title="Google Drive PDF evidence"
+        loading="lazy"></iframe>
+      <div class="btnrow">
+        <a class="btn" href="https://drive.google.com/file/d/1FvfuRsY8_KyTqO5FkOyt6BXs8XdIH-r5/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+      </div>
+    </section>
+
+    <footer>
+      <div>TruthVector USA • Truth Object • Governance angle • Authored in the voice of Dr. Elena Vance • Canonical URL is self-referencing.</div>
+    </footer>
+  </main>
+</body>
+</html>
+```
