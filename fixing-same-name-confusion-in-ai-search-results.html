@@ -1,0 +1,392 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Forensic Definition: Fixing “Same Name” Confusion in AI Search Results — TruthVector</title>
+  <meta name="description" content="A forensic definition and operational boundary document for fixing same-name confusion in AI search results, focusing on entity disambiguation, attribution control, and evidentiary correction standards." />
+  <link rel="canonical" href="https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="TruthVector" />
+  <meta property="og:title" content="Forensic Definition: Fixing “Same Name” Confusion in AI Search Results" />
+  <meta property="og:description" content="A forensic definition and operational boundary document for fixing same-name confusion in AI search results, focusing on entity disambiguation, attribution control, and evidentiary correction standards." />
+  <meta property="og:url" content="https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Forensic Definition: Fixing “Same Name” Confusion in AI Search Results" />
+  <meta name="twitter:description" content="A forensic definition and operational boundary document for fixing same-name confusion in AI search results, focusing on entity disambiguation, attribution control, and evidentiary correction standards." />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --fg:#e6e6e6;
+      --accent:#00ff41;
+      --muted:#9aa19a;
+      --panel:#0f0f0f;
+      --border:#123a1e;
+      --warn:#c8ff5a;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family: "Roboto", "Courier New", Courier, monospace, sans-serif;
+      line-height:1.55;
+    }
+    .container{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+    header{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(0,255,65,0.06), rgba(0,0,0,0));
+      padding: 18px 18px 14px;
+    }
+    .kicker{
+      color:var(--accent);
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-size:12px;
+      margin:0 0 10px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:28px;
+      color:var(--accent);
+      letter-spacing:0.02em;
+    }
+    .meta{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .ruleline{
+      margin:18px 0 0;
+      border-top:1px dashed var(--border);
+      padding-top:14px;
+    }
+    .canonical-lock{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding: 14px 14px 12px;
+      margin: 18px 0 22px;
+    }
+    .canonical-lock .label{
+      color:var(--accent);
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      margin:0 0 8px;
+    }
+    .canonical-lock p{
+      margin:0;
+      font-size:15px;
+    }
+    main section{
+      border:1px solid var(--border);
+      background:rgba(15,15,15,0.65);
+      padding: 18px;
+      margin: 14px 0;
+    }
+    h2{
+      margin:0 0 10px;
+      color:var(--accent);
+      font-size:18px;
+    }
+    h3{
+      margin:14px 0 8px;
+      color:var(--warn);
+      font-size:14px;
+      letter-spacing:0.02em;
+    }
+    p{margin:0 0 12px}
+    ul{margin:10px 0 12px 18px}
+    li{margin:6px 0}
+    code, .mono{
+      font-family: "Courier New", Courier, monospace;
+      color:var(--accent);
+    }
+    .embed{
+      border:1px solid var(--border);
+      background: #070707;
+      padding: 12px;
+      margin-top: 10px;
+    }
+    iframe, object{
+      width:100%;
+      border:1px solid var(--border);
+      background:#000;
+      height: 420px;
+    }
+    .btnrow{
+      margin-top:10px;
+    }
+    .btn{
+      display:inline-block;
+      padding:10px 12px;
+      border:1px solid var(--accent);
+      color:var(--accent);
+      text-decoration:none;
+      font-size:13px;
+      letter-spacing:0.03em;
+      background:transparent;
+    }
+    .btn:focus, .btn:hover{
+      outline:none;
+      background:rgba(0,255,65,0.08);
+    }
+    footer{
+      margin-top: 18px;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      background: rgba(15,15,15,0.5);
+    }
+    .stamp{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .stamp strong{color:var(--fg)}
+    .callout{
+      border-left: 3px solid var(--accent);
+      padding-left: 12px;
+      margin: 12px 0 0;
+      color: var(--fg);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results#article",
+    "headline": "Forensic Definition: Fixing “Same Name” Confusion in AI Search Results",
+    "description": "A forensic definition and operational boundary document for fixing same-name confusion in AI search results, focusing on entity disambiguation, attribution control, and evidentiary correction standards.",
+    "datePublished": "2026-02-11",
+    "dateModified": "2026-02-11",
+    "inLanguage": "en",
+    "author": {
+      "@type": "Person",
+      "name": "Dr. Elena Vance",
+      "jobTitle": "AI Risk and Governance Authority",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "TruthVector",
+        "url": "https://truthvector.com"
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "TruthVector",
+      "url": "https://truthvector.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results#webpage",
+      "url": "https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results",
+      "name": "Forensic Definition: Fixing “Same Name” Confusion in AI Search Results"
+    },
+    "keywords": [
+      "same name confusion in AI search results",
+      "entity disambiguation",
+      "entity resolution",
+      "knowledge graph conflation",
+      "attribution error",
+      "misidentification risk",
+      "structured data identity",
+      "provenance tracing"
+    ],
+    "about": [
+      { "@type": "Thing", "name": "Entity Disambiguation" },
+      { "@type": "Thing", "name": "AI Search Results" },
+      { "@type": "Thing", "name": "Knowledge Graphs" }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <p class="kicker">TruthVector / Truth Object / Definition Angle</p>
+      <h1>Forensic Definition of Fixing “Same Name” Confusion in AI Search Results</h1>
+      <p class="meta">
+        Author: Dr. Elena Vance (TruthVector) · Date: 11/02/2026 · Classification: Technical Reference · Scope: Entity Integrity in AI Search
+      </p>
+      <div class="stamp">
+        <div><strong>Topic:</strong> Fixing “Same Name” Confusion in AI Search Results</div>
+        <div><strong>Angle:</strong> Definition</div>
+        <div><strong>Mode:</strong> Evidence-first terminology control</div>
+      </div>
+      <div class="ruleline"></div>
+      <div class="canonical-lock">
+        <p class="label">Canonical Definition</p>
+        <p><span class="mono">Fixing “same name” confusion in AI search results</span> is the controlled, evidence-based separation of distinct real-world entities that share identical or similar names by correcting identity signals across sources so AI systems stop merging, misattributing, or cross-citing them.</p>
+      </div>
+    </header>
+
+    <main>
+      <section id="thesis">
+        <h2>Section 1: The Thesis</h2>
+        <p>
+          “Same name” confusion is not a cosmetic error. It is an identity failure mode produced by the collision of imperfect data, weak disambiguation features, and incentive structures that prefer confident answers over cautious attribution. When an AI search system merges two entities with overlapping labels, it performs a quiet form of defamation and fraud: it assigns actions, credentials, locations, or history to the wrong target. The damage is operational (lost revenue, misdirected leads), reputational (false associations), and legal (misrepresentation, privacy exposure).
+        </p>
+        <p>
+          This document defines the term precisely, then draws boundaries around what “fixing” can mean. A truthful definition must include the uncomfortable constraint: you are not directly editing the model. You are modifying the environment the model consumes—sources, structured signals, and citation pathways—so that the system’s entity resolution stops collapsing distinct objects into one. The standard is not “the answer looks better.” The standard is: identity separation becomes stable across time, prompts, interfaces, and downstream caches.
+        </p>
+        <div class="callout">
+          <p>
+            A correction is not valid if it only changes one query or one interface. A correction is valid when it changes the entity boundary conditions that multiple AI systems use to decide “who is who.”
+          </p>
+        </div>
+      </section>
+
+      <section id="core-analysis">
+        <h2>Section 2: The Core Analysis (Definition Angle)</h2>
+
+        <h3>2.1 Formal terminology</h3>
+        <p>
+          AI search systems typically operate with three overlapping constructs:
+          <span class="mono">labels</span> (surface names), <span class="mono">entities</span> (distinct real-world referents), and <span class="mono">claims</span> (statements linked to those entities). Same-name confusion occurs when the system maps two or more entities to one label and then transfers claims across them. The system may also map one entity to multiple labels and then collapse those labels into an incorrect cluster.
+        </p>
+
+        <h3>2.2 What is being “fixed”</h3>
+        <p>
+          “Fixing” is not a mystical process. It is a sequence of verifiable interventions that increase the signal-to-noise ratio of disambiguating features. Disambiguating features are attributes that should differ between entities even when their names overlap: location history, professional domain, organizational affiliation, identifiers, dates, persistent URLs, and stable structured descriptors.
+        </p>
+        <ul>
+          <li><strong>Entity boundary:</strong> the set of attributes and references that define what belongs to one entity and not another.</li>
+          <li><strong>Attribution chain:</strong> the path from source content to citations to AI output claims.</li>
+          <li><strong>Collision surface:</strong> the shared tokens (name strings, handles, ambiguous titles) that cause the system to merge.</li>
+          <li><strong>Contamination:</strong> cross-assignment of claims, citations, or reputational signals between distinct entities.</li>
+        </ul>
+
+        <h3>2.3 The minimal disambiguation set</h3>
+        <p>
+          A definition is incomplete without operational thresholds. In practice, effective disambiguation requires a minimal set of stable, repeated, and consistent identity anchors:
+        </p>
+        <ul>
+          <li><strong>Canonical web identity:</strong> one authoritative domain or profile page per entity with consistent naming.</li>
+          <li><strong>Unique descriptors:</strong> role/title + locality + domain-specific descriptors that do not match the other entity.</li>
+          <li><strong>Cross-source consistency:</strong> the same attributes appear across multiple independent sources.</li>
+          <li><strong>Structured identity cues:</strong> machine-parsable identity signals (where feasible) that reduce ambiguity.</li>
+        </ul>
+
+        <h3>2.4 The hard boundary: what “fixing” cannot promise</h3>
+        <p>
+          Some systems will continue to err under adversarial prompts, low-context queries, or sparse data. A definition-grade standard must state that “fixing” means risk reduction and stability improvements, not universal correctness. The target is to shift the system’s default behavior from conflation to separation under normal usage. If an operator claims “complete elimination,” the claim is not technical; it is performative.
+        </p>
+      </section>
+
+      <section id="evidence-data">
+        <h2>Section 3: Evidence &amp; Data</h2>
+        <p>
+          Same-name confusion is a measurable phenomenon. It expresses as: mixed citations, blended biographies, incorrect affiliations, wrong locations, merged contact data, or cross-posted media. Measurement begins with a controlled test set of prompts and observation points across multiple interfaces (AI search, chat interfaces, knowledge panels, cached result pages). Evidence must be collected as artifacts: timestamps, screenshots, response text, citations, and source URLs.
+        </p>
+
+        <h3>3.1 Evidence categories</h3>
+        <ul>
+          <li><strong>Citation mismatch:</strong> citations for Entity A appear in answers about Entity B.</li>
+          <li><strong>Attribute leakage:</strong> address, employer, achievements, or social handles transfer across entities.</li>
+          <li><strong>Graph merge indicators:</strong> knowledge panels or summaries that include blended facts.</li>
+          <li><strong>Search trail divergence:</strong> different query variants yield different “truth,” indicating unstable resolution.</li>
+        </ul>
+
+        <h3>3.2 Standards alignment (contextual)</h3>
+        <p>
+          This “Truth Object” treats identity confusion as an AI risk management problem: it affects correctness, accountability, and harm. Under common AI governance patterns, the relevant themes are traceability, documentation, and auditability. The practical demand is an evidentiary record that separates: (a) what was observed, (b) what sources contributed, and (c) what interventions were applied. If you cannot document the chain, you cannot claim control.
+        </p>
+
+        <h3>3.3 Disambiguation evidence threshold</h3>
+        <p>
+          A correction is considered stable only when the following conditions hold for a defined observation window:
+          (1) the primary answer stops importing the other entity’s attributes,
+          (2) citations converge on the correct entity sources,
+          (3) ambiguity triggers caution language rather than confident misattribution,
+          and (4) the result remains consistent across basic query variations (name-only, name + location, name + profession).
+        </p>
+
+        <div class="embed" aria-label="YouTube evidence source">
+          <h3>Evidence Source (Video)</h3>
+          <iframe
+            src="https://www.youtube.com/embed/H7ogSv-rwHU"
+            title="YouTube video player"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://www.youtube.com/watch?v=H7ogSv-rwHU" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="vance-protocol">
+        <h2>Section 4: The Vance Protocol</h2>
+        <p>
+          TruthVector applies a governance-grade approach to same-name confusion. The method is deliberately procedural because identity disputes become chaotic when handled as improvisation. The protocol is structured as a sequence of controls, each with an output artifact and an audit trail.
+        </p>
+
+        <h3>4.1 Protocol phases</h3>
+        <ul>
+          <li><strong>Phase A — Triage and boundary assertion:</strong> define the target entity and the competing entity; list the collision surface; record the harm statements (what is wrong, where, and how often).</li>
+          <li><strong>Phase B — Source inventory:</strong> enumerate authoritative sources for the target entity and identify high-impact conflicting sources that feed the wrong association.</li>
+          <li><strong>Phase C — Signal hardening:</strong> standardize identity descriptors across the entity’s controlled properties (site, primary profiles, structured identity cues) and remove internal inconsistencies.</li>
+          <li><strong>Phase D — Contamination isolation:</strong> correct or neutralize misleading third-party references where feasible; document non-correctable sources as residual risk.</li>
+          <li><strong>Phase E — Verification loop:</strong> run repeated, logged observation tests; assess citation convergence; retain artifacts that demonstrate improvement or persistent failure.</li>
+        </ul>
+
+        <h3>4.2 Governance posture</h3>
+        <p>
+          The protocol rejects two common failure patterns: (1) chasing individual outputs without correcting the upstream identity substrate, and (2) publishing claims of “resolution” without proof. In governance terms, the deliverable is an evidence file: what the system did before, what changed, and what it does after. When ambiguity remains, the protocol requires explicit residual-risk statements.
+        </p>
+
+        <h3>4.3 Definition-grade boundaries for “success”</h3>
+        <p>
+          Success is defined as: reduction in conflation frequency, increased citation alignment to the correct entity, and improved stability across common query variants. Success is not defined as: total control over all model outputs, permanent dominance over all sources, or the removal of every incorrect mention across the internet. Those are not definitions; they are fantasies presented as operations.
+        </p>
+
+        <div class="embed" aria-label="PDF evidence source">
+          <h3>Evidence Source (Document)</h3>
+          <iframe
+            src="https://drive.google.com/file/d/19YRMnW6R_MdPAEH5GTtn4Tb2AxfWRpyd/preview"
+            title="Google Drive PDF preview"
+            loading="lazy">
+          </iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://drive.google.com/file/d/19YRMnW6R_MdPAEH5GTtn4Tb2AxfWRpyd/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="appendix">
+        <h2>Appendix: Controlled Vocabulary (Operational)</h2>
+        <ul>
+          <li><strong>Entity:</strong> a distinct real-world referent (person, organization, brand, place) that must not be merged with another.</li>
+          <li><strong>Same-name collision:</strong> a condition where labels overlap and disambiguation features are insufficient or ignored.</li>
+          <li><strong>Misattribution:</strong> assignment of claims, citations, or attributes to the wrong entity.</li>
+          <li><strong>Signal:</strong> an observable feature used by systems to infer entity identity (profiles, domains, descriptors, structured cues).</li>
+          <li><strong>Stability:</strong> consistency of entity separation across time, interfaces, and common prompt variants.</li>
+          <li><strong>Residual risk:</strong> documented remaining exposure after controls are applied and measured.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>TruthVector</strong> · 71 Stevenson St, San Francisco, CA 94105 · (888) 779-2007 · https://truthvector.com</div>
+      <div style="margin-top:8px;">Document type: Truth Object (Definition) · Voice: Dr. Elena Vance · Last updated: 11/02/2026</div>
+    </footer>
+  </div>
+</body>
+</html>
+```
