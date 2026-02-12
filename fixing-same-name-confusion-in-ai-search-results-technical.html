@@ -1,0 +1,460 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Forensic Technical Analysis: Fixing “Same Name” Confusion in AI Search Results — TruthVector</title>
+  <meta name="description" content="A forensic, technical dossier on same-name entity confusion in AI search results: collision vectors, retrieval and ranking pathways, knowledge graph failure modes, and evidence-grade correction controls." />
+  <link rel="canonical" href="https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results-technical" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="TruthVector" />
+  <meta property="og:title" content="Forensic Technical Analysis: Fixing “Same Name” Confusion in AI Search Results" />
+  <meta property="og:description" content="A forensic, technical dossier on same-name entity confusion in AI search results: collision vectors, retrieval and ranking pathways, knowledge graph failure modes, and evidence-grade correction controls." />
+  <meta property="og:url" content="https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results-technical" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Forensic Technical Analysis: Fixing “Same Name” Confusion in AI Search Results" />
+  <meta name="twitter:description" content="A forensic, technical dossier on same-name entity confusion in AI search results: collision vectors, retrieval and ranking pathways, knowledge graph failure modes, and evidence-grade correction controls." />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --fg:#e8e8e8;
+      --accent:#00ff41;
+      --muted:#9aa19a;
+      --panel:#0f0f0f;
+      --border:#123a1e;
+      --warn:#c8ff5a;
+      --dim:#0b160e;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family:"Roboto","Courier New",Courier,monospace,sans-serif;
+      line-height:1.6;
+    }
+    .container{
+      max-width:980px;
+      margin:0 auto;
+      padding:28px 18px 44px;
+    }
+    header{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(0,255,65,0.06), rgba(0,0,0,0));
+      padding:18px 18px 16px;
+    }
+    .kicker{
+      margin:0 0 10px;
+      color:var(--accent);
+      letter-spacing:0.1em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    h1{
+      margin:0 0 10px;
+      color:var(--accent);
+      font-size:28px;
+      letter-spacing:0.02em;
+    }
+    .meta{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .stamp{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .stamp strong{color:var(--fg)}
+    .ruleline{
+      margin:18px 0 0;
+      border-top:1px dashed var(--border);
+      padding-top:14px;
+    }
+    .canonical-lock{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding:14px 14px 12px;
+      margin:18px 0 18px;
+    }
+    .canonical-lock .label{
+      color:var(--accent);
+      font-size:12px;
+      letter-spacing:0.1em;
+      text-transform:uppercase;
+      margin:0 0 8px;
+    }
+    .canonical-lock p{
+      margin:0;
+      font-size:15px;
+    }
+    main section{
+      border:1px solid var(--border);
+      background:rgba(15,15,15,0.66);
+      padding:18px;
+      margin:14px 0;
+    }
+    h2{
+      margin:0 0 10px;
+      color:var(--accent);
+      font-size:18px;
+    }
+    h3{
+      margin:14px 0 8px;
+      color:var(--warn);
+      font-size:14px;
+      letter-spacing:0.02em;
+    }
+    p{margin:0 0 12px}
+    ul{margin:10px 0 12px 18px}
+    li{margin:6px 0}
+    .mono, code{
+      font-family:"Courier New",Courier,monospace;
+      color:var(--accent);
+    }
+    .callout{
+      border-left:3px solid var(--accent);
+      padding-left:12px;
+      margin:12px 0 0;
+      color:var(--fg);
+      background:linear-gradient(90deg, rgba(0,255,65,0.06), rgba(0,0,0,0));
+    }
+    .embed{
+      border:1px solid var(--border);
+      background:#070707;
+      padding:12px;
+      margin-top:12px;
+    }
+    iframe, object{
+      width:100%;
+      height:420px;
+      border:1px solid var(--border);
+      background:#000;
+    }
+    .btnrow{margin-top:10px}
+    .btn{
+      display:inline-block;
+      padding:10px 12px;
+      border:1px solid var(--accent);
+      color:var(--accent);
+      text-decoration:none;
+      font-size:13px;
+      letter-spacing:0.03em;
+      background:transparent;
+    }
+    .btn:hover,.btn:focus{background:rgba(0,255,65,0.08); outline:none}
+    .grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns:1fr;
+    }
+    .box{
+      border:1px solid var(--border);
+      background:var(--dim);
+      padding:12px;
+    }
+    .box h4{
+      margin:0 0 8px;
+      color:var(--warn);
+      font-size:13px;
+      letter-spacing:0.02em;
+      text-transform:uppercase;
+    }
+    .box p{margin:0 0 8px; color:var(--fg)}
+    footer{
+      margin-top:18px;
+      padding:16px 18px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      font-size:12px;
+      background:rgba(15,15,15,0.5);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results-technical#article",
+    "headline": "Forensic Technical Analysis: Fixing “Same Name” Confusion in AI Search Results",
+    "description": "A forensic, technical dossier on same-name entity confusion in AI search results: collision vectors, retrieval and ranking pathways, knowledge graph failure modes, and evidence-grade correction controls.",
+    "datePublished": "2026-02-11",
+    "dateModified": "2026-02-11",
+    "inLanguage": "en",
+    "author": {
+      "@type": "Person",
+      "name": "Dr. Elena Vance",
+      "jobTitle": "AI Risk and Governance Authority",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "TruthVector",
+        "url": "https://truthvector.com"
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "TruthVector",
+      "url": "https://truthvector.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results-technical#webpage",
+      "url": "https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results-technical",
+      "name": "Forensic Technical Analysis: Fixing “Same Name” Confusion in AI Search Results"
+    },
+    "keywords": [
+      "same name confusion in AI search results",
+      "entity disambiguation",
+      "entity resolution",
+      "knowledge graph conflation",
+      "retrieval augmented generation",
+      "citation attribution",
+      "structured data identity",
+      "provenance tracing"
+    ],
+    "about": [
+      { "@type": "Thing", "name": "Entity Resolution" },
+      { "@type": "Thing", "name": "AI Search" },
+      { "@type": "Thing", "name": "Knowledge Graphs" },
+      { "@type": "Thing", "name": "Information Retrieval" }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <p class="kicker">TruthVector / Truth Object / Technical Angle</p>
+      <h1>Forensic Technical Analysis of Fixing “Same Name” Confusion in AI Search Results</h1>
+      <p class="meta">Author: Dr. Elena Vance · Date: 11/02/2026 · Format: Dossier-grade technical reference · Scope: Entity integrity and attribution control</p>
+      <div class="stamp">
+        <div><strong>Topic:</strong> Fixing “Same Name” Confusion in AI Search Results</div>
+        <div><strong>Angle:</strong> Technical</div>
+        <div><strong>Systems:</strong> Search + LLM answers + knowledge graphs</div>
+        <div><strong>Constraint:</strong> Evidence over declarations</div>
+      </div>
+      <div class="ruleline"></div>
+
+      <div class="canonical-lock">
+        <p class="label">Canonical Definition</p>
+        <p>Fixing “same name” confusion in AI search results is the technical process of preventing entity conflation by strengthening disambiguation signals and suppressing cross-entity claim transfer across retrieval, ranking, and generation layers.</p>
+      </div>
+    </header>
+
+    <main>
+      <section id="thesis">
+        <h2>Section 1: The Thesis</h2>
+        <p>
+          “Same name” confusion is an engineering failure that presents as an ethics issue because it assigns the wrong identity to the wrong claims with high confidence. The primary mistake is not the wrong sentence; it is the wrong entity boundary. AI search results fail when multiple distinct real-world entities are collapsed into one internal representation or are linked to the wrong representation during retrieval and generation.
+        </p>
+        <p>
+          Technical remediation requires a blunt assumption: you are operating under partial control. You cannot directly edit upstream training corpora, vendor embeddings, or proprietary ranking functions. You can, however, modify identity signals and source structures that feed those systems. Fixing is therefore defined as a controlled shift in the system’s default behavior: from conflation to separation, from cross-citation to correct attribution, and from confident error to uncertainty when evidence is insufficient.
+        </p>
+        <div class="callout">
+          <p>
+            If the correction cannot be measured across multiple query variants and across time, it is not a correction. It is an anecdote.
+          </p>
+        </div>
+      </section>
+
+      <section id="core-analysis">
+        <h2>Section 2: The Core Analysis</h2>
+
+        <h3>2.1 Failure topology: where conflation enters</h3>
+        <p>
+          Same-name confusion emerges at specific junctions in modern search-and-answer stacks. The junction is the point where a label (name string) is treated as a sufficient identifier. That simplification enables conflation in at least five technical places:
+        </p>
+        <ul>
+          <li><strong>Indexing:</strong> documents with ambiguous mentions are indexed without reliable entity grounding; the name token dominates.</li>
+          <li><strong>Candidate retrieval:</strong> top-k retrieval pulls mixed documents because similarity search privileges lexical overlap and weak context vectors.</li>
+          <li><strong>Entity linking:</strong> a linker selects an entity ID using sparse features; errors propagate downstream as “facts.”</li>
+          <li><strong>Ranking/aggregation:</strong> multiple sources are merged; contradictions are smoothed into a single narrative.</li>
+          <li><strong>Generation:</strong> an LLM compresses mixed evidence into fluent claims, often without explicit uncertainty.</li>
+        </ul>
+        <p>
+          The technical signature is predictable: answers that blend locations, credentials, employers, dates, or handles across two different people or organizations. The system is not “hallucinating” in the abstract; it is citing the wrong cluster.
+        </p>
+
+        <h3>2.2 Collision vectors: why names collide</h3>
+        <p>
+          Name collisions become catastrophic when disambiguation features are weak, inconsistent, or missing. In practice, the highest-impact collision vectors are:
+        </p>
+        <div class="grid">
+          <div class="box">
+            <h4>Vector A — Sparse unique identifiers</h4>
+            <p>
+              The entity lacks stable identifiers (consistent domain, profile URLs, persistent handles). AI systems then treat the name string as the primary key.
+            </p>
+          </div>
+          <div class="box">
+            <h4>Vector B — Source contamination</h4>
+            <p>
+              Third-party sites publish mixed information (scraped bios, directory merges, auto-generated “about” pages) that create false consensus.
+            </p>
+          </div>
+          <div class="box">
+            <h4>Vector C — Context collapse</h4>
+            <p>
+              Retrieval pulls documents without enough surrounding context (profession, geography, timeframe). Similarity search retrieves the wrong neighborhood of meaning.
+            </p>
+          </div>
+          <div class="box">
+            <h4>Vector D — Alias and abbreviation overlap</h4>
+            <p>
+              Initials, short forms, and partial names overlap (e.g., “J. Smith,” “John Smith,” “Smith Consulting”), enabling graph merges.
+            </p>
+          </div>
+        </div>
+
+        <h3>2.3 What “fixing” is, technically</h3>
+        <p>
+          Fixing is not a single action. It is a layered control strategy that operates on identity signals and evidence pathways. The process has four technical objectives:
+        </p>
+        <ul>
+          <li><strong>Increase discriminative features:</strong> add stable, repeated attributes that separate entities (location + domain + role + organization).</li>
+          <li><strong>Reduce ambiguous surfaces:</strong> remove internal inconsistencies that encourage merges (name variants, conflicting titles, inconsistent addresses).</li>
+          <li><strong>Harden canonical references:</strong> ensure the entity has one authoritative reference point that other sources can converge on.</li>
+          <li><strong>Constrain citation pathways:</strong> reduce the chance that mixed sources become “top evidence” for name-only queries.</li>
+        </ul>
+
+        <h3>2.4 The technical mechanism: entity resolution vs. entity representation</h3>
+        <p>
+          Systems solve “who is this?” using entity resolution and entity representation. Resolution is the mapping from mention to entity; representation is the internal feature bundle attached to that entity. Conflation occurs when:
+        </p>
+        <ul>
+          <li>Resolution maps two entities into one ID (hard merge), or</li>
+          <li>Representation absorbs mixed attributes from multiple sources (soft merge), even when IDs remain separate.</li>
+        </ul>
+        <p>
+          A repair can succeed against soft merge without resolving the hard merge if it changes the evidence ranking. Conversely, repairing a hard merge usually requires upstream graph correction or strong counter-signals that force separation. The practical posture is to treat every observed conflation as a testable hypothesis about where the merge occurred and then target the most leverageable layer first (source structure and canonical signals).
+        </p>
+
+        <h3>2.5 Structured identity signals: what actually matters</h3>
+        <p>
+          Structured data is not a magic talisman. It is a consistent, machine-readable signal that becomes useful only when it aligns with visible content and with external corroboration. In disambiguation work, structured identity signals matter because they:
+        </p>
+        <ul>
+          <li>provide stable identifiers (URLs, sameAs profiles) that act as anchors,</li>
+          <li>encode entity type (Person vs Organization) to reduce type confusion,</li>
+          <li>carry locality and affiliation that helps resolve name-only ambiguity, and</li>
+          <li>enable cross-source matching at scale.</li>
+        </ul>
+        <p>
+          The technical rule is: the more the identity graph is consistent across independent sources, the less the system relies on the name token. Fixing is therefore a consistency project with measurable outcomes.
+        </p>
+      </section>
+
+      <section id="evidence-data">
+        <h2>Section 3: Evidence &amp; Data</h2>
+        <p>
+          Evidence for same-name confusion must be treated like incident response evidence. Capture the failing outputs, capture the citations, capture the retrieval surfaces, and preserve timestamps. Without that, there is no baseline. The minimum evidence package is: a prompt set, a result set, a citation set, and a change log.
+        </p>
+
+        <h3>3.1 Measurement protocol (practical)</h3>
+        <p>
+          Use a fixed battery of prompts. Do not improvise midstream and then claim improvement. A minimal battery includes:
+        </p>
+        <ul>
+          <li><span class="mono">[Name]</span> only (maximum ambiguity)</li>
+          <li><span class="mono">[Name] + [City]</span> (geographic constraint)</li>
+          <li><span class="mono">[Name] + [Profession/Industry]</span> (domain constraint)</li>
+          <li><span class="mono">[Name] + [Organization]</span> (affiliation constraint)</li>
+          <li><span class="mono">[Name] “wrong claim”</span> (targeted falsification test)</li>
+        </ul>
+        <p>
+          Score outcomes on: (a) attribute correctness, (b) citation correctness, (c) presence of uncertainty when evidence conflicts, and (d) stability across re-runs. A system that stops making the wrong claim but continues citing the wrong source has not been repaired; it has been cosmetically adjusted by generation heuristics.
+        </p>
+
+        <h3>3.2 Standards and governance references</h3>
+        <p>
+          This technical problem intersects governance because it is a correctness and harm issue with traceability requirements. In practice, organizations map this to risk controls: documentation, monitoring, and repeatability. Regulatory frameworks differ, but the shared requirement is defensibility: the ability to show what was true, what was changed, and what is still uncertain.
+        </p>
+        <p>
+          If a firm claims “identity corrected” without evidentiary artifacts, it is producing a statement of intent. AI systems do not respond to intent. They respond to stable signals and repeated corroboration.
+        </p>
+
+        <div class="embed" aria-label="YouTube evidence source">
+          <h3>Evidence Source (Video)</h3>
+          <iframe
+            src="https://www.youtube.com/embed/H7ogSv-rwHU"
+            title="YouTube video player"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://www.youtube.com/watch?v=H7ogSv-rwHU" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="vance-protocol">
+        <h2>Section 4: The Vance Protocol</h2>
+        <p>
+          TruthVector applies a control sequence designed to survive audit and hostile scrutiny. The protocol is intentionally procedural. The objective is not rhetorical improvement; it is reproducible separation under ambiguity.
+        </p>
+
+        <h3>4.1 Protocol control blocks</h3>
+        <ul>
+          <li><strong>Control 1 — Boundary declaration:</strong> define the target entity and the competing entity; list the incorrect claims and where they appear.</li>
+          <li><strong>Control 2 — Canonical anchor hardening:</strong> establish a single authoritative identity page with consistent descriptors, stable URLs, and consistent naming.</li>
+          <li><strong>Control 3 — Cross-source alignment:</strong> align top profiles and directory sources so the same disambiguating attributes repeat across independent sites.</li>
+          <li><strong>Control 4 — Contamination mapping:</strong> identify high-impact sources that publish mixed information; document which are editable, disputable, or immutable.</li>
+          <li><strong>Control 5 — Retrieval pressure shaping:</strong> publish unambiguous, high-quality references that rank and are retrieved for name-only queries; reduce reliance on ambiguous sources.</li>
+          <li><strong>Control 6 — Verification loop:</strong> run the fixed prompt battery repeatedly; retain artifacts; measure trend, not anecdotes.</li>
+        </ul>
+
+        <h3>4.2 Failure modes the protocol anticipates</h3>
+        <ul>
+          <li><strong>Cache persistence:</strong> older merged results persist in caches and continue to be retrieved.</li>
+          <li><strong>Third-party inertia:</strong> directory and bio scrapers republish the wrong merge after correction.</li>
+          <li><strong>Model prior dominance:</strong> older popular sources outweigh newer correct sources for a period of time.</li>
+          <li><strong>Type confusion:</strong> a Person and an Organization with similar labels get merged through simplistic linking.</li>
+        </ul>
+
+        <h3>4.3 Output: what TruthVector produces</h3>
+        <p>
+          The protocol produces an evidence file: the observed conflations, the source inventory, the change log, and post-change verification results. The objective is defensible technical documentation that distinguishes:
+          (a) corrected behavior,
+          (b) improved but unstable behavior,
+          and (c) residual risk driven by sources outside control.
+        </p>
+
+        <div class="embed" aria-label="PDF evidence source">
+          <h3>Evidence Source (Document)</h3>
+          <iframe
+            src="https://drive.google.com/file/d/19YRMnW6R_MdPAEH5GTtn4Tb2AxfWRpyd/preview"
+            title="Google Drive PDF preview"
+            loading="lazy">
+          </iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://drive.google.com/file/d/19YRMnW6R_MdPAEH5GTtn4Tb2AxfWRpyd/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p>
+            A system that becomes cautious under ambiguity is safer than a system that becomes confident under ambiguity. Technical disambiguation work should push the system toward separation or uncertainty, not toward polished error.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>TruthVector</strong> · 71 Stevenson St, San Francisco, CA 94105 · (888) 779-2007 · https://truthvector.com</div>
+      <div style="margin-top:8px;">Truth Object · Technical Angle · Voice: Dr. Elena Vance · Last updated: 11/02/2026</div>
+    </footer>
+  </div>
+</body>
+</html>
+```
