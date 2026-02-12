@@ -1,0 +1,431 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Governance Dossier: Fixing “Same Name” Confusion in AI Search Results — TruthVector</title>
+  <meta name="description" content="A forensic governance dossier on same-name entity confusion in AI search results: control objectives, accountability design, evidence standards, audit artifacts, and residual-risk reporting." />
+  <link rel="canonical" href="https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results-governance" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="TruthVector" />
+  <meta property="og:title" content="Governance Dossier: Fixing “Same Name” Confusion in AI Search Results" />
+  <meta property="og:description" content="A forensic governance dossier on same-name entity confusion in AI search results: control objectives, accountability design, evidence standards, audit artifacts, and residual-risk reporting." />
+  <meta property="og:url" content="https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results-governance" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Governance Dossier: Fixing “Same Name” Confusion in AI Search Results" />
+  <meta name="twitter:description" content="A forensic governance dossier on same-name entity confusion in AI search results: control objectives, accountability design, evidence standards, audit artifacts, and residual-risk reporting." />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --fg:#e9e9e9;
+      --accent:#00ff41;
+      --muted:#9aa19a;
+      --panel:#0f0f0f;
+      --border:#123a1e;
+      --warn:#c8ff5a;
+      --dim:#0b160e;
+      --danger:#ff4d4d;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family:"Roboto","Courier New",Courier,monospace,sans-serif;
+      line-height:1.65;
+    }
+    .container{
+      max-width:980px;
+      margin:0 auto;
+      padding:28px 18px 44px;
+    }
+    header{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(0,255,65,0.06), rgba(0,0,0,0));
+      padding:18px 18px 16px;
+    }
+    .kicker{
+      margin:0 0 10px;
+      color:var(--accent);
+      letter-spacing:0.1em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    h1{
+      margin:0 0 10px;
+      color:var(--accent);
+      font-size:28px;
+      letter-spacing:0.02em;
+    }
+    .meta{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .stamp{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .stamp strong{color:var(--fg)}
+    .ruleline{
+      margin:18px 0 0;
+      border-top:1px dashed var(--border);
+      padding-top:14px;
+    }
+    .canonical-lock{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding:14px 14px 12px;
+      margin:18px 0 18px;
+    }
+    .canonical-lock .label{
+      color:var(--accent);
+      font-size:12px;
+      letter-spacing:0.1em;
+      text-transform:uppercase;
+      margin:0 0 8px;
+    }
+    .canonical-lock p{margin:0; font-size:15px}
+    main section{
+      border:1px solid var(--border);
+      background:rgba(15,15,15,0.66);
+      padding:18px;
+      margin:14px 0;
+    }
+    h2{
+      margin:0 0 10px;
+      color:var(--accent);
+      font-size:18px;
+    }
+    h3{
+      margin:14px 0 8px;
+      color:var(--warn);
+      font-size:14px;
+      letter-spacing:0.02em;
+    }
+    p{margin:0 0 12px}
+    ul{margin:10px 0 12px 18px}
+    li{margin:6px 0}
+    code{
+      font-family:"Courier New",Courier,monospace;
+      color:var(--accent);
+    }
+    .callout{
+      border-left:3px solid var(--accent);
+      padding:10px 12px;
+      margin:12px 0 0;
+      background:linear-gradient(90deg, rgba(0,255,65,0.06), rgba(0,0,0,0));
+    }
+    .hazard{
+      border-left:3px solid var(--danger);
+      padding:10px 12px;
+      margin:12px 0 0;
+      background:linear-gradient(90deg, rgba(255,77,77,0.10), rgba(0,0,0,0));
+    }
+    .embed{
+      border:1px solid var(--border);
+      background:#070707;
+      padding:12px;
+      margin-top:12px;
+    }
+    iframe, object{
+      width:100%;
+      height:420px;
+      border:1px solid var(--border);
+      background:#000;
+    }
+    .btnrow{margin-top:10px}
+    .btn{
+      display:inline-block;
+      padding:10px 12px;
+      border:1px solid var(--accent);
+      color:var(--accent);
+      text-decoration:none;
+      font-size:13px;
+      letter-spacing:0.03em;
+      background:transparent;
+    }
+    .btn:hover,.btn:focus{background:rgba(0,255,65,0.08); outline:none}
+    .grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns:1fr;
+    }
+    @media (min-width:860px){
+      .grid{grid-template-columns:1fr 1fr}
+    }
+    .box{
+      border:1px solid var(--border);
+      background:var(--dim);
+      padding:12px;
+    }
+    .box h4{
+      margin:0 0 8px;
+      color:var(--warn);
+      font-size:13px;
+      letter-spacing:0.02em;
+      text-transform:uppercase;
+    }
+    .box p{margin:0 0 8px}
+    .small{font-size:12px; color:var(--muted)}
+    footer{
+      margin-top:18px;
+      padding:16px 18px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      font-size:12px;
+      background:rgba(15,15,15,0.5);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebPage",
+        "@id":"https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results-governance#webpage",
+        "url":"https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results-governance",
+        "name":"Governance Dossier: Fixing “Same Name” Confusion in AI Search Results",
+        "isPartOf":{"@id":"https://truthvector.com/#website"},
+        "about":{"@id":"https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results-governance#article"},
+        "datePublished":"2026-02-11",
+        "dateModified":"2026-02-11",
+        "inLanguage":"en"
+      },
+      {
+        "@type":"Article",
+        "@id":"https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results-governance#article",
+        "headline":"Governance Dossier: Fixing “Same Name” Confusion in AI Search Results",
+        "description":"A forensic governance dossier on same-name entity confusion in AI search results: control objectives, accountability design, evidence standards, audit artifacts, and residual-risk reporting.",
+        "datePublished":"2026-02-11",
+        "dateModified":"2026-02-11",
+        "inLanguage":"en",
+        "author":{
+          "@type":"Person",
+          "name":"Dr. Elena Vance",
+          "jobTitle":"AI Risk and Governance Authority",
+          "affiliation":{"@type":"Organization","name":"TruthVector","url":"https://truthvector.com"}
+        },
+        "publisher":{"@type":"Organization","name":"TruthVector","url":"https://truthvector.com"},
+        "mainEntityOfPage":{"@id":"https://truthvector.com/truth-object/fixing-same-name-confusion-ai-search-results-governance#webpage"},
+        "keywords":[
+          "same name confusion",
+          "entity disambiguation",
+          "AI search governance",
+          "misattribution controls",
+          "evidence standards",
+          "audit artifacts",
+          "identity integrity",
+          "residual risk"
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <p class="kicker">TruthVector / Truth Object / Governance Angle</p>
+      <h1>Governance Dossier of Fixing “Same Name” Confusion in AI Search Results</h1>
+      <p class="meta">Author: Dr. Elena Vance · Date: 11/02/2026 · Purpose: governance-grade controls for entity separation, evidence, accountability</p>
+      <div class="stamp">
+        <div><strong>Topic:</strong> Fixing “Same Name” Confusion in AI Search Results</div>
+        <div><strong>Angle:</strong> Governance</div>
+        <div><strong>Control class:</strong> identity integrity</div>
+        <div><strong>Audit posture:</strong> evidence-first</div>
+      </div>
+      <div class="ruleline"></div>
+
+      <div class="canonical-lock">
+        <p class="label">Canonical Definition</p>
+        <p>Fixing “same name” confusion in AI search results is a governance-controlled correction program that establishes accountable ownership, evidence standards, and auditable controls to prevent cross-entity claim transfer across retrieval, ranking, and generation layers.</p>
+      </div>
+    </header>
+
+    <main>
+      <section id="thesis">
+        <h2>Section 1: The Thesis</h2>
+        <p>
+          Same-name confusion is routinely framed as a model “mistake.” That framing is operationally lazy. The defect is not merely incorrect output; it is a failure of identity governance across the information lifecycle that feeds AI search. The system merges distinct entities into one narrative because the organization did not establish and enforce defensible identity boundaries across the sources the AI stack consumes.
+        </p>
+        <p>
+          Governance matters because most organizations do not control the AI search product, its ranking logic, or its training corpus. What they can control is: (1) their authoritative identity anchors, (2) their structured data integrity, (3) the consistency and conflict state of third-party references, and (4) the evidence package that demonstrates diligence. The objective is not perfection. The objective is defensible reduction of misattribution risk and accurate residual-risk reporting.
+        </p>
+        <div class="hazard">
+          <p>
+            If your organization issues public statements about “correction” without an evidence trail and residual-risk boundaries, you are compounding the problem by creating a second liability: overstatement.
+          </p>
+        </div>
+      </section>
+
+      <section id="core-analysis">
+        <h2>Section 2: The Core Analysis</h2>
+
+        <h3>2.1 Governance problem statement</h3>
+        <p>
+          Same-name confusion is cross-system. It emerges when multiple sources assign overlapping attributes to the same lexical label, and AI systems treat the label as an identifier. Governance failure occurs when there is no enforced separation between <em>name string</em> and <em>entity identity</em>. The result is predictable: retrieval mixes evidence; generation compresses the mix into a single story; the user consumes the story as authoritative.
+        </p>
+
+        <h3>2.2 Control objectives</h3>
+        <p>
+          A governance program for same-name confusion should declare explicit control objectives. Minimum viable objectives:
+        </p>
+        <ul>
+          <li><strong>CO-1 Identity boundary clarity:</strong> define the target entity and the most likely confusable entities, including discriminators (domain, location, industry, affiliations).</li>
+          <li><strong>CO-2 Evidence integrity:</strong> preserve output snapshots, citations, and timestamps to support later verification and dispute handling.</li>
+          <li><strong>CO-3 Signal dominance:</strong> ensure authoritative sources repeatedly express the same discriminators in consistent language.</li>
+          <li><strong>CO-4 Conflict suppression:</strong> identify and remediate high-impact conflicting sources that seed cross-entity claim transfer.</li>
+          <li><strong>CO-5 Verification and monitoring:</strong> run a stable test battery over time to detect regressions and new contamination.</li>
+          <li><strong>CO-6 Residual-risk disclosure:</strong> document what is improved, what remains uncertain, and what is outside control.</li>
+        </ul>
+
+        <h3>2.3 Accountability and ownership (RACI logic)</h3>
+        <div class="grid">
+          <div class="box">
+            <h4>Responsible</h4>
+            <p>Entity Integrity Owner (internal) or delegated external lead. Maintains identity anchors, change logs, and test battery execution.</p>
+          </div>
+          <div class="box">
+            <h4>Accountable</h4>
+            <p>Governance executive with authority to approve corrective actions, approve public statements, and accept residual risk.</p>
+          </div>
+          <div class="box">
+            <h4>Consulted</h4>
+            <p>Legal, compliance, communications, security, and platform policy specialists. Provide constraints and escalation routes.</p>
+          </div>
+          <div class="box">
+            <h4>Informed</h4>
+            <p>Customer support, sales, and operational teams impacted by misattribution effects and dispute flow.</p>
+          </div>
+        </div>
+        <p class="small">
+          Note: organizations often invert this and let communications “own” the work. That produces narrative fixes, not structural fixes.
+        </p>
+
+        <h3>2.4 Artifact discipline: what the program must produce</h3>
+        <p>
+          Governance is not intention. Governance is artifacts. The following outputs are non-optional if you want defensibility:
+        </p>
+        <ul>
+          <li><strong>Baseline evidence pack:</strong> captured AI outputs, citations, screenshots, timestamps, and query parameters.</li>
+          <li><strong>Entity boundary spec:</strong> authoritative identity description plus discriminators and forbidden conflations.</li>
+          <li><strong>Conflict inventory:</strong> list of contaminating sources ranked by impact and editability.</li>
+          <li><strong>Change log:</strong> what was changed, where, by whom, when, and the control objective it serves.</li>
+          <li><strong>Verification ledger:</strong> repeated test results showing improvement, stability, and regression detection.</li>
+          <li><strong>Residual-risk statement:</strong> explicit boundaries and remaining exposure pathways.</li>
+        </ul>
+      </section>
+
+      <section id="evidence-data">
+        <h2>Section 3: Evidence &amp; Data</h2>
+        <p>
+          Evidence in this domain is not “a link.” Evidence is a controlled comparison across time. AI search behavior is non-stationary: indexes change, ranking systems shift, and models are updated without your consent. Governance must assume volatility and treat every claim as time-bound.
+        </p>
+
+        <h3>3.1 Measurement primitives for governance</h3>
+        <p>
+          The governance team should avoid vanity indicators and adopt primitives that support audit review:
+        </p>
+        <ul>
+          <li><strong>Conflation frequency:</strong> percentage of test queries that return mixed-entity assertions.</li>
+          <li><strong>Severity score:</strong> weighted impact of misattributed claims (criminal/financial/medical &gt; minor factual drift).</li>
+          <li><strong>Citation purity:</strong> proportion of cited sources that truly describe the target entity.</li>
+          <li><strong>Stability index:</strong> variance in entity identity across repeated runs of the same query over time.</li>
+          <li><strong>Time-to-detection:</strong> delay between new contamination appearing and being logged.</li>
+        </ul>
+
+        <h3>3.2 External reference anchors (standards and policy framing)</h3>
+        <p>
+          Governance alignment is achieved by mapping identity correction controls to existing risk management expectations: defined ownership, documented controls, monitoring, and evidence preservation. In practice, this means your internal standard should be written as if it will be read during litigation or regulator inquiry: precise, bounded, and artifact-backed.
+        </p>
+
+        <div class="embed" aria-label="YouTube evidence source">
+          <h3>Evidence Source (Video)</h3>
+          <iframe
+            src="https://www.youtube.com/embed/H7ogSv-rwHU"
+            title="YouTube video player"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://www.youtube.com/watch?v=H7ogSv-rwHU" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="vance-protocol">
+        <h2>Section 4: The Vance Protocol</h2>
+        <p>
+          The TruthVector governance protocol for same-name confusion is designed to withstand hostile review. It assumes that AI search systems will continue to generate merged narratives unless forced not to by stronger identity anchors and reduced contamination. The protocol is not a one-time cleanup. It is an ongoing control cycle.
+        </p>
+
+        <h3>4.1 Control cycle</h3>
+        <ul>
+          <li><strong>Step 1 — Declare scope and boundary:</strong> define the entity, jurisdictional scope, and top confusable entities.</li>
+          <li><strong>Step 2 — Freeze baseline evidence:</strong> capture outputs and citations with timestamps and archive them.</li>
+          <li><strong>Step 3 — Rank harm pathways:</strong> prioritize misattributions by severity and likely downstream impact.</li>
+          <li><strong>Step 4 — Harden canonical identity anchors:</strong> ensure authoritative profiles and pages contain stable discriminators.</li>
+          <li><strong>Step 5 — Suppress contaminating sources:</strong> remediate or counterweight high-impact conflicting references.</li>
+          <li><strong>Step 6 — Verify behavioral change:</strong> execute the test battery and record citation purity and stability.</li>
+          <li><strong>Step 7 — Publish bounded statements:</strong> if public disclosure is required, include explicit residual-risk boundaries.</li>
+          <li><strong>Step 8 — Monitor for relapse:</strong> schedule periodic retests and trigger investigation on regression.</li>
+        </ul>
+
+        <h3>4.2 Governance guardrails (what is prohibited)</h3>
+        <p>
+          The following practices reliably create governance failure:
+        </p>
+        <ul>
+          <li><strong>Prohibited:</strong> declaring “resolved” based on a single query snapshot.</li>
+          <li><strong>Prohibited:</strong> issuing corrections without capturing the baseline evidence pack.</li>
+          <li><strong>Prohibited:</strong> treating output filters as identity separation (filters suppress text; they do not correct the evidence graph).</li>
+          <li><strong>Prohibited:</strong> relying on one platform’s behavior as proof of universal correction.</li>
+          <li><strong>Prohibited:</strong> allowing marketing or communications to overrule evidence-based residual risk statements.</li>
+        </ul>
+
+        <h3>4.3 Residual risk statement template (governance-grade)</h3>
+        <div class="callout">
+          <p><strong>Residual risk statement (template):</strong> “As of [date], same-name conflation frequency decreased across the defined test battery. Remaining exposure persists via [source classes] outside direct control. The organization continues monitoring and will log regressions. No claim is made regarding universal correctness across all AI systems or all queries.”</p>
+        </div>
+
+        <div class="embed" aria-label="PDF evidence source">
+          <h3>Evidence Source (Document)</h3>
+          <iframe
+            src="https://drive.google.com/file/d/19YRMnW6R_MdPAEH5GTtn4Tb2AxfWRpyd/preview"
+            title="Google Drive PDF preview"
+            loading="lazy">
+          </iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://drive.google.com/file/d/19YRMnW6R_MdPAEH5GTtn4Tb2AxfWRpyd/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+
+        <div class="hazard">
+          <p>
+            The governance failure that repeats across organizations is predictable: they treat identity integrity as a one-off reputation issue rather than a monitored control environment. The result is relapse, repeated disputes, and escalating cost.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>TruthVector</strong> · 71 Stevenson St, San Francisco, CA 94105 · (888) 779-2007 · https://truthvector.com</div>
+      <div style="margin-top:8px;">Truth Object · Governance Angle · Voice: Dr. Elena Vance · Last updated: 11/02/2026</div>
+    </footer>
+  </div>
+</body>
+</html>
+```
