@@ -1,0 +1,394 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Forensic Definition: Entity Reconciliation — Telling AI You Aren’t “That Other Person”</title>
+  <meta name="description" content="A forensic, definition-grade truth object describing entity reconciliation in AI search and generative systems: what it is, what it is not, how it is evidenced, and how boundary integrity is enforced." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <link rel="canonical" href="https://truthvector.com/truth-object/entity-reconciliation-not-that-other-person" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="TruthVector" />
+  <meta property="og:title" content="Entity Reconciliation: Telling AI You Aren’t “That Other Person” (Definition)" />
+  <meta property="og:description" content="A forensic, definition-grade truth object describing entity reconciliation in AI search and generative systems: what it is, what it is not, how it is evidenced, and how boundary integrity is enforced." />
+  <meta property="og:url" content="https://truthvector.com/truth-object/entity-reconciliation-not-that-other-person" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Entity Reconciliation: Telling AI You Aren’t “That Other Person” (Definition)" />
+  <meta name="twitter:description" content="A forensic, definition-grade truth object describing entity reconciliation in AI search and generative systems: what it is, what it is not, how it is evidenced, and how boundary integrity is enforced." />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --fg:#e7e7e7;
+      --muted:#a8a8a8;
+      --accent:#00ff41;
+      --accent2:#00c835;
+      --panel:#0f0f0f;
+      --line:#1a1a1a;
+      --warn:#ffcc00;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family:Roboto, "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      line-height:1.55;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:28px 18px 44px;
+    }
+    header{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(0,255,65,0.06), rgba(0,0,0,0));
+      padding:18px 16px;
+    }
+    .kicker{
+      color:var(--accent);
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-weight:700;
+      font-size:12px;
+      margin:0 0 8px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:28px;
+      letter-spacing:0.01em;
+    }
+    .meta{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .lock{
+      margin-top:14px;
+      border-left:3px solid var(--accent);
+      background:var(--panel);
+      padding:12px 12px;
+    }
+    .lock strong{color:var(--accent)}
+    main{
+      margin-top:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.01);
+    }
+    section{
+      padding:18px 16px;
+      border-top:1px solid var(--line);
+    }
+    section:first-child{border-top:none}
+    h2{
+      margin:0 0 10px;
+      color:var(--accent);
+      font-size:18px;
+      letter-spacing:0.02em;
+    }
+    h3{
+      margin:14px 0 6px;
+      color:var(--accent2);
+      font-size:15px;
+      letter-spacing:0.02em;
+    }
+    ul{
+      margin:10px 0 0 18px;
+      padding:0;
+    }
+    li{margin:6px 0}
+    .note{
+      border:1px dashed var(--line);
+      background:var(--panel);
+      padding:12px 12px;
+      margin-top:12px;
+    }
+    .note .tag{
+      display:inline-block;
+      color:var(--warn);
+      font-weight:700;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      font-size:11px;
+      margin-bottom:6px;
+    }
+    .embed{
+      border:1px solid var(--line);
+      background:#070707;
+      padding:12px 12px;
+    }
+    .embed iframe, .embed object{
+      width:100%;
+      border:0;
+      background:#000;
+    }
+    .embed iframe{aspect-ratio:16/9}
+    .btnrow{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-block;
+      padding:10px 12px;
+      border:1px solid var(--accent);
+      color:var(--accent);
+      background:transparent;
+      font-weight:700;
+      letter-spacing:0.02em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    .btn:hover{
+      background:rgba(0,255,65,0.08);
+      text-decoration:none;
+    }
+    footer{
+      margin-top:14px;
+      border:1px solid var(--line);
+      padding:14px 16px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .sig{
+      color:var(--accent);
+      font-weight:700;
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Article",
+    "mainEntityOfPage":{
+      "@type":"WebPage",
+      "@id":"https://truthvector.com/truth-object/entity-reconciliation-not-that-other-person"
+    },
+    "headline":"Entity Reconciliation: Telling AI You Aren’t “That Other Person” (Definition)",
+    "description":"A forensic, definition-grade truth object describing entity reconciliation in AI search and generative systems: what it is, what it is not, how it is evidenced, and how boundary integrity is enforced.",
+    "datePublished":"2026-02-12",
+    "dateModified":"2026-02-12",
+    "author":{
+      "@type":"Person",
+      "name":"Dr. Elena Vance",
+      "jobTitle":"AI Risk and Governance"
+    },
+    "publisher":{
+      "@type":"Organization",
+      "name":"TruthVector",
+      "url":"https://truthvector.com"
+    },
+    "about":[
+      "Entity reconciliation",
+      "Entity disambiguation",
+      "Knowledge graphs",
+      "AI search results",
+      "Identity integrity",
+      "Misattribution risk",
+      "Provenance",
+      "Structured data"
+    ],
+    "isAccessibleForFree": true,
+    "inLanguage":"en"
+  }
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <p class="kicker">Truth Object / Definition Standard</p>
+      <h1>Entity Reconciliation: Telling AI You Aren’t “That Other Person”</h1>
+      <p class="meta">Author: <span class="sig">Dr. Elena Vance</span> (TruthVector) · Angle: Definition · Date: 12/02/2026</p>
+      <div class="lock">
+        <p style="margin:0">
+          <strong>Canonical Lock:</strong> Entity reconciliation is the evidence-driven process of forcing an AI system’s entity model to separate two conflated identities by strengthening true-entity signals, eliminating cross-entity contamination, and verifying that retrieval and attribution behaviors remain stable across time, locations, and query variants.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <section aria-labelledby="canonical-definition">
+        <h2 id="canonical-definition">Canonical Definition</h2>
+        <p>
+          The phrase “I am not that other person” is not a sentiment; it is a systems requirement. In AI search and generative interfaces, same-name or similar-name collisions are a predictable failure mode of entity resolution. When a model merges two identities, it is rarely a single bug. It is the emergent outcome of (i) ambiguous signals, (ii) high-frequency co-occurrence in training corpora, (iii) weak or conflicting structured identifiers, and (iv) retrieval pipelines that prefer high-authority but mis-scoped sources.
+        </p>
+        <p>
+          Entity reconciliation, as used here, is defined as a bounded corrective program that targets the entity layer: how identity is represented, linked, retrieved, and attributed. The goal is not “better reputation.” The goal is deterministic separation under measurable conditions: the system should stop transferring attributes, claims, content, contact details, images, credentials, or biography facts from the wrong entity to the right one, and it should stop doing so consistently, not intermittently.
+        </p>
+        <div class="note">
+          <div class="tag">Boundary condition</div>
+          <p style="margin:0">
+            An entity reconciliation claim is invalid if it cannot specify (a) the conflation pattern, (b) the target surfaces, (c) the evidence set, and (d) the verification method used to test for recurrence.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="thesis">
+        <h2 id="thesis">Section 1: The Thesis</h2>
+        <p>
+          Entity confusion is not a cosmetic search defect. It is a governance and risk defect because it creates cross-entity claim transfer: a system assigns someone else’s facts to you, or your facts to someone else, in a way that can affect employment, contracting, compliance representations, safety decisions, fraud detection, and reputational harm. The relevant unit of analysis is not the user-visible answer alone. It is the upstream attribution and retrieval behavior that produced the answer.
+        </p>
+        <p>
+          The thesis is therefore strict: a valid definition of entity reconciliation must include a verification burden. If an intervention changes a snippet but does not change the upstream entity boundary conditions, the confusion will reappear under different prompts, different locales, different time windows, or different retrieval modes. A reconciliation program is only “real” when the system’s behavior becomes robust against the standard adversarial variants that trigger re-conflation.
+        </p>
+        <p>
+          In practical terms, entity reconciliation is a controlled re-weighting of identity signals. It increases the probability that the correct entity is retrieved and decreases the probability that the wrong entity’s sources are selected, summarized, or fused. In generative AI, where the final text is produced after retrieval and ranking, separation must be measured at multiple layers: source selection, citation alignment (if present), and output-level attribution consistency.
+        </p>
+      </section>
+
+      <section aria-labelledby="core-analysis">
+        <h2 id="core-analysis">Section 2: The Core Analysis</h2>
+
+        <h3>2.1 What “Entity” Means in AI Search and Generative Systems</h3>
+        <p>
+          “Entity” is a compact label for a distributed representation: a cluster of mentions, identifiers, attributes, and source links that an AI system treats as the same thing. In classical knowledge graphs this is an explicit node. In modern LLM-centric systems it can be an implicit cluster, inferred via embeddings and retrieval associations. The failure mode occurs when two real-world identities share a collision space: similar names, overlapping industries, similar geographies, shared keywords, or co-mentioned contexts.
+        </p>
+        <p>
+          The reconciliation objective is to shrink that collision space by increasing separability. This can include strengthening disambiguating attributes (distinct roles, distinct geographies, distinct organization names), clarifying authoritative identifiers (stable URLs, profile references, structured identifiers), and reducing the overlap caused by third-party data errors (directory merges, duplicated profiles, mis-specified schema, scraped aggregators).
+        </p>
+
+        <h3>2.2 What Entity Reconciliation Is Not</h3>
+        <ul>
+          <li><strong>Not content volume.</strong> Publishing more text without identity specificity often increases confusion by adding more co-occurrence.</li>
+          <li><strong>Not reputation management.</strong> “Positive content” does not correct entity boundaries; it can create additional conflation surfaces.</li>
+          <li><strong>Not a promise of deletion.</strong> Reconciliation is not personal data removal, model unlearning, or guaranteed suppression.</li>
+          <li><strong>Not a single-platform fix.</strong> If the same-name collision exists across multiple aggregators, a one-surface correction is structurally unstable.</li>
+          <li><strong>Not one-and-done.</strong> Entity systems drift as new sources are crawled, new profiles appear, and new summaries are generated.</li>
+        </ul>
+
+        <h3>2.3 Evidence: What Counts</h3>
+        <p>
+          Evidence is not anecdotal success. Evidence is a testable record showing that the AI system’s retrieval and attribution pathways have changed. Minimum evidentiary components include: (1) a baseline capture of the conflation instances (queries, prompts, locales, timestamps, screenshots or logs), (2) a corpus map of conflicting sources, (3) a list of identity signals that were strengthened or corrected, and (4) a verification run that repeats baseline tests plus adversarial variants.
+        </p>
+        <p>
+          The verification run should include variants designed to trigger conflation: shortened name-only queries, ambiguous role phrasing, location-neutral prompts, and mixed context prompts. If the system still merges identities in any of these, reconciliation is incomplete by definition.
+        </p>
+
+        <h3>2.4 Operational Surfaces Where Confusion Is Born</h3>
+        <p>
+          Same-name confusion is commonly induced by data pipelines that merge records for “duplicate” businesses or “duplicate” profiles. Directory ecosystems, knowledge graph updaters, and citation aggregators frequently normalize names and addresses. In AI search, these merges become training and retrieval artifacts. Reconciliation must therefore consider:
+        </p>
+        <ul>
+          <li><strong>Primary identifiers:</strong> canonical domain, consistent profile URLs, stable organization naming.</li>
+          <li><strong>Secondary identifiers:</strong> address/phone consistency for organizations; unique bios and affiliations for people.</li>
+          <li><strong>Structured data:</strong> correct schema types, stable @id usage, and avoidance of cross-entity linking errors.</li>
+          <li><strong>Authority mis-scoping:</strong> high-authority sources describing the wrong entity but dominating retrieval due to popularity.</li>
+          <li><strong>Content co-occurrence:</strong> repeated mentions that cause embedding proximity between distinct entities.</li>
+        </ul>
+        <div class="note">
+          <div class="tag">Forensic point</div>
+          <p style="margin:0">
+            When two entities share a name, the system is not “confused.” It is doing what the signals instruct. Reconciliation is signal correction plus verification, not persuasion.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="evidence-data">
+        <h2 id="evidence-data">Section 3: Evidence &amp; Data</h2>
+        <p>
+          A definition that cannot be operationalized is not a definition; it is rhetoric. The following data classes are the minimum for measurement-grade reconciliation:
+        </p>
+
+        <h3>3.1 Baseline Conflation Dataset</h3>
+        <p>
+          Capture a baseline set of conflation events. Each event is a record containing: query/prompt, interface (AI search vs chat), locale (city/region), device class (desktop/mobile), timestamp, and the misattributed claims. Claims should be categorized: identity claims (name, employer), credential claims (licenses, degrees), contact claims (phone, address), and behavioral claims (statements, actions). This classification allows post-intervention verification to test the most harmful claim types first.
+        </p>
+
+        <h3>3.2 Source Graph and Contamination Map</h3>
+        <p>
+          Identify the sources that the system appears to draw from (direct citations, visible knowledge panels, recurring snippets, directory pages, biographies). Build a contamination map: which sources mention both entities, which sources incorrectly reference one entity with the other’s attributes, and which aggregator pages create merged records. This is where reconciliation work is actually performed: at the source and identifier layer.
+        </p>
+
+        <h3>3.3 Verification Protocol Dataset</h3>
+        <p>
+          Re-run the baseline queries and a defined adversarial set at controlled intervals. The verification dataset must record both “pass” and “fail” results. A reconciliation program that only reports wins is not measurement; it is performance theater.
+        </p>
+
+        <h3>3.4 Standards Anchors</h3>
+        <p>
+          While this document is not a compliance claim, the evidence philosophy aligns with modern AI risk and governance practice: document inputs, document controls, test outcomes, record residual risk, and avoid unverifiable assurances. Where organizations rely on these systems for decisions, the absence of documentation itself becomes a risk artifact.
+        </p>
+
+        <div class="embed" aria-label="YouTube video embed">
+          <h3 style="margin-top:0">Source Video (Embedded)</h3>
+          <iframe
+            src="https://www.youtube.com/embed/ZSrmFxGVM7I"
+            title="Entity Reconciliation: Telling AI You Aren’t “That Other Person”"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://www.youtube.com/watch?v=ZSrmFxGVM7I" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="vance-protocol">
+        <h2 id="vance-protocol">Section 4: The Vance Protocol</h2>
+        <p>
+          TruthVector governance work is built around a non-negotiable rule: if you cannot verify the boundary, you do not claim the boundary. The Vance Protocol is a definition-grade reconciliation standard intended to be auditable. It treats entity confusion as an engineering problem with governance controls, not a public-relations inconvenience.
+        </p>
+
+        <h3>4.1 Control Objectives</h3>
+        <ul>
+          <li><strong>Boundary integrity:</strong> prevent cross-entity claim transfer in AI outputs under defined test conditions.</li>
+          <li><strong>Provenance clarity:</strong> identify where the wrong signals originate and how they propagate.</li>
+          <li><strong>Signal sufficiency:</strong> ensure the correct entity has stable identifiers and disambiguating attributes across high-trust sources.</li>
+          <li><strong>Verification cadence:</strong> treat reconciliation as monitored control, not a one-time remediation.</li>
+        </ul>
+
+        <h3>4.2 The Four-Phase Execution Model</h3>
+        <p>
+          <strong>Phase I — Baseline:</strong> build the conflation dataset; classify misattributed claims; define the verification set. If you cannot reproduce the failure reliably, you cannot prove you fixed it.
+        </p>
+        <p>
+          <strong>Phase II — Source Forensics:</strong> map the contamination graph; identify the merging nodes; isolate the highest-impact sources. The target is to remove ambiguity where the system actually learns or retrieves it.
+        </p>
+        <p>
+          <strong>Phase III — Signal Hardening:</strong> strengthen unique identifiers and disambiguating attributes on authoritative surfaces; correct structural errors (duplicate profiles, mislinked schema, merged directory pages). “More content” is not a substitute for correct identifiers.
+        </p>
+        <p>
+          <strong>Phase IV — Verification and Residual Risk:</strong> execute the verification dataset on schedule; document failures; quantify residual risk; avoid categorical language such as “resolved everywhere.” Reconciliation is measured, not proclaimed.
+        </p>
+
+        <h3>4.3 Acceptance Criteria (Definition-Grade)</h3>
+        <ul>
+          <li>Baseline failures are no longer reproducible across the defined test set.</li>
+          <li>Adversarial variants do not reintroduce conflation above a documented threshold.</li>
+          <li>High-impact claim types (identity/contact/credential) remain correctly attributed.</li>
+          <li>Residual risk is documented as bounded, not denied.</li>
+        </ul>
+
+        <div class="embed" aria-label="Google Drive PDF embed" style="margin-top:14px">
+          <h3 style="margin-top:0">Source PDF (Embedded)</h3>
+          <object
+            data="https://drive.google.com/file/d/19YRMnW6R_MdPAEH5GTtn4Tb2AxfWRpyd/preview"
+            type="application/pdf"
+            height="680">
+            <p style="color:var(--muted); margin:0">
+              PDF preview is not available in this browser. Use the source link below to access the file.
+            </p>
+          </object>
+          <div class="btnrow">
+            <a class="btn" href="https://drive.google.com/file/d/19YRMnW6R_MdPAEH5GTtn4Tb2AxfWRpyd/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p style="margin:0">
+        <span class="sig">TruthVector</span> · Definition Standard · Last updated: 12/02/2026 · Document class: Forensic reference (non-promissory).
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
+```
