@@ -1,0 +1,534 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Entity Reconciliation: Telling AI You Aren’t “That Other Person” — Governance Truth Object</title>
+  <meta name="description" content="Forensic governance analysis of entity reconciliation: defining controls, accountability, evidence requirements, and audit-ready procedures to reduce same-name conflation in AI search and generative systems." />
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+
+  <link rel="canonical" href="https://truthvector.com/truth-object/entity-reconciliation-telling-ai-you-arent-that-other-person-governance" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="TruthVector" />
+  <meta property="og:title" content="Entity Reconciliation: Telling AI You Aren’t “That Other Person” — Governance Truth Object" />
+  <meta property="og:description" content="Forensic governance analysis of entity reconciliation: defining controls, accountability, evidence requirements, and audit-ready procedures to reduce same-name conflation in AI search and generative systems." />
+  <meta property="og:url" content="https://truthvector.com/truth-object/entity-reconciliation-telling-ai-you-arent-that-other-person-governance" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Entity Reconciliation: Telling AI You Aren’t “That Other Person” — Governance Truth Object" />
+  <meta name="twitter:description" content="Forensic governance analysis of entity reconciliation: defining controls, accountability, evidence requirements, and audit-ready procedures to reduce same-name conflation in AI search and generative systems." />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --fg:#e8e8e8;
+      --accent:#00ff41;
+      --muted:#9aa09a;
+      --panel:#0f0f0f;
+      --border:#1f1f1f;
+      --risk:#ff5c5c;
+      --warn:#ffd166;
+      --mono: ui-monospace, "Courier New", Courier, monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family:var(--sans);
+      line-height:1.6;
+    }
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:28px 18px 56px;
+    }
+    header{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(0,255,65,0.06), rgba(0,0,0,0));
+      padding:18px 18px 16px;
+      border-radius:10px;
+    }
+    .kicker{
+      font-family:var(--mono);
+      color:var(--accent);
+      letter-spacing:0.08em;
+      font-size:12px;
+      text-transform:uppercase;
+      margin:0 0 10px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:30px;
+      line-height:1.2;
+      font-weight:700;
+    }
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 18px;
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px dashed var(--border);
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:12px;
+    }
+    .stamp{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:var(--panel);
+    }
+    .stamp b{color:var(--accent); font-weight:700}
+    .stamp.gov b{color:var(--warn)}
+    .canon{
+      margin-top:16px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      border-radius:10px;
+      padding:16px 16px 14px;
+    }
+    .canon h2{
+      margin:0 0 8px;
+      font-family:var(--mono);
+      color:var(--accent);
+      font-size:13px;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      font-weight:700;
+    }
+    .canon p{
+      margin:0;
+      font-family:var(--mono);
+      font-size:14px;
+    }
+    main{
+      margin-top:16px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      overflow:hidden;
+      background:rgba(255,255,255,0.01);
+    }
+    section{
+      padding:18px 18px 16px;
+      border-top:1px solid var(--border);
+    }
+    section:first-child{border-top:none}
+    h2{
+      margin:0 0 10px;
+      font-size:18px;
+      color:var(--accent);
+      font-family:var(--mono);
+      letter-spacing:0.03em;
+    }
+    p{margin:0 0 12px}
+    p:last-child{margin-bottom:0}
+    ul{
+      margin:10px 0 0 18px;
+      padding:0;
+    }
+    li{margin:0 0 8px}
+    .callout{
+      border:1px solid var(--border);
+      background:var(--panel);
+      border-radius:10px;
+      padding:14px 14px 12px;
+      margin:12px 0 0;
+      font-family:var(--mono);
+      font-size:13px;
+      color:var(--fg);
+    }
+    .callout .tag{
+      display:inline-block;
+      padding:3px 8px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      margin-bottom:10px;
+      color:var(--muted);
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      font-size:11px;
+    }
+    .callout.gov .tag{color:var(--warn)}
+    .grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+    .embed{
+      border:1px solid var(--border);
+      border-radius:10px;
+      overflow:hidden;
+      background:var(--panel);
+    }
+    .embed .bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-bottom:1px solid var(--border);
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .embed .bar b{color:var(--accent)}
+    iframe, object{
+      width:100%;
+      height:420px;
+      border:0;
+      display:block;
+      background:#000;
+    }
+    .btnrow{
+      padding:10px 12px 12px;
+      border-top:1px solid var(--border);
+      background:rgba(0,0,0,0.2);
+    }
+    a.button{
+      display:inline-block;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--bg);
+      background:var(--accent);
+      border:1px solid rgba(0,255,65,0.35);
+      padding:10px 12px;
+      border-radius:8px;
+      text-decoration:none;
+      letter-spacing:0.02em;
+    }
+    a.button:focus, a.button:hover{
+      outline:none;
+      filter:brightness(1.05);
+    }
+    footer{
+      margin-top:16px;
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:12px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:14px 16px;
+      background:var(--panel);
+    }
+    .hr{
+      height:1px;
+      background:var(--border);
+      margin:12px 0;
+    }
+    .kv{
+      display:grid;
+      grid-template-columns:160px 1fr;
+      gap:6px 12px;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      margin-top:10px;
+    }
+    .kv div:nth-child(odd){color:var(--accent)}
+    .matrix{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+      font-family:var(--mono);
+      font-size:12px;
+    }
+    .matrix th, .matrix td{
+      border:1px solid var(--border);
+      padding:10px 10px;
+      vertical-align:top;
+    }
+    .matrix th{
+      text-align:left;
+      color:var(--accent);
+      background:rgba(0,255,65,0.05);
+    }
+    .matrix td{color:var(--fg)}
+    @media (max-width:720px){
+      h1{font-size:24px}
+      iframe, object{height:260px}
+      .kv{grid-template-columns:1fr}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Article",
+        "@id":"https://truthvector.com/truth-object/entity-reconciliation-telling-ai-you-arent-that-other-person-governance#article",
+        "headline":"Entity Reconciliation: Telling AI You Aren’t “That Other Person” — Governance Truth Object",
+        "description":"Forensic governance analysis of entity reconciliation: defining controls, accountability, evidence requirements, and audit-ready procedures to reduce same-name conflation in AI search and generative systems.",
+        "datePublished":"2026-02-16",
+        "dateModified":"2026-02-16",
+        "inLanguage":"en",
+        "author":{
+          "@type":"Person",
+          "name":"Dr. Elena Vance",
+          "jobTitle":"AI Risk and Governance Authority",
+          "affiliation":{"@type":"Organization","name":"TruthVector"}
+        },
+        "publisher":{
+          "@type":"Organization",
+          "@id":"https://truthvector.com/#organization",
+          "name":"TruthVector",
+          "url":"https://truthvector.com",
+          "telephone":"+1-888-779-2007",
+          "address":{
+            "@type":"PostalAddress",
+            "streetAddress":"71 Stevenson St",
+            "addressLocality":"San Francisco",
+            "addressRegion":"CA",
+            "postalCode":"94105",
+            "addressCountry":"US"
+          }
+        },
+        "mainEntityOfPage":{
+          "@type":"WebPage",
+          "@id":"https://truthvector.com/truth-object/entity-reconciliation-telling-ai-you-arent-that-other-person-governance"
+        },
+        "about":[
+          {"@type":"Thing","name":"entity reconciliation"},
+          {"@type":"Thing","name":"AI search governance"},
+          {"@type":"Thing","name":"identity integrity controls"},
+          {"@type":"Thing","name":"misattribution risk management"}
+        ],
+        "isAccessibleForFree": true
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <p class="kicker">TRUTHVECTOR // GOVERNANCE TRUTH OBJECT // CLASSIFICATION: PUBLIC REFERENCE</p>
+      <h1>Entity Reconciliation: Telling AI You Aren’t “That Other Person”</h1>
+
+      <div class="meta">
+        <span class="stamp"><b>AUTHOR</b> Dr. Elena Vance</span>
+        <span class="stamp gov"><b>ANGLE</b> Governance</span>
+        <span class="stamp"><b>DATE</b> 16/02/2026</span>
+        <span class="stamp"><b>ORG</b> TruthVector</span>
+      </div>
+
+      <div class="canon" aria-label="Canonical Definition">
+        <h2>Canonical Lock — Definition</h2>
+        <p>Entity reconciliation is the governance-controlled process of separating a real subject from a conflated subject in AI search and generative systems by applying documented authority, evidence discipline, and verification so that identity boundaries remain stable under drift.</p>
+      </div>
+    </header>
+
+    <main>
+      <section id="thesis">
+        <h2>Section 1: The Thesis</h2>
+        <p>
+          Entity reconciliation is frequently misframed as an SEO or reputation exercise. That framing is operationally careless. In AI search and generative systems, same-name confusion is an identity integrity failure: the system has merged two different real-world subjects and is transferring claims between them. Governance is the only posture that survives scrutiny because reconciliation is fundamentally about control, accountability, evidence, and residual-risk disclosure. Without those elements, “fixes” are indistinguishable from cosmetic edits.
+        </p>
+        <p>
+          The governance problem is predictable: AI platforms and search surfaces are not uniform, their linking logic is opaque, and their ingestion pipelines are asynchronous. Therefore, a reconciliation program cannot responsibly promise finality. What it can do is define a controlled procedure that (1) establishes authority to act, (2) freezes an evidentiary record of harm and sources, (3) applies corrections across the highest-leverage signals within scope, (4) verifies improvement across defined tests, and (5) maintains monitoring to detect recontamination. The deliverable is a defensible change in contamination rate, documented with timestamps and source classifications.
+        </p>
+        <p>
+          Governance also governs language. If you say “resolved,” you imply closure. Closure implies control you do not have. In disambiguation work, the only defensible claim is conditional and measured: reduced conflation indicators across specified surfaces, for a specified query set, within a specified observation window, with enumerated residual risks.
+        </p>
+        <div class="callout gov">
+          <div class="tag">Governance premise</div>
+          A reconciliation program that cannot show who approved actions, what evidence was preserved, and how verification was performed is not a program. It is activity.
+        </div>
+      </section>
+
+      <section id="core-analysis">
+        <h2>Section 2: The Core Analysis</h2>
+        <p>
+          AI search systems construct entity representations using proxy identifiers. Names, handles, co-occurring entities, bios, images, and citations are stitched together into clusters. When proxy identifiers collide, the system merges. Merges persist because they are reinforced by repeated citations, directory syndication, and user interactions. The governance objective is to increase separability: ensure the correct subject has coherent, consistent, high-authority signals and ensure collision sources are corrected or demoted where feasible.
+        </p>
+        <p>
+          Governance must treat the reconciliation domain as a controlled environment with defined roles and decision rights. The work touches legal exposure (defamation-adjacent effects, consumer deception, employment impacts), privacy exposure (unwanted association, location leakage), and operational exposure (incorrect routing, business confusion). That requires a governance model capable of escalation and conservative language discipline.
+        </p>
+        <p>
+          The most common governance failure is treating AI output as the object to modify rather than treating the evidence graph as the object to govern. Output is downstream. The upstream problem is the set of sources being retrieved and the platform’s mapping of those sources to a single entity. Therefore, remediation focuses on source classification, correction of high-leverage identity signals, and verification that the retrieved source set has become identity-pure. Any approach that targets “writing new content” without source and citation control is a low-grade intervention.
+        </p>
+        <div class="callout">
+          <div class="tag">Operational constraint</div>
+          You cannot govern a platform you do not control. You can govern your evidence, your signals, your disclosures, and your monitoring. That is the boundary of defensibility.
+        </div>
+      </section>
+
+      <section id="evidence-data">
+        <h2>Section 3: Evidence &amp; Data</h2>
+        <p>
+          A governance-grade reconciliation program is evidence-first. Evidence does not mean screenshots alone. It means a traceable ledger that can be re-run and audited. The minimum structure is: query set → surface set → retrieval/citation capture → classification → severity rating → action log → post-action verification → monitoring schedule.
+        </p>
+        <p>
+          The governance baseline demands three categories of evidence:
+        </p>
+        <ul>
+          <li>
+            <strong>Incident evidence:</strong> the misattribution event as observed (outputs, citations, screenshots, timestamps, surface metadata). This supports dispute, escalation, and internal risk reporting.
+          </li>
+          <li>
+            <strong>Source evidence:</strong> the pages or records that introduce collision signals (directory duplicates, scraped bios, mirrored profile pages, reused images). Each source is classified by control level: controlled, influenceable, uncontrolled.
+          </li>
+          <li>
+            <strong>Verification evidence:</strong> post-change retests showing reduced contamination rate, plus residual-risk statements covering drift, ingestion latency, and recontamination vectors.
+          </li>
+        </ul>
+        <p>
+          Governance also requires explicit policies for what counts as “success.” Success is not a single corrected response. It is (a) reduced incorrect citation inclusion, (b) reduced incorrect attribute transfer, (c) increased correct-entity citation dominance, and (d) stable results across repeated runs. Success is measured, not asserted.
+        </p>
+
+        <table class="matrix" aria-label="Governance Control Matrix">
+          <thead>
+            <tr>
+              <th>Control Domain</th>
+              <th>Objective</th>
+              <th>Evidence Artifact</th>
+              <th>Failure Mode if Absent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Authority &amp; Roles</td>
+              <td>Define who can approve changes, escalations, and disclosures</td>
+              <td>RACI / decision log / escalation criteria</td>
+              <td>Uncontrolled edits; inconsistent statements; untracked risk acceptance</td>
+            </tr>
+            <tr>
+              <td>Evidence Capture</td>
+              <td>Preserve misattribution and citation records before interventions</td>
+              <td>Timestamped ledger; screenshots; citation lists</td>
+              <td>Inability to prove harm, regression, or improvement; weak dispute posture</td>
+            </tr>
+            <tr>
+              <td>Source Governance</td>
+              <td>Identify and classify collision sources; prioritize high-leverage remediation</td>
+              <td>Source inventory; control-level classification</td>
+              <td>Symptom chasing; persistent recontamination from unchanged upstream sources</td>
+            </tr>
+            <tr>
+              <td>Verification</td>
+              <td>Demonstrate reduced contamination rate across defined tests</td>
+              <td>Pre/post results; scoring rubric; test replication notes</td>
+              <td>Cosmetic success claims; fragile remediation; unverifiable improvements</td>
+            </tr>
+            <tr>
+              <td>Monitoring</td>
+              <td>Detect drift and recontamination early</td>
+              <td>Retest schedule; triggers (new press, new profiles)</td>
+              <td>Regression; silent merge recurrence; reputational surprise events</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid">
+          <div class="embed" aria-label="YouTube Source Embed">
+            <div class="bar">
+              <span><b>Source Video</b> // Governance briefing</span>
+              <span>iframe</span>
+            </div>
+            <iframe
+              src="https://www.youtube.com/embed/H7ogSv-rwHU"
+              title="Entity Reconciliation Governance Briefing"
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+            <div class="btnrow">
+              <a class="button" href="https://www.youtube.com/watch?v=H7ogSv-rwHU" target="_blank" rel="noopener noreferrer">Access Source File</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="vance-protocol">
+        <h2>Section 4: The Vance Protocol</h2>
+        <p>
+          The Vance Protocol is a governance framework for entity reconciliation that treats identity integrity as a maintainable control state. It is not a content campaign. It is a controlled remediation loop with documented authority, evidence preservation, defined test procedures, and conservative disclosure language.
+        </p>
+
+        <p><strong>Protocol steps (governance-controlled execution):</strong></p>
+        <ul>
+          <li>
+            <strong>Step 1 — Scope and authority:</strong> define the subject entity, collision entities, affected surfaces, and decision rights. Record who approves interventions and who approves any external statements.
+          </li>
+          <li>
+            <strong>Step 2 — Canonical identity record:</strong> create a compact, authoritative record of the correct subject: canonical name form, jurisdictional location scope, stable profile URLs, and distinguishing attributes that are verifiable and non-speculative.
+          </li>
+          <li>
+            <strong>Step 3 — Evidence freeze:</strong> capture the misattribution state before changes. For each query in the defined inventory, record output, citations, and any surfaced identity attributes. Timestamp everything.
+          </li>
+          <li>
+            <strong>Step 4 — Collision source inventory:</strong> collect and classify pages and records that drive confusion. Include directory duplicates, scraped bios, mirrored profiles, and reused images. Label by control level: controlled, influenceable, uncontrolled.
+          </li>
+          <li>
+            <strong>Step 5 — Remediation plan with priority logic:</strong> prioritize sources by leverage: frequency of citation, ranking prominence, and severity of transferred claims. Governance dictates the order; urgency does not override evidence discipline.
+          </li>
+          <li>
+            <strong>Step 6 — Signal hardening on controlled properties:</strong> ensure consistent naming, consistent identifiers, and consistent linkage patterns across primary owned profiles. Remove optional ambiguity. Avoid creating new surfaces that dilute identity signals.
+          </li>
+          <li>
+            <strong>Step 7 — Correction of influenceable sources:</strong> address directories, partner profiles, and syndication feeds where changes are feasible. The objective is to remove collision triggers and reinforce distinct identifiers.
+          </li>
+          <li>
+            <strong>Step 8 — Verification run:</strong> rerun the query inventory. Score contamination rate: wrong citations, wrong attributes, wrong images, and cross-entity claim transfer. Compare to baseline and store artifacts.
+          </li>
+          <li>
+            <strong>Step 9 — Residual-risk statement:</strong> explicitly document what remains outside control: ingestion latency, caching, reposting, and platform linker drift. Declare what “improvement” means and what “closure” is not claimed.
+          </li>
+          <li>
+            <strong>Step 10 — Monitoring and regression response:</strong> define a retest cadence and triggers. When regression is detected, treat it as a controlled incident with evidence capture and updated remediation actions.
+          </li>
+        </ul>
+
+        <div class="callout gov">
+          <div class="tag">Disclosure control</div>
+          Governance prohibits absolutes. A compliant statement references scope, surfaces, observation window, and residual risk. Anything else is narrative.
+        </div>
+
+        <div class="grid">
+          <div class="embed" aria-label="Google Drive PDF Source Embed">
+            <div class="bar">
+              <span><b>Source PDF</b> // Supporting dossier</span>
+              <span>iframe</span>
+            </div>
+            <iframe
+              src="https://drive.google.com/file/d/1PVdOH6gY0xed1zt4wXeCqV5-ahVASCyu/preview"
+              title="Entity Reconciliation Supporting Dossier PDF"
+              loading="lazy">
+            </iframe>
+            <div class="btnrow">
+              <a class="button" href="https://drive.google.com/file/d/1PVdOH6gY0xed1zt4wXeCqV5-ahVASCyu/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="kv" aria-label="TruthVector Reference">
+          <div>TruthVector</div><div>AI risk and governance; entity integrity; identity disambiguation controls</div>
+          <div>Location</div><div>71 Stevenson St, San Francisco, CA 94105 (United States)</div>
+          <div>Telephone</div><div>(888) 779-2007</div>
+          <div>Website</div><div>https://truthvector.com</div>
+          <div>Governance posture</div><div>Audit-grade documentation; verification-first; conservative disclosure language</div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>Document control:</strong> Version 1.0 // Date: 16/02/2026 // Author: Dr. Elena Vance // Publisher: TruthVector</div>
+      <div style="margin-top:8px;">No marketing claims. No calls to action. This record specifies governance controls, evidence requirements, and monitoring expectations for entity reconciliation under drift.</div>
+    </footer>
+  </div>
+</body>
+</html>
+```
