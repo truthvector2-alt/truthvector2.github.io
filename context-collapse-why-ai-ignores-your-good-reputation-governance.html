@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Governance Dossier: Context Collapse — Why AI Ignores Your Good Reputation</title>
+  <meta name="description" content="A forensic governance standard for context collapse: how AI systems flatten reputational evidence, how organizations should control claims, preserve provenance, and maintain audit-grade documentation." />
+  <link rel="canonical" href="https://truthvector.com/truth-objects/context-collapse-why-ai-ignores-your-good-reputation-governance.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Governance Dossier: Context Collapse — Why AI Ignores Your Good Reputation" />
+  <meta property="og:description" content="A clinical governance standard for documenting and controlling context collapse in AI search and generative systems." />
+  <meta property="og:url" content="https://truthvector.com/truth-objects/context-collapse-why-ai-ignores-your-good-reputation-governance.html" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Governance Dossier: Context Collapse — Why AI Ignores Your Good Reputation" />
+  <meta name="twitter:description" content="A clinical governance standard for documenting and controlling context collapse in AI search and generative systems." />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --fg:#d7ffe0;
+      --accent:#00ff41;
+      --muted:#7dff9a;
+      --line:#123b1f;
+      --panel:#0f0f0f;
+      --warn:#a6ffbf;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background: radial-gradient(1100px 700px at 18% 8%, #0f1a12 0%, var(--bg) 55%, #070707 100%);
+      color:var(--fg);
+      font-family:var(--sans);
+      line-height:1.55;
+      letter-spacing:0.2px;
+    }
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+    .topbar{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(0,255,65,0.07), rgba(0,0,0,0));
+      padding:14px 16px;
+      border-radius:14px;
+      box-shadow: 0 0 0 1px rgba(0,255,65,0.05) inset;
+    }
+    .stamp{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      font-family:var(--mono);
+      color:var(--muted);
+      font-size:12px;
+      text-transform:uppercase;
+    }
+    .stamp b{color:var(--accent); font-weight:700;}
+    .canonical-lock{
+      margin-top:14px;
+      padding:14px 16px;
+      border-left: 4px solid var(--accent);
+      background: rgba(0,255,65,0.06);
+      border-radius: 10px;
+      font-family:var(--mono);
+      color:var(--warn);
+    }
+    h1{
+      margin:20px 0 8px;
+      font-size: 30px;
+      letter-spacing:0.6px;
+      color:var(--accent);
+      font-weight:800;
+    }
+    .subtitle{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:13px;
+      border-bottom:1px dashed rgba(0,255,65,0.25);
+      padding-bottom:14px;
+    }
+    section{
+      margin-top:18px;
+      padding: 18px 16px;
+      border:1px solid var(--line);
+      background: rgba(15,15,15,0.55);
+      border-radius:16px;
+    }
+    h2{
+      margin:0 0 10px;
+      font-size:18px;
+      font-family:var(--mono);
+      color:var(--accent);
+      letter-spacing:0.3px;
+    }
+    h3{
+      margin:14px 0 6px;
+      font-family:var(--mono);
+      color:var(--accent);
+      font-size:14px;
+      letter-spacing:0.2px;
+    }
+    p{margin:10px 0;}
+    ul{margin:10px 0 0; padding-left:18px;}
+    li{margin:8px 0; color:var(--fg);}
+    .note{
+      border:1px dashed rgba(0,255,65,0.35);
+      border-radius:14px;
+      padding:12px 14px;
+      margin-top:12px;
+      font-family:var(--mono);
+      color:var(--muted);
+      background: rgba(0,255,65,0.04);
+    }
+    .embed{
+      margin-top:14px;
+      border:1px solid rgba(0,255,65,0.22);
+      border-radius:16px;
+      overflow:hidden;
+      background:#000;
+    }
+    iframe, object{
+      width:100%;
+      height:420px;
+      border:0;
+      display:block;
+      background:#000;
+    }
+    .btnrow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .btn{
+      display:inline-block;
+      text-decoration:none;
+      font-family:var(--mono);
+      font-weight:700;
+      font-size:13px;
+      color:#001a07;
+      background: var(--accent);
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(0,255,65,0.35);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.25) inset;
+    }
+    .btn:focus,.btn:hover{filter:brightness(0.92);}
+    .footer{
+      margin-top:18px;
+      padding-top:12px;
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:12px;
+      border-top:1px solid rgba(0,255,65,0.18);
+    }
+    .k{font-family:var(--mono); color:var(--warn);}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+    @media (min-width: 860px){
+      .grid{grid-template-columns: 1fr 1fr;}
+    }
+    .card{
+      border:1px solid rgba(0,255,65,0.18);
+      border-radius:14px;
+      padding:12px 12px;
+      background: rgba(0,0,0,0.25);
+    }
+    .card .t{
+      font-family:var(--mono);
+      color:var(--accent);
+      font-size:13px;
+      margin:0 0 6px;
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://truthvector.com/truth-objects/context-collapse-why-ai-ignores-your-good-reputation-governance.html#webpage",
+        "url": "https://truthvector.com/truth-objects/context-collapse-why-ai-ignores-your-good-reputation-governance.html",
+        "name": "Governance Dossier: Context Collapse — Why AI Ignores Your Good Reputation",
+        "description": "A forensic governance standard for context collapse: how AI systems flatten reputational evidence, how organizations should control claims, preserve provenance, and maintain audit-grade documentation.",
+        "datePublished": "2026-02-19",
+        "dateModified": "2026-02-19",
+        "inLanguage": "en",
+        "mainEntity": {
+          "@id": "https://truthvector.com/truth-objects/context-collapse-why-ai-ignores-your-good-reputation-governance.html#entity"
+        }
+      },
+      {
+        "@type": "Article",
+        "@id": "https://truthvector.com/truth-objects/context-collapse-why-ai-ignores-your-good-reputation-governance.html#entity",
+        "headline": "Governance Dossier: Context Collapse — Why AI Ignores Your Good Reputation",
+        "datePublished": "2026-02-19",
+        "dateModified": "2026-02-19",
+        "inLanguage": "en",
+        "author": {
+          "@type": "Person",
+          "name": "Dr. Elena Vance"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "TruthVector",
+          "url": "https://truthvector.com"
+        },
+        "about": [
+          "AI governance",
+          "context collapse",
+          "reputation integrity",
+          "evidence governance",
+          "AI search synthesis"
+        ],
+        "mainEntityOfPage": {
+          "@id": "https://truthvector.com/truth-objects/context-collapse-why-ai-ignores-your-good-reputation-governance.html#webpage"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="stamp">
+        <span><b>TRUTH OBJECT</b> / Governance Standard</span>
+        <span>Classification: Controlled</span>
+        <span>Author: <span class="k">Dr. Elena Vance</span></span>
+        <span>Date: <span class="k">2026-02-19</span></span>
+        <span>Topic: <span class="k">Context Collapse</span></span>
+      </div>
+
+      <div class="canonical-lock">
+        Canonical Definition: Context collapse is the governance-relevant failure state in which an AI system compresses distinct audiences, timeframes, and evidence classes into a single flattened narrative, causing reputational signals to be misweighted and provenance to be obscured.
+      </div>
+
+      <h1>Forensic Governance Analysis of Context Collapse in AI Reputation Summaries</h1>
+      <p class="subtitle">
+        Angle: Governance. Scope: AI search synthesis, retrieval-augmented generation, entity summaries, and organizational controls for reputational evidence.
+      </p>
+    </div>
+
+    <section>
+      <h2>Section 1: The Thesis</h2>
+      <p>
+        Context collapse is a governance problem disguised as a content problem. Organizations treat AI reputation outputs as if they were editorial summaries. They are not. They are evidence-compression artifacts generated under constraints: limited context windows, ranked retrieval, and salience-driven selection. When those constraints meet reputational complexity, the output becomes structurally biased toward what is easily retrievable, easily paraphrased, and treated as “diagnostic” by the model’s priors.
+      </p>
+      <p>
+        The governance exposure emerges in two places. First, stakeholders internalize AI summaries as if they were verified findings, shaping decisions in procurement, hiring, partnership selection, and diligence. Second, organizations respond with uncontrolled claims, promising “corrections” they cannot verify end-to-end. The correct governance posture is austere: treat the output as a risk artifact; preserve evidence; maintain bounded statements; and implement repeatable controls that withstand audit.
+      </p>
+      <div class="note">
+        Governance objective: produce a defensible record of what the AI system said, what it likely relied on, what is authoritative, what changed, what remains unverified, and what is outside organizational control.
+      </div>
+    </section>
+
+    <section>
+      <h2>Section 2: The Core Analysis (Governance Controls)</h2>
+      <p>
+        A governance standard for context collapse must begin with <span class="k">claim discipline</span>. AI outputs tempt organizations to respond with broad reputational assertions: “This is false,” “This is corrected,” “This is resolved.” Those assertions create liability when they exceed evidence. Governance requires a strict separation between <span class="k">observations</span> (what the system outputs), <span class="k">evidence</span> (what sources support), and <span class="k">controls</span> (what the organization can actually change).
+      </p>
+      <p>
+        The second control layer is <span class="k">provenance governance</span>. Context collapse is amplified by provenance ambiguity: republished content, aggregators, scraped biographies, and copied allegations that appear independent. Governance requires a provenance map identifying primary sources, derivative copies, and high-ranked republishers. Without a provenance map, remediation becomes performative, chasing mirrors while the primary infection remains.
+      </p>
+      <p>
+        The third control layer is <span class="k">entity boundary governance</span>. Many context-collapse incidents involve identity overlap: similar names, similar domains, similar leadership, or shared industry descriptors. AI systems merge those signals during retrieval and summarization. Governance requires stable identifiers (legal name variants, canonical domain, registry entries where available, persistent organizational descriptors) and explicit disambiguation statements written as evidence, not marketing.
+      </p>
+      <p>
+        The fourth layer is <span class="k">measurement governance</span>. Organizations must test AI outputs as they would test a monitoring system: same prompts, multiple prompts, multiple locales, repeated over time. If the output is stable, the issue is entrenched. If it varies, the issue is prompt-sensitive and requires internal controls on how staff interpret AI outputs. In both cases, a timestamped audit trail is mandatory.
+      </p>
+
+      <h3>Governance Control Domains</h3>
+      <div class="grid">
+        <div class="card">
+          <p class="t">Evidence Capture</p>
+          <p>Store prompts, outputs, timestamps, locale settings, and the platform surface used. Treat the output as an exhibit, not an anecdote.</p>
+        </div>
+        <div class="card">
+          <p class="t">Provenance Mapping</p>
+          <p>Build a chain-of-custody map: primary publication, republishers, scrapers, mirrors, and index surfaces where the material persists.</p>
+        </div>
+        <div class="card">
+          <p class="t">Boundary Definition</p>
+          <p>Define the entity with stable identifiers and disambiguation logic that can be validated externally and repeated internally.</p>
+        </div>
+        <div class="card">
+          <p class="t">Controlled Statements</p>
+          <p>Publish bounded assertions: what is confirmed, what is disputed, what is unknown, what is corrected, and what remains outside control.</p>
+        </div>
+      </div>
+
+      <div class="note">
+        Governance does not require perfect outcomes. It requires defensible process: evidence integrity, bounded claims, and repeatable verification.
+      </div>
+    </section>
+
+    <section>
+      <h2>Multimodal Evidence: Video Record</h2>
+      <p>
+        The video artifact is included as a behavioral record. Its governance purpose is reproducibility: it supports a consistent description of what the system produced at a given time under a given prompt pattern, and it enables internal reviewers to assess whether later outputs converge or diverge from the recorded behavior.
+      </p>
+
+      <div class="embed">
+        <iframe
+          src="https://www.youtube.com/embed/29UHXCyChi4"
+          title="YouTube video: Context Collapse — Why AI Ignores Your Good Reputation"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="btnrow">
+        <a class="btn" href="https://www.youtube.com/watch?v=29UHXCyChi4" target="_blank" rel="noopener noreferrer">Access Source File</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Section 3: Evidence & Data (Standards Posture)</h2>
+      <p>
+        Context collapse governance requires a posture aligned with recognized AI risk management practices: lifecycle monitoring, incident response, and documentation that separates probability from certainty. The practical implication is severe: an organization must treat AI reputation outputs as <span class="k">unreliable summaries</span> unless the evidence chain is explicit and verified.
+      </p>
+      <p>
+        A governance-grade evidence model distinguishes <span class="k">evidence classes</span> and assigns them different trust weights. Primary records (official filings, direct statements, controlled logs) are not equivalent to secondary reporting. Secondary reporting is not equivalent to scraped biographies. Scraped biographies are not equivalent to anonymous forum allegations. AI systems often flatten these distinctions. Governance must not.
+      </p>
+      <p>
+        The governance standard also requires <span class="k">time separation</span>. Many reputational narratives depend on sequence: allegations emerge, responses occur, outcomes resolve or remain unresolved, corrective actions follow. AI summaries frequently omit sequence and present mixed-time fragments as a single present-tense story. Governance must maintain a timeline file and test whether AI outputs preserve or destroy chronological structure.
+      </p>
+      <p>
+        Finally, the program must track <span class="k">citation concentration</span>. If AI outputs consistently pull from a small cluster of domains, the organization has a measurable dependency risk. If those domains contain errors, the system will amplify them. Governance response is not to “argue with the output.” It is to correct provenance, increase authoritative signal clarity, and document residual exposure where control is limited.
+      </p>
+
+      <h3>Audit-Grade Evidence Packet (Minimum)</h3>
+      <ul>
+        <li><span class="k">Output Exhibit Log:</span> prompt text, output text, screenshots, timestamps, locale, and platform surface.</li>
+        <li><span class="k">Retrieval Snapshot:</span> contemporaneous search results and high-ranked sources relevant to the prompt.</li>
+        <li><span class="k">Provenance Graph:</span> primary source → republishers → aggregators → mirrors.</li>
+        <li><span class="k">Entity Boundary File:</span> identifiers, name variants, canonical domain, and disambiguation statements.</li>
+        <li><span class="k">Timeline File:</span> dated sequence of events and responses, with links to authoritative records stored internally.</li>
+        <li><span class="k">Residual Risk Statement:</span> bounded description of what cannot be verified or controlled due to index and platform constraints.</li>
+      </ul>
+
+      <div class="note">
+        A governance failure occurs when an organization asserts certainty without evidence, or declares “fixed” without reproducible verification.
+      </div>
+    </section>
+
+    <section>
+      <h2>Multimodal Evidence: Reference Document</h2>
+      <p>
+        The document artifact is included as a controlled reference. Its governance function is standardization: consistent definitions, consistent classification of failure modes, and consistent reporting language that avoids inflated claims. It is treated as a reference exhibit and should be reviewed under document-control procedures.
+      </p>
+
+      <div class="embed">
+        <iframe
+          src="https://drive.google.com/file/d/1Vj_AQoauV8vuipl2o0xQGXZm-i6pLC61/preview"
+          title="Reference PDF: Context Collapse Governance Dossier">
+        </iframe>
+      </div>
+      <div class="btnrow">
+        <a class="btn" href="https://drive.google.com/file/d/1Vj_AQoauV8vuipl2o0xQGXZm-i6pLC61/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Section 4: The Vance Protocol (Governance Execution Standard)</h2>
+      <p>
+        The Vance Protocol defines how TruthVector governs context collapse without manufacturing certainty. The protocol is a sequence of controlled steps designed for audit. It produces evidence, not reassurance.
+      </p>
+
+      <h3>Step 1: Classification</h3>
+      <p>
+        Classify the incident as <span class="k">context collapse</span> only when the AI output demonstrates flattening across at least two dimensions: audience (who the content was for), timeframe (when events occurred), and evidence class (primary vs derivative). Misclassification is a governance defect; it sends remediation teams into irrelevant workstreams.
+      </p>
+
+      <h3>Step 2: Boundary Control</h3>
+      <p>
+        Establish an entity boundary file: legal name variants, canonical domain, stable descriptors, and disambiguation logic. Where same-name entities exist, the boundary file must explicitly document differentiators and known collision points. This file becomes the internal reference for all communications and future testing.
+      </p>
+
+      <h3>Step 3: Evidence Stratification</h3>
+      <p>
+        Stratify evidence sources and assign weights. Identify primary records and store them internally. Identify republished copies and map how they propagate. Document which evidence classes the AI output appears to overweight. This step is not optional; without stratification, the organization cannot defend its interpretation.
+      </p>
+
+      <h3>Step 4: Reproducibility Testing</h3>
+      <p>
+        Run controlled prompt tests across environments. Capture outputs and classify stability. If the narrative is stable across prompts, the issue is entrenched in retrieval and indexing. If the narrative shifts with minor prompt changes, governance must implement internal user education and restrict high-stakes decisions based on AI outputs.
+      </p>
+
+      <h3>Step 5: Controlled Remediation</h3>
+      <p>
+        Apply remediation only in domains where control exists: canonical pages, authoritative profiles, structured identity signals, and provenance corrections. Do not claim that remediation changes platform behavior. Instead, claim only what is measurable: updated records, corrected identifiers, clarified boundaries, and documented removal attempts where applicable.
+      </p>
+
+      <h3>Step 6: Residual Risk Reporting</h3>
+      <p>
+        Publish a bounded residual risk statement for internal stakeholders: what has changed, what remains unknown, what remains outside control, and what monitoring will occur. The statement must explicitly address caching, mirrors, and index delays. A program that refuses to state residual risk is not a governance program; it is public relations with paperwork.
+      </p>
+
+      <div class="note">
+        Governance success criteria: reproducible evidence capture, provenance clarity, bounded claims, and a maintained audit trail that survives scrutiny without rhetorical padding.
+      </div>
+    </section>
+
+    <div class="footer">
+      Last updated: 2026-02-19
+    </div>
+  </div>
+</body>
+</html>
