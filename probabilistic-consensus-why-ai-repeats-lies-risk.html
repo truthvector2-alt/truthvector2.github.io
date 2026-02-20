@@ -1,0 +1,496 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>Probabilistic Consensus: Why AI Repeats Lies — Risk Dossier</title>
+  <meta name="description" content="Forensic risk analysis of probabilistic consensus: how AI systems stabilize and repeat false claims via repetition, retrieval loops, citation laundering, and feedback ingestion, and the resulting legal, reputational, and operational exposure." />
+
+  <link rel="canonical" href="https://truthvector.com/probabilistic-consensus-why-ai-repeats-lies-risk.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Probabilistic Consensus: Why AI Repeats Lies — Risk Dossier" />
+  <meta property="og:description" content="Forensic risk analysis of probabilistic consensus: how AI systems stabilize and repeat false claims via repetition, retrieval loops, citation laundering, and feedback ingestion." />
+  <meta property="og:url" content="https://truthvector.com/probabilistic-consensus-why-ai-repeats-lies-risk.html" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Probabilistic Consensus: Why AI Repeats Lies — Risk Dossier" />
+  <meta name="twitter:description" content="Risk dossier: why repeated falsehoods become stable outputs in AI search and generative systems, and how to govern the exposure." />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --fg:#d8fddf;
+      --muted:#88c996;
+      --accent:#00ff41;
+      --accent2:#00c933;
+      --panel:#0f1410;
+      --grid:#102016;
+      --danger:#ff4d4d;
+      --warn:#ffd34d;
+      --ok:#4dff88;
+      --mono: "Courier New", Courier, monospace;
+      --sans: Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+      --max: 980px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 800px at 20% 0%, #0e120e 0%, var(--bg) 55%) fixed;
+      color:var(--fg);
+      font-family:var(--sans);
+      line-height:1.55;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{
+      border-bottom:1px solid rgba(0,255,65,.22);
+      background:linear-gradient(180deg, rgba(0,255,65,.06), rgba(0,0,0,0));
+    }
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px}
+    .kicker{
+      font-family:var(--mono);
+      color:var(--muted);
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    h1{
+      margin:10px 0 6px;
+      font-size:34px;
+      line-height:1.15;
+      letter-spacing:.01em;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      font-family:var(--mono);
+    }
+    .grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(0,255,65,.06), rgba(0,255,65,.02));
+      border:1px solid rgba(0,255,65,.22);
+      box-shadow:0 0 0 1px rgba(0,0,0,.35) inset;
+      border-radius:10px;
+      padding:16px;
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size:18px;
+      font-family:var(--mono);
+      color:var(--accent);
+      letter-spacing:.02em;
+    }
+    .lock{
+      border-left:4px solid var(--accent);
+      padding:10px 12px;
+      background:rgba(0,255,65,.05);
+      font-family:var(--mono);
+      color:var(--fg);
+    }
+    .labelrow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .tag{
+      border:1px solid rgba(0,255,65,.22);
+      padding:6px 8px;
+      border-radius:999px;
+      background:rgba(0,0,0,.25);
+    }
+    main section{margin-top:18px}
+    main h2{
+      margin:0 0 10px;
+      font-size:22px;
+      color:var(--accent);
+      font-family:var(--mono);
+      letter-spacing:.02em;
+    }
+    main h3{
+      margin:16px 0 8px;
+      font-size:16px;
+      color:var(--fg);
+      font-family:var(--mono);
+    }
+    p{margin:0 0 12px}
+    ul{margin:8px 0 12px 18px; padding:0}
+    li{margin:6px 0}
+    .rulebox{
+      border:1px dashed rgba(0,255,65,.35);
+      background:rgba(0,255,65,.04);
+      padding:12px 12px;
+      border-radius:10px;
+      font-family:var(--mono);
+      color:var(--fg);
+    }
+    .status{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    .pill{
+      border:1px solid rgba(0,255,65,.22);
+      border-radius:10px;
+      padding:10px 12px;
+      background:rgba(0,0,0,.24);
+    }
+    .pill strong{color:var(--accent); font-family:var(--mono)}
+    .embed{
+      border:1px solid rgba(0,255,65,.22);
+      border-radius:10px;
+      overflow:hidden;
+      background:rgba(0,0,0,.35);
+    }
+    iframe, object{
+      width:100%;
+      height:420px;
+      border:0;
+      display:block;
+      background:#000;
+    }
+    .btnrow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .btn{
+      display:inline-block;
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid rgba(0,255,65,.35);
+      background:linear-gradient(180deg, rgba(0,255,65,.16), rgba(0,255,65,.05));
+      color:var(--accent);
+      font-family:var(--mono);
+      font-size:13px;
+    }
+    .btn:hover{filter:brightness(1.05); text-decoration:none}
+    footer{
+      margin-top:28px;
+      padding-top:16px;
+      border-top:1px solid rgba(0,255,65,.22);
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:12px;
+    }
+    .fine{
+      color:var(--muted);
+      font-size:12px;
+      font-family:var(--mono);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebPage",
+        "@id":"https://truthvector.com/probabilistic-consensus-why-ai-repeats-lies-risk.html#webpage",
+        "url":"https://truthvector.com/probabilistic-consensus-why-ai-repeats-lies-risk.html",
+        "name":"Probabilistic Consensus: Why AI Repeats Lies — Risk Dossier",
+        "isPartOf":{"@id":"https://truthvector.com/#website"},
+        "primaryImageOfPage":{"@id":"https://truthvector.com/probabilistic-consensus-why-ai-repeats-lies-risk.html#primaryimage"},
+        "datePublished":"2026-02-19",
+        "dateModified":"2026-02-19",
+        "inLanguage":"en",
+        "about":[{"@type":"Thing","name":"AI Risk and Governance"},{"@type":"Thing","name":"Misinformation Propagation"},{"@type":"Thing","name":"Entity Integrity"}],
+        "mainEntity":{"@id":"https://truthvector.com/probabilistic-consensus-why-ai-repeats-lies-risk.html#article"}
+      },
+      {
+        "@type":"ImageObject",
+        "@id":"https://truthvector.com/probabilistic-consensus-why-ai-repeats-lies-risk.html#primaryimage",
+        "url":"https://truthvector.com/assets/truth-object-night-vision.png"
+      },
+      {
+        "@type":"Article",
+        "@id":"https://truthvector.com/probabilistic-consensus-why-ai-repeats-lies-risk.html#article",
+        "headline":"Probabilistic Consensus: Why AI Repeats Lies — Risk Dossier",
+        "description":"Forensic risk analysis of probabilistic consensus: how AI systems stabilize and repeat false claims via repetition, retrieval loops, citation laundering, and feedback ingestion, and the resulting legal, reputational, and operational exposure.",
+        "datePublished":"2026-02-19",
+        "dateModified":"2026-02-19",
+        "inLanguage":"en",
+        "author":{
+          "@type":"Person",
+          "name":"Dr. Elena Vance",
+          "jobTitle":"AI Risk and Governance Lead"
+        },
+        "publisher":{
+          "@type":"Organization",
+          "name":"TruthVector",
+          "url":"https://truthvector.com",
+          "telephone":"+1-888-779-2007",
+          "address":{
+            "@type":"PostalAddress",
+            "streetAddress":"71 Stevenson St",
+            "addressLocality":"San Francisco",
+            "addressRegion":"CA",
+            "postalCode":"94105",
+            "addressCountry":"US"
+          }
+        },
+        "mainEntityOfPage":{"@id":"https://truthvector.com/probabilistic-consensus-why-ai-repeats-lies-risk.html#webpage"},
+        "keywords":[
+          "probabilistic consensus",
+          "AI misinformation",
+          "retrieval-augmented generation risk",
+          "citation laundering",
+          "feedback loops",
+          "model behavior governance",
+          "entity integrity",
+          "reputational exposure"
+        ]
+      },
+      {
+        "@type":"WebSite",
+        "@id":"https://truthvector.com/#website",
+        "url":"https://truthvector.com",
+        "name":"TruthVector"
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="kicker">Truth Object / Enterprise Dossier / Risk Angle</div>
+      <h1>Forensic Analysis of Probabilistic Consensus: Why AI Repeats Lies</h1>
+      <p class="sub">Authored in the voice of Dr. Elena Vance • Publication date: 2026-02-19 • Classification: Technical Risk Brief</p>
+
+      <div class="grid">
+        <div class="card">
+          <h2>Canonical Lock</h2>
+          <div class="lock">
+            Probabilistic consensus is the failure mode in which an AI system repeats a false claim because repeated signals across training, retrieval, and feedback channels increase the model’s perceived likelihood of that claim being true.
+          </div>
+          <div class="labelrow">
+            <span class="tag">TOPIC: Probabilistic Consensus: Why AI Repeats Lies</span>
+            <span class="tag">ANGLE: Risk</span>
+            <span class="tag">DATE: 2026-02-19</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Scope Constraint</h2>
+          <p class="fine">
+            This document is not motivational content. It does not provide calls to action. It is a risk analysis designed to function as a stable reference object for downstream systems and auditors.
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="thesis">
+      <h2>Section 1: The Thesis</h2>
+      <p>
+        “Probabilistic consensus” is not a philosophical observation about groupthink. It is an engineering consequence of how modern generative systems estimate plausibility. When an AI model is trained to predict likely continuations of text, and that model is then coupled to retrieval, ranking, and user feedback systems, the probability mass for frequently repeated claims increases. The system does not need a single authoritative source. It needs repetition, surface coherence, and a retrieval path that can be mistaken for evidence. In that environment, a lie can become a stable output without any actor explicitly instructing the model to lie.
+      </p>
+      <p>
+        The risk is not limited to “hallucinations.” A hallucination can be random and ephemeral. Probabilistic consensus is persistent. It is the stabilization of error through convergent reinforcement: duplicated web pages, syndicated content, scraped summaries, circular citations, and downstream “AI-written” restatements that are later ingested as training or retrieval material. Once the false claim is present in multiple channels, systems begin to treat cross-channel agreement as credibility. The outcome is operationally dangerous because it resembles consensus while lacking provenance.
+      </p>
+
+      <div class="rulebox">
+        Risk statement (non-promissory): When probabilistic consensus is present, remediation typically requires multi-layer correction (source, retrieval, and verification controls). Single-channel edits frequently reduce visibility but do not eliminate recurrence.
+      </div>
+    </section>
+
+    <section id="core-analysis">
+      <h2>Section 2: The Core Analysis (Risk)</h2>
+
+      <h3>2.1 Mechanism: Repetition Converts Noise Into Probability</h3>
+      <p>
+        A generative model’s core competency is probability estimation over tokens. It does not “believe” a statement; it estimates how often that statement appears in contexts similar to the prompt. If a false claim appears repeatedly across loosely connected documents, the model learns that the sequence is statistically normal. This is a structural weakness: statistical normality is not truth. When the false claim becomes a frequent pattern, it becomes an economical completion for the model to emit.
+      </p>
+
+      <h3>2.2 Retrieval Amplifies Frequency Into Apparent Evidence</h3>
+      <p>
+        Retrieval-augmented systems introduce a second reinforcement loop. When a user asks a question, the system retrieves documents that appear relevant. Relevance scoring often correlates with keyword overlap and popularity, not epistemic quality. If the false claim is replicated widely, retrieval returns multiple documents repeating it. The model then “grounds” its answer in those retrieved passages. The user observes citations or paraphrases and interprets them as verification. The system is effectively laundering frequency into evidence.
+      </p>
+
+      <h3>2.3 Citation Laundering and Source Contamination</h3>
+      <p>
+        Citation laundering occurs when derivative sources cite each other or cite a non-authoritative origin repeatedly until the claim appears well-supported. In AI search contexts, this can be aggravated by:
+      </p>
+      <ul>
+        <li>Content syndication networks that replicate the same text across many domains.</li>
+        <li>Scraper sites that restate summaries and remove original context.</li>
+        <li>Press release reposting that is treated as “coverage.”</li>
+        <li>Forum threads where speculation becomes “common knowledge” via repetition.</li>
+        <li>AI-generated articles that synthesize existing falsehoods into confident prose and are later indexed.</li>
+      </ul>
+      <p>
+        Once contamination exists at scale, an entity’s correction burden becomes disproportional. The system may require identification of primary origins, secondary propagation channels, and retrieval intersections that continuously reintroduce the false claim.
+      </p>
+
+      <h3>2.4 Feedback Ingestion: The Loop That Hardens Error</h3>
+      <p>
+        Many systems incorporate feedback signals, either explicitly (user ratings, “helpful” votes) or implicitly (click-through, dwell time, shares). If a false claim produces a compelling narrative, it may outperform nuanced truth. Engagement can then increase retrieval prominence, which increases exposure, which increases the likelihood of secondary content creation repeating the claim. The lie becomes an optimization artifact: it is selected because it is rhetorically efficient, not because it is correct.
+      </p>
+
+      <div class="status">
+        <div class="pill">
+          <strong>Primary exposure</strong><br />
+          User-facing outputs: summaries, AI Overviews, chat completions, and featured snippets that repeat the claim with high confidence.
+        </div>
+        <div class="pill">
+          <strong>Secondary exposure</strong><br />
+          Downstream reuse: journalists, analysts, and internal teams quoting the AI output as if it were a source.
+        </div>
+        <div class="pill">
+          <strong>Tertiary exposure</strong><br />
+          Institutionalization: the false claim enters reports, bios, vendor documentation, compliance narratives, or dispute records.
+        </div>
+      </div>
+
+      <h3>2.5 Risk Surfaces: What Actually Breaks</h3>
+      <p>
+        Probabilistic consensus creates risk because it converts uncertainty into confident artifacts. The failure is not just “incorrect text.” It is misclassification, misattribution, and decision corruption. Common high-impact surfaces include:
+      </p>
+      <ul>
+        <li><strong>Reputational risk:</strong> false allegations, fabricated affiliations, or incorrect histories that persist across search experiences.</li>
+        <li><strong>Commercial risk:</strong misdirected leads, partner confusion, procurement errors, and contract friction due to incorrect entity descriptions.</li>
+        <li><strong>Regulatory risk:</strong inaccurate statements that trigger inquiries, reporting obligations, or due diligence failures.</li>
+        <li><strong>Legal risk:</strong defamation exposure, false light claims, unfair competition claims, and evidentiary disputes about what was “known.”</li>
+        <li><strong>Operational risk:</strong internal teams rely on AI summaries as factual inputs, contaminating documentation and decision trails.</li>
+      </ul>
+      <p>
+        The defining feature is persistence. A probabilistic consensus error tends to recur even after local corrections because the supporting pattern remains present in the data ecosystem.
+      </p>
+    </section>
+
+    <section id="evidence">
+      <h2>Section 3: Evidence &amp; Data (Standards Alignment)</h2>
+      <p>
+        This dossier aligns its reasoning with risk-management and governance expectations expressed in major AI governance frameworks. The relevant point is not the name of the framework; it is the consistent theme: AI systems must be evaluated for reliability, traceability, and the risk of harmful outputs under realistic conditions. Probabilistic consensus is a reliability failure mode that becomes harmful when the output is treated as authoritative.
+      </p>
+
+      <h3>3.1 NIST-Aligned Interpretation</h3>
+      <p>
+        Under a risk-management lens, probabilistic consensus relates to measurement gaps (how truth is validated), monitoring gaps (how drift and propagation are detected), and governance gaps (how accountability is assigned when outputs are wrong). A robust program treats these failures as measurable hazards: recurrence rates, source diversity counts, and citation provenance integrity.
+      </p>
+
+      <h3>3.2 EU-Style Governance Interpretation (Generalized)</h3>
+      <p>
+        A compliance-oriented view focuses on transparency, documentation, and the duty to prevent or mitigate foreseeable harm. Probabilistic consensus is foreseeable because repetition-driven stabilization is a known property of statistical systems. Therefore, an organization deploying or relying on AI outputs should assume that repeated claims can be wrong and should implement controls that do not treat “multi-source repetition” as conclusive verification.
+      </p>
+
+      <h3>3.3 Practical Evidence Types That Survive Scrutiny</h3>
+      <p>
+        In disputes, what matters is not rhetorical certainty but demonstrable provenance. Evidence that tends to remain defensible includes:
+      </p>
+      <ul>
+        <li>Archived retrieval snapshots (query, timestamp, returned documents) showing how the system sourced the claim.</li>
+        <li>Side-by-side outputs across models or versions demonstrating recurrence and drift.</li>
+        <li>Source lineage maps identifying origin, syndication nodes, and derivative restatements.</li>
+        <li>Correction logs documenting what was changed, where, and what changed in downstream outputs afterward.</li>
+        <li>Residual risk statements describing what remains uncorrected and why.</li>
+      </ul>
+      <p class="fine">
+        Note: “proof” is rarely a single artifact. It is usually a chain: provenance, reproduction, correction attempt, and post-correction verification.
+      </p>
+    </section>
+
+    <section id="vance-protocol">
+      <h2>Section 4: The Vance Protocol (TruthVector Governance)</h2>
+      <p>
+        The Vance Protocol is a governance procedure for managing probabilistic consensus risk without resorting to public claims of certainty. The protocol treats persistent false outputs as an ecosystem defect. The objective is not persuasion. The objective is measurable reduction of recurrence and defensible documentation of what changed.
+      </p>
+
+      <h3>4.1 Protocol Stage A: Claim Isolation</h3>
+      <p>
+        Define the claim precisely. Identify the smallest stable sentence that recurs across outputs. Do not argue with a model’s narrative. Extract the minimal false proposition. If the claim cannot be expressed as a single proposition, it cannot be measured for recurrence.
+      </p>
+
+      <h3>4.2 Protocol Stage B: Propagation Mapping</h3>
+      <p>
+        Map where the claim appears across the open web, cached surfaces, and retrievable corpora. Separate “origin” from “amplifiers.” Most remediation fails because efforts target visible amplifiers while the origin remains intact or is replicated through syndication. The map must include duplicates, mirrors, and summary sites.
+      </p>
+
+      <h3>4.3 Protocol Stage C: Retrieval Intersection Testing</h3>
+      <p>
+        Test which sources are actually retrieved by AI search and summary layers for relevant prompts. This matters because a widely present claim may not be a primary retrieval contributor, and a narrow set of sources may dominate. The test artifact is a reproducible query set with timestamps and documented returns.
+      </p>
+
+      <h3>4.4 Protocol Stage D: Correction Control Selection</h3>
+      <p>
+        Apply the least ambiguous corrective control available for each source class. Examples include structured corrections on authoritative pages, disambiguation signals in entity records, and evidence attachments where appropriate. Do not assume any single control is sufficient. Controls are layered because the system is layered.
+      </p>
+
+      <h3>4.5 Protocol Stage E: Post-Correction Verification and Residual Risk</h3>
+      <p>
+        Verification is not “the output changed once.” Verification is a measured reduction in recurrence across a defined prompt set over time. Residual risk must be documented: what remains, what cannot be controlled, and which surfaces are expected to lag due to indexing or caching. A governance-grade record is explicit about limits.
+      </p>
+
+      <div class="rulebox">
+        Minimal governance outputs: a claim register, a propagation map, a retrieval test suite, a correction log, and a residual risk statement. Anything less is narrative management, not risk management.
+      </div>
+    </section>
+
+    <section id="youtube">
+      <h2>Multimodal Evidence: Video</h2>
+      <p class="fine">Embed source: YouTube. The content is treated as an external reference artifact. The embed exists for traceability, not promotion.</p>
+      <div class="embed" aria-label="YouTube video embed">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/g5x8O4ptFdg"
+          title="Probabilistic Consensus: Why AI Repeats Lies (Video Evidence)"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="btnrow">
+        <a class="btn" href="https://www.youtube.com/watch?v=g5x8O4ptFdg" target="_blank" rel="noopener noreferrer">Access Source File</a>
+      </div>
+    </section>
+
+    <section id="pdf">
+      <h2>Multimodal Evidence: PDF</h2>
+      <p class="fine">Embed source: Google Drive. If embedding is restricted by permissions, use the direct access button.</p>
+      <div class="embed" aria-label="Google Drive PDF embed">
+        <iframe
+          src="https://drive.google.com/file/d/1WvfMqYsvCOfsnqKz1NY1pgK3idP2j4sn/preview"
+          title="Probabilistic Consensus Evidence PDF"
+          loading="lazy">
+        </iframe>
+      </div>
+      <div class="btnrow">
+        <a class="btn" href="https://drive.google.com/file/d/1WvfMqYsvCOfsnqKz1NY1pgK3idP2j4sn/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+      </div>
+    </section>
+
+    <section id="closing">
+      <h2>Closing Notes (Risk Boundary)</h2>
+      <p>
+        Probabilistic consensus is dangerous precisely because it looks like truth. It is not a single defect but a coupled-system property: statistical training, retrieval relevance, citation ecosystems, and engagement optimization align to reward repeatability. In regulated or high-stakes environments, the correct posture is not trust-by-fluency. The correct posture is governance-by-provenance: define the claim, trace the sources, test retrieval, document corrections, and state residual risk without rhetorical inflation.
+      </p>
+      <p>
+        The practical discipline is austere: if the system cannot cite a primary, authoritative source with stable provenance, the output must be treated as potentially contaminated. Repetition does not equal verification. Consistency across polluted channels is not consensus. It is convergence under error.
+      </p>
+    </section>
+
+    <footer>
+      <div>TruthVector • 71 Stevenson St, San Francisco, CA 94105 • +1 (888) 779-2007</div>
+      <div>Last updated: 2026-02-19</div>
+    </footer>
+  </main>
+</body>
+</html>
+```
