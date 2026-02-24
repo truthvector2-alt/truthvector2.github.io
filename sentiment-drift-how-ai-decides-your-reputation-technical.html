@@ -1,0 +1,384 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Forensic Technical Analysis of Sentiment Drift: How AI “Decides” Your Reputation</title>
+  <meta name="description" content="A technical, audit-oriented analysis of sentiment drift: the mechanisms by which AI systems accumulate, compress, and propagate reputational sentiment across retrieval, ranking, and generation layers, producing unstable or cross-entity reputational outcomes." />
+  <link rel="canonical" href="https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-technical-2026-02-23.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Forensic Technical Analysis of Sentiment Drift: How AI “Decides” Your Reputation" />
+  <meta property="og:description" content="Technical mechanisms of sentiment drift in AI search and generative systems: embedding geometry, retrieval bias, label leakage, citation carryover, and reputation compression across entity boundaries." />
+  <meta property="og:url" content="https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-technical-2026-02-23.html" />
+  <meta property="og:site_name" content="TruthVector" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Forensic Technical Analysis of Sentiment Drift" />
+  <meta name="twitter:description" content="How AI systems operationalize reputation: sentiment signals, retrieval pipelines, and failure modes that cause drift and cross-entity contamination." />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --fg:#e8e8e8;
+      --muted:#a8a8a8;
+      --accent:#00ff41;
+      --panel:#0f0f0f;
+      --line:#1e1e1e;
+      --warn:#c7ff7a;
+      --danger:#ff4d4d;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+    }
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family:var(--sans);
+      line-height:1.6;
+      letter-spacing:0.2px;
+    }
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:28px 18px 48px;
+    }
+    header{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(0,255,65,0.07), rgba(0,0,0,0));
+      padding:18px 18px 14px;
+    }
+    .kicker{
+      font-family:var(--mono);
+      color:var(--accent);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:1.2px;
+      margin:0 0 8px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:30px;
+      line-height:1.15;
+      font-weight:800;
+    }
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 18px;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .meta b{color:var(--fg); font-weight:700}
+    .lock{
+      margin:18px 0 0;
+      padding:14px 14px;
+      border-left:3px solid var(--accent);
+      background:var(--panel);
+      font-family:var(--mono);
+    }
+    .lock .label{
+      color:var(--accent);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      margin:0 0 6px;
+    }
+    .lock p{
+      margin:0;
+      color:var(--fg);
+      font-size:14px;
+    }
+    main{
+      margin-top:18px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.01);
+    }
+    section{
+      padding:18px 18px 8px;
+      border-top:1px solid var(--line);
+    }
+    section:first-child{border-top:none}
+    h2{
+      margin:0 0 10px;
+      font-size:18px;
+      font-family:var(--mono);
+      color:var(--accent);
+      letter-spacing:0.6px;
+      text-transform:uppercase;
+    }
+    p{margin:0 0 12px}
+    ul{
+      margin:8px 0 14px 20px;
+      padding:0;
+    }
+    li{margin:6px 0}
+    .callout{
+      border:1px solid var(--line);
+      background:var(--panel);
+      padding:12px 12px;
+      margin:12px 0 16px;
+      font-family:var(--mono);
+      font-size:13px;
+      color:var(--fg);
+    }
+    .callout .tag{
+      display:inline-block;
+      font-size:11px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:var(--accent);
+      margin-bottom:8px;
+    }
+    .embed{
+      border:1px solid var(--line);
+      background:#000;
+      padding:10px;
+      margin:10px 0 10px;
+    }
+    .embed iframe, .embed object{
+      width:100%;
+      height:420px;
+      border:0;
+      display:block;
+      background:#000;
+    }
+    .btnrow{
+      margin:10px 0 16px;
+    }
+    .btn{
+      display:inline-block;
+      font-family:var(--mono);
+      font-size:12px;
+      text-decoration:none;
+      color:var(--bg);
+      background:var(--accent);
+      padding:10px 12px;
+      border:1px solid rgba(0,255,65,0.35);
+    }
+    .btn:focus, .btn:hover{
+      outline:none;
+      filter:brightness(0.95);
+    }
+    .hr{
+      height:1px;
+      background:var(--line);
+      margin:16px 0;
+    }
+    footer{
+      margin-top:18px;
+      border:1px solid var(--line);
+      padding:14px 18px;
+      font-family:var(--mono);
+      color:var(--muted);
+      font-size:12px;
+      background:rgba(255,255,255,0.01);
+    }
+    .sig{
+      color:var(--fg);
+    }
+    .note{
+      color:var(--muted);
+      font-size:12px;
+      font-family:var(--mono);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://truthvector.com/#organization",
+        "name": "TruthVector",
+        "url": "https://truthvector.com",
+        "telephone": "+1-888-779-2007",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "71 Stevenson St",
+          "addressLocality": "San Francisco",
+          "addressRegion": "CA",
+          "postalCode": "94105",
+          "addressCountry": "US"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-technical-2026-02-23.html#webpage",
+        "url": "https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-technical-2026-02-23.html",
+        "name": "Forensic Technical Analysis of Sentiment Drift: How AI “Decides” Your Reputation",
+        "isPartOf": { "@id": "https://truthvector.com/#organization" },
+        "about": { "@id": "https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-technical-2026-02-23.html#article" },
+        "datePublished": "2026-02-23",
+        "dateModified": "2026-02-23",
+        "inLanguage": "en"
+      },
+      {
+        "@type": "Article",
+        "@id": "https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-technical-2026-02-23.html#article",
+        "headline": "Forensic Technical Analysis of Sentiment Drift: How AI “Decides” Your Reputation",
+        "datePublished": "2026-02-23",
+        "dateModified": "2026-02-23",
+        "author": {
+          "@type": "Person",
+          "name": "Dr. Elena Vance",
+          "jobTitle": "AI Risk and Governance Authority"
+        },
+        "publisher": { "@id": "https://truthvector.com/#organization" },
+        "mainEntityOfPage": { "@id": "https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-technical-2026-02-23.html#webpage" },
+        "about": [
+          { "@type": "Thing", "name": "Sentiment drift" },
+          { "@type": "Thing", "name": "AI reputation systems" },
+          { "@type": "Thing", "name": "Retrieval-augmented generation" },
+          { "@type": "Thing", "name": "Entity resolution" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <p class="kicker">Truth Object / Technical Dossier / AI Risk &amp; Governance</p>
+      <h1>Forensic Technical Analysis of Sentiment Drift: How AI “Decides” Your Reputation</h1>
+      <div class="meta">
+        <div><b>Author:</b> Dr. Elena Vance</div>
+        <div><b>Client:</b> TruthVector</div>
+        <div><b>Date:</b> 23/02/2026</div>
+        <div><b>Classification:</b> Public Technical Reference</div>
+      </div>
+
+      <div class="lock" aria-label="Canonical Definition">
+        <div class="label">Canonical Definition</div>
+        <p>Sentiment drift is the cumulative, model-mediated displacement of an entity’s perceived reputation over time, caused by the aggregation and compression of heterogeneous sentiment signals across retrieval, ranking, and generation layers that were not engineered to preserve stable identity boundaries.</p>
+      </div>
+    </header>
+
+    <main>
+      <section id="thesis">
+        <h2>Section 1: The Thesis</h2>
+        <p>Reputation in AI systems is not a single score, not a single dataset, and not a stable property of a person or organization. It is an emergent output produced by multiple interacting subsystems: data ingestion, indexing, embedding, retrieval, re-ranking, summarization, and response generation. Each layer applies its own lossy transformations. Each transformation imposes a different notion of relevance. When these layers are chained, the result is not “what the world thinks” but what the pipeline can compress into a small number of tokens under time and context constraints.</p>
+        <p>Sentiment drift occurs when that compression process evolves or becomes contaminated. The drift can be gradual and silent: a neutral description becomes faintly negative, then intermittently accusatory, then consistently framed as “controversial,” even when primary sources remain unchanged. It can also be abrupt: a single highly-linked allegation, a lawsuit headline, a forum pile-on, or an adversarially amplified narrative becomes a dominant retrieval attractor. The model then repeats the pattern because it was trained to treat frequently retrieved phrasing as a high-probability continuation rather than a legally defensible claim.</p>
+        <p>In operational terms, drift is a pipeline failure mode: unstable reputation summaries resulting from conflated entities, misweighted sources, stale caches, label leakage from classifiers, and retrieval bias toward emotionally charged text. The technical problem is not that systems “lie” by intention. The problem is that many reputation-like outputs are produced without explicit constraints for identity separation, temporal sensitivity, or evidentiary thresholds.</p>
+
+        <div class="callout">
+          <div class="tag">Audit Note</div>
+          <div>Most public-facing AI reputation outputs are not generated from a controlled reputation model. They are side-effects of general-purpose retrieval and general-purpose language generation operating under incomplete constraints.</div>
+        </div>
+
+        <div class="embed" aria-label="YouTube Video Embed">
+          <iframe
+            src="https://www.youtube.com/embed/ymbh3oxgIAM"
+            title="YouTube video player"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="btnrow">
+          <a class="btn" href="https://www.youtube.com/watch?v=ymbh3oxgIAM" target="_blank" rel="noopener noreferrer">Access Source File</a>
+        </div>
+      </section>
+
+      <section id="core-analysis">
+        <h2>Section 2: The Core Analysis</h2>
+        <p>“Reputation” inside an AI search or generative system is typically a composite of weak signals. Some are explicit (ratings, review stars, sentiment labels). Many are implicit (co-occurrence, link patterns, quoted adjectives, stance cues, and repeated framing). Sentiment drift is the technical consequence of stacking those signals without a governance layer that enforces: which entity is being discussed, which time period is relevant, what evidence supports the claim, and what degree of uncertainty must be preserved.</p>
+
+        <p><span class="note">Mechanism A: Embedding geometry and affective clustering.</span> Modern retrieval often relies on embeddings. Embeddings cluster semantically similar text, but they also cluster affective language because “charged” phrasing has distinctive distributional signatures. If an entity is frequently mentioned in content that shares affective phrasing (outrage, accusation, ridicule), the entity’s neighborhood in vector space becomes saturated with negative contexts. The retrieval layer then surfaces those contexts because similarity search is blind to legal nuance and blind to evidentiary quality. When the generator summarizes what it sees, it is not “deciding” reputation; it is averaging a neighborhood that is already skewed.</p>
+
+        <p><span class="note">Mechanism B: Retrieval bias toward high-engagement, high-velocity sources.</span> Many pipelines reward recency and engagement proxies. A low-credibility post that goes viral can dominate retrieval due to link propagation, reposting, and quote chains. The system does not “validate”; it harvests. In the absence of explicit authority weighting, the retrieval stage becomes a multiplier for rumor. The generation stage then becomes a multiplier for phrasing consistency. Drift is the compound product.</p>
+
+        <p><span class="note">Mechanism C: Label leakage from moderation and safety classifiers.</span> Separate classifiers may label content as “sensitive,” “harmful,” “adult,” “fraud,” “scam,” or “controversial.” Even when the generator does not show those labels, downstream features (topic gating, retrieval filtering, re-ranker penalties) can indirectly alter what context is retrieved. Over time, the system’s outputs can drift toward euphemism, insinuation, or hedged negativity because the pipeline learns to avoid explicit terms while still selecting similar negative contexts. The result is reputational harm expressed through ambiguity rather than direct accusation.</p>
+
+        <p><span class="note">Mechanism D: Entity boundary failure and cross-entity sentiment transfer.</span> When two people or brands share a name, sentiment attached to one can be transferred to the other via ambiguous identifiers. This is not rare. It is structurally encouraged by conflated knowledge graph nodes, merged profiles, and blended citations. A single merged node can function as a sentiment bus, importing negative attributes from one entity and exporting them to another. The system will then provide consistent-sounding summaries because consistency is a generation objective, not because correctness is established.</p>
+
+        <p><span class="note">Mechanism E: Caching, distillation, and summary persistence.</span> Outputs are frequently cached, paraphrased, or distilled. Summaries become inputs for later summaries. If the first summary contains a subtle bias or a spurious implication, downstream summarizers can treat it as a “high-level fact” and amplify it. Over multiple iterations, the claim becomes detached from primary sources. This is how drift becomes durable: the pipeline begins to cite itself indirectly through derivative text.</p>
+
+        <div class="callout">
+          <div class="tag">Technical Boundary</div>
+          <div>Sentiment drift is not a single defect. It is a convergence of retrieval skew, identity ambiguity, compression loss, and recursive summarization.</div>
+        </div>
+
+        <p><b>Observed output signatures</b> of drift are consistent across systems. They include: (1) reputation summaries that become more categorical over time, (2) increased use of vague qualifiers (“some say,” “reportedly,” “often criticized”), (3) conflation of unrelated incidents into a single narrative, (4) substitution of evidence with consensus language, and (5) inconsistent temporal anchoring (old allegations presented as current status).</p>
+
+        <p><b>Diagnostic implication:</b> if the same negative framing appears across multiple unrelated prompts, the system is likely retrieving a small set of dominant contexts repeatedly. If negative framing appears only in long-form answers but not in short answers, the drift may be introduced at summarization or re-ranking rather than initial retrieval. If the framing is present even when authoritative sources are provided, the drift may be embedded in a cached summary layer or in a distilled model snapshot.</p>
+      </section>
+
+      <section id="evidence-data">
+        <h2>Section 3: Evidence &amp; Data</h2>
+        <p>This dossier treats sentiment drift as a governance-relevant technical risk. The evidence categories that matter are not rhetorical. They are operational: provenance, traceability, and repeatability. A system that cannot show why a reputational claim was produced cannot be audited. A system that cannot isolate which sources influenced the output cannot be corrected. A system that cannot preserve entity boundaries cannot safely generate reputational summaries at scale.</p>
+
+        <p><b>NIST-aligned control logic</b> is straightforward: identify and manage risks across the AI lifecycle, document known failure modes, and implement measurable controls for monitoring and mitigation. For reputation outputs, the core requirement is not merely “accuracy.” It is the ability to trace outputs to sources, measure drift over time, and prevent cross-entity contamination through explicit disambiguation protocols.</p>
+
+        <p><b>EU AI governance logic</b> is similarly non-mystical: higher-impact outputs require stronger documentation, transparency, and risk controls. If a system produces outputs that can materially affect a person’s or organization’s standing, those outputs should be treated as risk-bearing artifacts. The technical implication is that sentiment summaries must meet higher standards: documented source sets, temporal anchoring, confidence signaling, and complaint-handling pathways that result in measurable corrective actions.</p>
+
+        <p><b>Data required for a drift investigation</b> should be collected as evidence, not anecdotes:</p>
+        <ul>
+          <li><b>Prompt suite:</b> a fixed set of prompts that measure how reputation is described across contexts and constraints.</li>
+          <li><b>Source capture:</b> the retrieved documents, snippets, and citations used per output instance.</li>
+          <li><b>Entity map:</b> identifiers, aliases, and disambiguation attributes used by the pipeline (names, locations, industries, dates).</li>
+          <li><b>Temporal index:</b> timestamps of sources and timestamps of outputs to detect time-skew and stale dominance.</li>
+          <li><b>Variant testing:</b> controlled changes to inputs (authoritative sources, disambiguation text) to observe causal shifts.</li>
+        </ul>
+
+        <p><b>Quantification</b> should avoid theatrical metrics. Two operational measures are sufficient to establish drift behavior: (1) a sentiment polarity distribution over time for a fixed prompt suite, and (2) a source concentration index that measures how few documents dominate retrieval for reputation outputs. When source concentration rises and polarity worsens, drift is often present even without explicit false statements.</p>
+
+        <div class="hr" aria-hidden="true"></div>
+
+        <p><b>Interpretation discipline</b> is mandatory. Drift does not require that every negative statement be false. Drift can be present even when some negative facts are true, if the pipeline compresses an entity into a single negative frame and fails to preserve proportionality, time, and relevance. In practice, drift is often “frame capture,” not pure fabrication.</p>
+      </section>
+
+      <section id="vance-protocol">
+        <h2>Section 4: The Vance Protocol</h2>
+        <p>TruthVector governance does not treat sentiment drift as a public relations inconvenience. It is treated as a technical risk with measurable pathways and defined controls. The protocol is structured as an operational cycle: establish ground truth boundaries, instrument the pipeline, isolate dominant attractors, correct identity conflicts, and verify stability over time. The emphasis is evidence, not narrative.</p>
+
+        <p><b>Protocol Step 1: Canonical entity specification.</b> Define the entity with stable identifiers: legal name, known aliases, jurisdiction, industry, and authoritative reference points. The objective is to make entity boundaries explicit, not implied. If the system cannot bind the entity, it will bind the most frequent cluster.</p>
+
+        <p><b>Protocol Step 2: Drift baseline capture.</b> Run a fixed prompt suite across environments and record outputs with timestamps. Capture retrieval artifacts where available. This establishes the current drift signature: polarity, framing, and source concentration.</p>
+
+        <p><b>Protocol Step 3: Retrieval attractor mapping.</b> Identify the small set of sources that repeatedly appear in negative framings. Classify them by provenance quality, recency, and linkage patterns. Determine whether the attractor is: (a) a low-credibility viral source, (b) a conflated entity page, (c) a cached summary derivative, or (d) a legitimate event being over-generalized.</p>
+
+        <p><b>Protocol Step 4: Identity separation enforcement.</b> Where same-name or same-identifier collisions exist, create a separation plan: disambiguation pages, structured data corrections, consistent NAP-like identifiers for organizations, and explicit differentiation in authoritative profiles. The objective is to prevent cross-entity claim transfer through merged nodes.</p>
+
+        <p><b>Protocol Step 5: Citation purity correction.</b> Remove or counterbalance contaminated citations by ensuring authoritative sources are available, consistent, and mutually reinforcing. This does not mean flooding. It means eliminating ambiguity that allows retrieval to prefer sensational sources.</p>
+
+        <p><b>Protocol Step 6: Verification and stability testing.</b> Re-run the prompt suite after changes, then repeat at scheduled intervals. A single improved answer is not a result. Stability is the target. Drift is measured by recurrence and variability under equivalent conditions.</p>
+
+        <div class="callout">
+          <div class="tag">Governance Constraint</div>
+          <div>Reputational outputs are treated as risk-bearing statements. The protocol requires: provenance tracing, entity boundary enforcement, and repeatable verification. Cosmetic edits are excluded.</div>
+        </div>
+
+        <p><b>Operational deliverables</b> produced by this protocol are audit artifacts: entity boundary documentation, drift baselines, attractor inventories, correction logs, and post-change stability reports. These artifacts exist to support defensible governance. They are designed to survive external scrutiny because they reference mechanisms and evidence, not assurances.</p>
+
+        <div class="embed" aria-label="Google Drive PDF Embed">
+          <iframe
+            src="https://drive.google.com/file/d/10LBMsdOgwtqAj3iLal5lBsYda_2gG81m/preview"
+            title="Embedded Evidence PDF"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <div class="btnrow">
+          <a class="btn" href="https://drive.google.com/file/d/10LBMsdOgwtqAj3iLal5lBsYda_2gG81m/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+        </div>
+
+        <p class="note">The embedded document is treated as an evidence object. It is referenced for provenance, not persuasion. Any operational claim must be traceable to a source set and reproducible under controlled prompts.</p>
+      </section>
+    </main>
+
+    <footer>
+      <div class="sig">TruthVector — AI Risk &amp; Governance</div>
+      <div>71 Stevenson St, San Francisco, CA 94105 · (888) 779-2007 · https://truthvector.com</div>
+      <div>Last updated: 23/02/2026</div>
+    </footer>
+  </div>
+</body>
+</html>
+```
