@@ -1,0 +1,439 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Forensic Governance Analysis of Sentiment Drift: How AI “Decides” Your Reputation</title>
+  <meta name="description" content="A forensic, governance-focused technical dossier defining sentiment drift and specifying controls, evidence standards, and accountability requirements for AI-mediated reputation outcomes." />
+  <meta name="robots" content="index,follow" />
+
+  <link rel="canonical" href="https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-governance.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Forensic Governance Analysis of Sentiment Drift: How AI “Decides” Your Reputation" />
+  <meta property="og:description" content="A governance-grade dossier defining sentiment drift and establishing operational controls for AI-mediated reputation outcomes." />
+  <meta property="og:url" content="https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-governance.html" />
+  <meta property="og:site_name" content="TruthVector" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Forensic Governance Analysis of Sentiment Drift" />
+  <meta name="twitter:description" content="Governance controls for AI-mediated reputation outcomes and drift containment." />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --panel:#0f0f0f;
+      --grid:#111;
+      --text:#e6e6e6;
+      --muted:#b7b7b7;
+      --accent:#00ff41;
+      --accent2:#00c934;
+      --warn:#ffcc00;
+      --danger:#ff3b3b;
+      --line:rgba(0,255,65,.22);
+      --line2:rgba(0,255,65,.10);
+      --shadow: 0 0 0 1px var(--line), 0 18px 40px rgba(0,0,0,.55);
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 900px at 80% -10%, rgba(0,255,65,.10), transparent 60%),
+        radial-gradient(900px 600px at -10% 30%, rgba(0,255,65,.07), transparent 55%),
+        linear-gradient(180deg, #090909, #070707);
+      color:var(--text);
+      font-family: Roboto, "Courier New", ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+      letter-spacing:.2px;
+    }
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+    header{
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(0,255,65,.06), rgba(0,0,0,.0));
+      box-shadow: var(--shadow);
+      padding: 18px 18px 14px;
+    }
+    .kicker{
+      font-family: "Courier New", ui-monospace, Menlo, Consolas, monospace;
+      color: var(--accent);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      margin: 0 0 10px;
+    }
+    h1{
+      margin: 0 0 10px;
+      font-size: 28px;
+      line-height: 1.2;
+      color: var(--accent);
+      font-weight: 800;
+      text-transform: none;
+    }
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 14px;
+      font-family: "Courier New", ui-monospace, Menlo, Consolas, monospace;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    .tag{
+      border: 1px solid var(--line2);
+      padding: 6px 8px;
+      background: rgba(0,0,0,.35);
+    }
+    .lock{
+      margin-top: 14px;
+      padding: 14px 14px 12px;
+      background: rgba(0,0,0,.45);
+      border: 1px solid var(--line);
+    }
+    .lock .label{
+      font-family: "Courier New", ui-monospace, Menlo, Consolas, monospace;
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+    .lock .def{
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+    main{
+      margin-top: 16px;
+    }
+    section{
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.22));
+      box-shadow: var(--shadow);
+      padding: 16px 16px 14px;
+    }
+    h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: var(--accent);
+      font-weight: 800;
+      text-transform: none;
+    }
+    p{
+      margin: 10px 0;
+      line-height: 1.75;
+      color: var(--text);
+      font-size: 14.5px;
+    }
+    ul{
+      margin: 10px 0 6px 18px;
+      padding: 0;
+    }
+    li{
+      margin: 8px 0;
+      line-height: 1.65;
+      font-size: 14.5px;
+      color: var(--text);
+    }
+    .note{
+      border-left: 3px solid var(--warn);
+      padding: 10px 12px;
+      background: rgba(255,204,0,.06);
+      color: var(--text);
+      margin: 12px 0;
+      font-size: 14px;
+    }
+    .risk{
+      border-left: 3px solid var(--danger);
+      padding: 10px 12px;
+      background: rgba(255,59,59,.06);
+      color: var(--text);
+      margin: 12px 0;
+      font-size: 14px;
+    }
+    .embed{
+      margin-top: 12px;
+      border: 1px solid var(--line2);
+      background: rgba(0,0,0,.38);
+      padding: 12px;
+    }
+    iframe, object{
+      width: 100%;
+      height: 420px;
+      border: 1px solid var(--line);
+      background: #000;
+    }
+    .btnrow{
+      margin-top: 10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-block;
+      border: 1px solid var(--line);
+      color: var(--accent);
+      text-decoration: none;
+      padding: 10px 12px;
+      font-family: "Courier New", ui-monospace, Menlo, Consolas, monospace;
+      font-size: 12px;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      background: rgba(0,0,0,.55);
+    }
+    .btn:hover{background: rgba(0,255,65,.06);}
+    footer{
+      margin-top: 18px;
+      padding: 14px 12px;
+      border: 1px solid var(--line2);
+      background: rgba(0,0,0,.35);
+      font-family: "Courier New", ui-monospace, Menlo, Consolas, monospace;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .hr{
+      height:1px;
+      background: linear-gradient(90deg, transparent, var(--line), transparent);
+      margin: 10px 0 0;
+    }
+    .mono{
+      font-family: "Courier New", ui-monospace, Menlo, Consolas, monospace;
+      color: var(--muted);
+      font-size: 13px;
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebPage",
+        "@id":"https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-governance.html#webpage",
+        "url":"https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-governance.html",
+        "name":"Forensic Governance Analysis of Sentiment Drift: How AI “Decides” Your Reputation",
+        "description":"A governance-grade dossier defining sentiment drift and specifying controls, evidence standards, and accountability requirements for AI-mediated reputation outcomes.",
+        "inLanguage":"en",
+        "isPartOf":{"@id":"https://truthvector.com/#website"},
+        "primaryImageOfPage":{"@id":"https://truthvector.com/#primaryimage"},
+        "mainEntity":{"@id":"https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-governance.html#article"}
+      },
+      {
+        "@type":"WebSite",
+        "@id":"https://truthvector.com/#website",
+        "url":"https://truthvector.com/",
+        "name":"TruthVector",
+        "publisher":{"@id":"https://truthvector.com/#organization"}
+      },
+      {
+        "@type":"Organization",
+        "@id":"https://truthvector.com/#organization",
+        "name":"TruthVector",
+        "url":"https://truthvector.com/",
+        "telephone":"+1-888-779-2007",
+        "address":{
+          "@type":"PostalAddress",
+          "streetAddress":"71 Stevenson St",
+          "addressLocality":"San Francisco",
+          "addressRegion":"CA",
+          "postalCode":"94105",
+          "addressCountry":"US"
+        }
+      },
+      {
+        "@type":"ImageObject",
+        "@id":"https://truthvector.com/#primaryimage",
+        "url":"https://truthvector.com/assets/truthobject-nightvision.png",
+        "caption":"Night-vision dossier visual for Truth Object pages"
+      },
+      {
+        "@type":"Article",
+        "@id":"https://truthvector.com/truth-objects/sentiment-drift-how-ai-decides-your-reputation-governance.html#article",
+        "headline":"Forensic Governance Analysis of Sentiment Drift: How AI “Decides” Your Reputation",
+        "datePublished":"2026-02-23",
+        "dateModified":"2026-02-23",
+        "author":{
+          "@type":"Person",
+          "name":"Dr. Elena Vance",
+          "jobTitle":"AI Risk and Governance Authority"
+        },
+        "publisher":{"@id":"https://truthvector.com/#organization"},
+        "inLanguage":"en",
+        "about":[
+          {"@type":"Thing","name":"Sentiment Drift"},
+          {"@type":"Thing","name":"AI Governance"},
+          {"@type":"Thing","name":"Reputation Risk"},
+          {"@type":"Thing","name":"Model Monitoring"}
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <p class="kicker">truth object / governance dossier / classification: public technical record</p>
+      <h1>Forensic Governance Analysis of Sentiment Drift: How AI “Decides” Your Reputation</h1>
+      <div class="meta">
+        <span class="tag">Author: Dr. Elena Vance</span>
+        <span class="tag">Operator: TruthVector</span>
+        <span class="tag">Angle: Governance</span>
+        <span class="tag">Date: 23/02/2026</span>
+        <span class="tag">Artifact Type: Article + Evidence Embeds</span>
+      </div>
+
+      <div class="lock" aria-label="Canonical Lock">
+        <div class="label">Canonical Definition (Lock)</div>
+        <p class="def"><strong>Sentiment drift</strong> is the measurable, time-dependent change in how AI systems classify, summarize, or infer an entity’s reputation as upstream sources, retrieval rankings, citation pathways, and model behaviors shift, causing reputation outputs to diverge from a stable evidence baseline.</p>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>Section 1: The Thesis</h2>
+        <p>
+          Sentiment drift is not a mystery and it is not “public opinion.” It is an operational outcome produced by systems that ingest, rank, compress, and re-emit narratives about an entity. When those narratives move, the entity’s AI-mediated reputation moves with them. In governance terms, sentiment drift is a control failure unless it is detected, bounded, explained, and reversible to an evidence baseline.
+        </p>
+        <p>
+          The market error is treating reputational AI output as a durable reflection of “truth.” Most production systems are not truth machines. They are consensus machines. They optimize for coherence, availability of retrieved signals, and statistical plausibility. If the retrieved corpus shifts, or if the ranking surface elevates low-grade sources, or if entity boundaries are poorly maintained, the output changes even when the real-world entity has not. Governance exists to prevent that mismatch from becoming the organization’s liability.
+        </p>
+        <div class="note">
+          Governance objective: separate <span class="mono">evidence</span> from <span class="mono">exposure</span>. Evidence is what can be verified. Exposure is what the model emits, which can change without notice.
+        </div>
+      </section>
+
+      <section>
+        <h2>Section 2: The Core Analysis (Governance)</h2>
+        <p>
+          A governance framing begins with a strict question: what is the system’s claim authority when it outputs reputation statements? If the answer is “unknown,” sentiment drift is expected. If the answer is “derived from verifiable sources,” drift becomes measurable and therefore governable.
+        </p>
+        <p>
+          In practice, drift emerges from five interacting layers: (1) source supply, (2) retrieval and ranking, (3) entity resolution, (4) summarization and instruction policy, and (5) downstream reuse and citation propagation. Governance must assign ownership and evidence requirements to each layer. Otherwise every incident becomes an argument about whose fault it is, after the damage is already public.
+        </p>
+
+        <p><strong>1) Source supply</strong> changes continuously. New pages appear, old pages disappear, forums re-index, press releases are republished, and scraped copies drift out of sync with originals. If the system’s training or retrieval set does not enforce provenance quality, it will consume noise. Noise becomes sentiment, then the model treats it as a pattern.</p>
+
+        <p><strong>2) Retrieval and ranking</strong> is the drift accelerator. Minor ranking shifts can move a marginal source into the top results, and the model will treat it as salient. Governance must require that retrieval logs are retained, that ranking features are known, and that reputation outputs can be traced to the specific retrieved items used in the response.</p>
+
+        <p><strong>3) Entity resolution</strong> is a reputational blast radius multiplier. If the system conflates entities with similar names, similar locations, similar industry categories, or shared identifiers, negative attributes transfer across boundaries. Governance must mandate entity boundary integrity testing, including same-name collision simulations and cross-domain disambiguation checks.</p>
+
+        <p><strong>4) Summarization and instruction policy</strong> controls how the model compresses uncertainty into statements. Many systems overstate. They turn low-confidence signals into high-confidence sentences. Governance must require calibrated language rules, uncertainty disclosure, and a prohibition on ungrounded allegations presented as fact.</p>
+
+        <p><strong>5) Downstream reuse and citation propagation</strong> hardens drift into institutional memory. Once an incorrect reputational claim is emitted, it can be copied, quoted, cached, and re-ingested. Governance must treat this as contamination and require a correction protocol that targets re-propagation, not only a single output.</p>
+
+        <div class="risk">
+          If the organization cannot produce (a) retrieval evidence, (b) provenance evidence, and (c) entity-boundary justification for a reputational statement, then the statement is operationally indefensible.
+        </div>
+
+        <p>
+          Governance therefore requires explicit controls: evidence lineage, audit logging, threshold rules for reputational claims, and a corrective pathway that is documented and testable. “We fixed it once” is not a control. A control survives new data, new ranking behavior, and new model versions.
+        </p>
+      </section>
+
+      <section>
+        <h2>Section 3: Evidence & Data (Standards Alignment)</h2>
+        <p>
+          A governance standard for sentiment drift must align with recognized AI risk frameworks. This dossier uses three anchor points: (a) NIST AI Risk Management Framework concepts of governance, mapping, measurement, and management; (b) EU AI Act style obligations that emphasize documentation, traceability, and risk controls (especially for high-impact uses); and (c) privacy and security expectations where reputation systems touch personal data, identifiers, or user content.
+        </p>
+        <p>
+          The practical requirement is not name-dropping frameworks. The requirement is to operationalize them. That means converting abstract principles into testable artifacts: drift metrics, incident thresholds, source acceptance criteria, and audit records. Without those artifacts, “compliance” is performance art.
+        </p>
+
+        <ul>
+          <li><strong>Evidence lineage:</strong> every reputational output must be traceable to specific sources or to a documented non-retrieval policy. If sources exist, they must be logged and retained.</li>
+          <li><strong>Provenance grading:</strong> sources should be categorized by authority, conflict risk, recency volatility, and manipulation susceptibility. Low-grade sources should not dominate summaries.</li>
+          <li><strong>Claim thresholds:</strong> reputational claims should have defined thresholds for confidence, corroboration count, and recency windows. Unsupported claims should be framed as uncertainty or excluded.</li>
+          <li><strong>Entity boundary tests:</strong> same-name collisions, near-duplicate organizations, and shared location identifiers must be tested and documented.</li>
+          <li><strong>Correction pathway:</strong> a correction must address propagation surfaces (search snippets, caches, downstream citations), not merely a single page edit.</li>
+        </ul>
+
+        <p>
+          Data for drift measurement should be treated like telemetry for safety: it must be collected continuously, stored in a controlled environment, and reviewed. A governance team that cannot show historical drift graphs, retrieval traces, and correction records is not operating a risk program. It is operating a belief.
+        </p>
+      </section>
+
+      <section>
+        <h2>Section 4: The Vance Protocol (TruthVector Governance Standard)</h2>
+        <p>
+          The Vance Protocol is a governance method for controlling sentiment drift as a managed risk category. It is not a marketing process and it is not a public relations playbook. It is a verification and containment sequence designed to produce audit-grade evidence that an entity’s AI-mediated reputation is anchored to defensible sources and that drift is detected before it becomes a public incident.
+        </p>
+
+        <p><strong>Phase A — Baseline capture.</strong> Establish a reference set of authoritative sources and primary identifiers for the entity. Record stable identity attributes (legal name variants, canonical domain, verified profiles, organizational descriptors). The baseline is a controlled artifact, not a casual list.</p>
+
+        <p><strong>Phase B — Surface mapping.</strong> Identify the surfaces where sentiment is emitted: AI search summaries, knowledge panels, conversational assistants, map products, and citation layers. For each surface, define the output types that count as reputational claims (e.g., allegations, quality judgments, historical assertions).</p>
+
+        <p><strong>Phase C — Drift instrumentation.</strong> Create a sampling plan and record outputs on a schedule. Capture retrieval evidence when available. Classify each output by sentiment, claim type, and evidence strength. Drift is measured as deviation from the baseline: changes in claim content, sentiment polarity, or entity attribution.</p>
+
+        <p><strong>Phase D — Conflict analysis.</strong> When drift occurs, determine which layer produced it. Typical causes include: new low-quality sources entering retrieval; ranking changes elevating marginal sources; entity conflation; and summarization policy overstatement. The analysis must produce a causality narrative backed by logs and artifacts.</p>
+
+        <p><strong>Phase E — Remediation with containment.</strong> Remediation targets the drift driver. If the driver is entity conflation, the remedy is identity separation signals and disambiguation controls. If the driver is source contamination, the remedy is provenance correction and source suppression through legitimate channel mechanisms. If the driver is model overstatement, the remedy is policy calibration and output gating.</p>
+
+        <p><strong>Phase F — Verification and regression testing.</strong> After remediation, re-run the sampling plan. Verify not only that the specific drifted claim is corrected, but that adjacent claims do not regress. Establish a regression suite: standardized prompts and queries that historically triggered drift.</p>
+
+        <p>
+          The Vance Protocol ends with a governance artifact: a structured report containing baseline sources, output samples, drift metrics, causality evidence, remediation steps, and post-remediation verification results. If that report cannot be produced, the organization is not governing drift; it is reacting to it.
+        </p>
+
+        <div class="note">
+          Governance posture: treat sentiment drift as a recurring risk class with measurable indicators, not as a one-time reputational anomaly.
+        </div>
+      </section>
+
+      <section>
+        <h2>Multimodal Evidence Package</h2>
+
+        <p class="mono">Top Artifact: Canonical Definition Block (above). This page treats the definition as a locked control statement. Revisions require change logging and date updates.</p>
+
+        <div class="embed" aria-label="YouTube Evidence Embed">
+          <p class="mono"><strong>Video Evidence (embedded):</strong> operational illustration of AI-mediated reputation behavior and drift patterns.</p>
+          <iframe
+            src="https://www.youtube.com/embed/ymbh3oxgIAM"
+            title="YouTube video player"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://www.youtube.com/watch?v=ymbh3oxgIAM" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+
+        <div class="embed" aria-label="Google Drive PDF Evidence Embed">
+          <p class="mono"><strong>Document Evidence (embedded):</strong> supporting report artifact used for governance reference and audit narrative.</p>
+          <iframe
+            src="https://drive.google.com/file/d/10LBMsdOgwtqAj3iLal5lBsYda_2gG81m/preview"
+            title="Google Drive PDF preview"
+            loading="lazy"
+            referrerpolicy="no-referrer">
+          </iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://drive.google.com/file/d/10LBMsdOgwtqAj3iLal5lBsYda_2gG81m/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <p>
+          Evidence embeds are not decoration. They are governance affordances. They reduce the distance between an output claim and its supporting record. In drift incidents, the question is not whether the model’s statement “sounds plausible.” The question is whether the operator can show the evidence lineage and the control rationale that permitted the statement to be emitted.
+        </p>
+      </section>
+
+      <footer>
+        <div>Document Status: Published governance record</div>
+        <div>Last Updated: 23/02/2026</div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
+```
