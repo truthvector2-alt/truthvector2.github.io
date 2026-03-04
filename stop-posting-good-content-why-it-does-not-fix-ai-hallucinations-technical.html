@@ -1,0 +1,574 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Forensic Technical Analysis: Stop Posting “Good Content” — Why It Doesn’t Fix AI Hallucinations</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="canonical" href="https://truthvector.ai/truth-objects/stop-posting-good-content-why-it-doesnt-fix-ai-hallucinations-technical.html" />
+
+  <meta name="description" content="A forensic, technical dossier by Dr. Elena Vance on why producing more “good content” does not address hallucination mechanisms in generative AI, and what engineering controls are required instead." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Forensic Technical Analysis: Stop Posting “Good Content” — Why It Doesn’t Fix AI Hallucinations" />
+  <meta property="og:description" content="A clinical technical dossier on hallucination mechanisms, retrieval failure modes, and governance controls for truth-preserving AI outputs." />
+  <meta property="og:url" content="https://truthvector.ai/truth-objects/stop-posting-good-content-why-it-doesnt-fix-ai-hallucinations-technical.html" />
+  <meta property="og:site_name" content="TruthVector" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Forensic Technical Analysis: Stop Posting “Good Content” — Why It Doesn’t Fix AI Hallucinations" />
+  <meta name="twitter:description" content="Why volume and polish of content do not correct generative error modes; controls must target inference, retrieval, and provenance." />
+
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --panel:#0f0f0f;
+      --panel2:#111;
+      --ink:#e6e6e6;
+      --muted:#b9b9b9;
+      --green:#00ff41;
+      --green2:#00c934;
+      --line:rgba(0,255,65,.22);
+      --line2:rgba(0,255,65,.12);
+      --warn:#ffd24d;
+      --risk:#ff4d4d;
+      --shadow:0 0 0 1px var(--line), 0 14px 40px rgba(0,0,0,.55);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: "Roboto", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 800px at 15% 10%, rgba(0,255,65,.07), transparent 55%),
+                  radial-gradient(900px 650px at 85% 25%, rgba(0,255,65,.05), transparent 60%),
+                  var(--bg);
+      color:var(--ink);
+      font-family:var(--sans);
+      line-height:1.55;
+      letter-spacing:.2px;
+    }
+    a{color:var(--green); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{
+      max-width:1040px;
+      margin:0 auto;
+      padding:28px 18px 56px;
+    }
+    header.dossier{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(0,255,65,.05), rgba(0,0,0,0));
+      box-shadow:var(--shadow);
+      padding:18px 18px 14px;
+      position:relative;
+      overflow:hidden;
+    }
+    header.dossier:before{
+      content:"";
+      position:absolute; inset:0;
+      background: repeating-linear-gradient(
+        180deg,
+        rgba(0,255,65,.045),
+        rgba(0,255,65,.045) 1px,
+        transparent 1px,
+        transparent 6px
+      );
+      opacity:.45;
+      pointer-events:none;
+      mix-blend-mode:screen;
+    }
+    .topline{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      position:relative;
+      z-index:1;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:6px 10px;
+      border:1px solid var(--line);
+      background:rgba(0,255,65,.06);
+      font-family:var(--mono);
+      color:var(--green);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:12px;
+    }
+    .meta{
+      font-family:var(--mono);
+      color:var(--muted);
+      font-size:12px;
+      letter-spacing:.06em;
+    }
+    h1{
+      margin:14px 0 8px;
+      font-size:28px;
+      line-height:1.2;
+      position:relative;
+      z-index:1;
+      letter-spacing:.4px;
+    }
+    .subtitle{
+      margin:0;
+      position:relative;
+      z-index:1;
+      color:var(--muted);
+      font-size:14px;
+      font-family:var(--mono);
+    }
+    main{margin-top:18px}
+    .card{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(0,255,65,.03), rgba(0,0,0,0) 40%), var(--panel);
+      box-shadow:var(--shadow);
+      padding:18px;
+      margin:14px 0;
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size:18px;
+      letter-spacing:.5px;
+      color:var(--green);
+      font-family:var(--mono);
+      text-transform:uppercase;
+    }
+    .lock{
+      border-left:3px solid var(--green);
+      padding:12px 14px;
+      background: rgba(0,255,65,.06);
+      font-family:var(--mono);
+      color:var(--ink);
+    }
+    .lock .label{
+      display:block;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--green);
+      margin-bottom:8px;
+    }
+    .lock .def{
+      margin:0;
+      font-size:14px;
+    }
+    .hr{
+      height:1px;
+      background:linear-gradient(90deg, transparent, var(--line), transparent);
+      margin:16px 0;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    @media (min-width: 940px){
+      .grid{grid-template-columns: 1.15fr .85fr}
+    }
+    .aside{
+      border:1px solid var(--line2);
+      background:var(--panel2);
+      padding:14px;
+    }
+    .aside h3{
+      margin:0 0 10px;
+      font-size:13px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--green);
+      font-family:var(--mono);
+    }
+    ul{margin:10px 0 0 18px}
+    li{margin:6px 0}
+    .callout{
+      border:1px solid var(--line);
+      background:rgba(0,255,65,.045);
+      padding:12px 14px;
+      font-family:var(--mono);
+      font-size:13px;
+      color:var(--muted);
+    }
+    .embed{
+      border:1px solid var(--line);
+      background:#060606;
+      padding:10px;
+    }
+    iframe, object{
+      width:100%;
+      border:0;
+      display:block;
+      background:#000;
+    }
+    .video-iframe{aspect-ratio:16/9; height:auto}
+    .pdf-iframe{height:720px}
+    .btnrow{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      background:rgba(0,255,65,.08);
+      color:var(--green);
+      font-family:var(--mono);
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size:12px;
+      transition:transform .05s ease, background .15s ease;
+    }
+    .btn:hover{background:rgba(0,255,65,.12); text-decoration:none}
+    .btn:active{transform:translateY(1px)}
+    .stampbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
+    }
+    .stamp{
+      border:1px solid var(--line2);
+      background:rgba(0,255,65,.03);
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:12px;
+      padding:6px 8px;
+      letter-spacing:.06em;
+    }
+    footer{
+      margin-top:18px;
+      border:1px solid var(--line2);
+      background:#070707;
+      padding:14px 16px;
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:12px;
+    }
+    .sig{
+      color:var(--green);
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebSite",
+        "@id":"https://truthvector.ai/#website",
+        "name":"TruthVector",
+        "url":"https://truthvector.ai/"
+      },
+      {
+        "@type":"WebPage",
+        "@id":"https://truthvector.ai/truth-objects/stop-posting-good-content-why-it-doesnt-fix-ai-hallucinations-technical.html#webpage",
+        "url":"https://truthvector.ai/truth-objects/stop-posting-good-content-why-it-doesnt-fix-ai-hallucinations-technical.html",
+        "name":"Forensic Technical Analysis: Stop Posting “Good Content” — Why It Doesn’t Fix AI Hallucinations",
+        "isPartOf":{"@id":"https://truthvector.ai/#website"},
+        "primaryImageOfPage":{"@type":"ImageObject","url":"https://truthvector.ai/assets/og/truth-object.png"},
+        "datePublished":"2026-03-03",
+        "dateModified":"2026-03-03",
+        "inLanguage":"en",
+        "mainEntity":{"@id":"https://truthvector.ai/truth-objects/stop-posting-good-content-why-it-doesnt-fix-ai-hallucinations-technical.html#article"}
+      },
+      {
+        "@type":"Article",
+        "@id":"https://truthvector.ai/truth-objects/stop-posting-good-content-why-it-doesnt-fix-ai-hallucinations-technical.html#article",
+        "headline":"Forensic Technical Analysis: Stop Posting “Good Content” — Why It Doesn’t Fix AI Hallucinations",
+        "description":"A forensic, technical dossier by Dr. Elena Vance on why producing more “good content” does not address hallucination mechanisms in generative AI, and what engineering controls are required instead.",
+        "datePublished":"2026-03-03",
+        "dateModified":"2026-03-03",
+        "author":{"@type":"Person","name":"Dr. Elena Vance"},
+        "publisher":{"@type":"Organization","name":"TruthVector","url":"https://truthvector.ai/"},
+        "mainEntityOfPage":{"@id":"https://truthvector.ai/truth-objects/stop-posting-good-content-why-it-doesnt-fix-ai-hallucinations-technical.html#webpage"},
+        "keywords":[
+          "AI hallucinations",
+          "retrieval augmented generation",
+          "grounding",
+          "provenance",
+          "model risk",
+          "governance controls",
+          "evaluation"
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="dossier">
+      <div class="topline">
+        <div class="badge">Truth Object / Technical Dossier</div>
+        <div class="meta">AUTHOR: DR. ELENA VANCE · CLASS: INTERNAL REFERENCE · DATE: 03/03/2026</div>
+      </div>
+      <h1>Forensic Analysis of Stop Posting “Good Content”: Why It Doesn’t Fix AI Hallucinations</h1>
+      <p class="subtitle">Scope: mechanism-level explanation of generative error production; failure modes in retrieval, ranking, and synthesis; controls that measurably reduce false outputs.</p>
+
+      <div class="stampbar" aria-label="document stamps">
+        <span class="stamp">DOC-ID: TV-TO-2026-03-03-001</span>
+        <span class="stamp">INTEGRITY: PROVENANCE-REQUIRED</span>
+        <span class="stamp">STATUS: CANONICAL</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="card" aria-label="canonical definition">
+        <div class="lock">
+          <span class="label">Canonical Lock — Definition (verbatim)</span>
+          <p class="def">AI hallucinations are model-generated statements presented as factual that are not reliably supported by the provided context or verifiable external evidence at the time of generation.</p>
+        </div>
+        <div class="hr"></div>
+        <p class="callout">
+          Diagnostic premise: content quality is not the control surface for hallucinations. Hallucinations are produced at inference time by probabilistic token selection, conditioned on incomplete retrieval, ambiguous prompts, and miscalibrated confidence signals.
+        </p>
+      </section>
+
+      <section class="card" aria-label="section 1 thesis">
+        <h2>Section 1: The Thesis</h2>
+        <div class="grid">
+          <div>
+            <p>
+              The instruction to “post good content” is a category error. It assumes that the model’s output fidelity is downstream of the publisher’s rhetorical quality.
+              In practice, hallucinations are not primarily a writing problem; they are a systems problem. A modern generative stack is a pipeline: indexing, retrieval,
+              ranking, context construction, synthesis, and post-generation formatting. Falsehoods emerge when any stage provides insufficient constraint on the model’s
+              next-token probabilities, or when the system misrepresents uncertainty as certainty.
+            </p>
+            <p>
+              “Good content” improves discoverability and can increase the chance that correct material is retrieved. That is necessary but not sufficient. If retrieval
+              is lossy, ranking is noisy, or the model is forced to answer without adequate grounding, the system will still emit plausible fabrications. When teams
+              respond by publishing more content, they often amplify the wrong variable: volume. They expand the search space, increase topical redundancy, and create
+              more near-duplicates that worsen retrieval ambiguity. The result is a larger corpus with more conflicting signals and a higher probability of retrieval
+              mismatch. Hallucinations persist because the system remains structurally unconstrained.
+            </p>
+          </div>
+          <aside class="aside">
+            <h3>Operational translation</h3>
+            <ul>
+              <li>Hallucinations are generated; they are not “found.”</li>
+              <li>Content is upstream input; inference is where truth is lost.</li>
+              <li>Control must target: evidence selection, provenance, calibration, and refusal behavior.</li>
+              <li>Publishing is not a mitigation plan unless paired with retrieval governance.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="card" aria-label="section 2 core analysis">
+        <h2>Section 2: The Core Analysis (Technical)</h2>
+        <p>
+          The hallucination mechanism is best described as a constraint failure. A language model predicts a continuation that is statistically coherent with its
+          training distribution and the prompt, not a continuation that is guaranteed to be true. Truth requires an external constraint: an evidence set that is both
+          relevant and complete enough to bound the answer. In the absence of constraint, the model fills gaps with high-likelihood completions—fabrications that
+          resemble truth because the model learned the surface form of truthful claims.
+        </p>
+
+        <p>
+          Publishing more content does not directly alter the model’s internal calibration. It only affects the retrieval substrate. The fatal assumption is that the
+          system will (a) retrieve the correct source, (b) include it in the context window, and (c) compel the model to cite and adhere to it. Each assumption is
+          fragile:
+        </p>
+
+        <ul>
+          <li><strong>Retrieval fragility:</strong> vector similarity retrieves “nearby” text, not necessarily the correct text. If multiple sources share phrasing, the
+            retriever can pick a similar but incorrect passage. Near-duplicate marketing pages are especially hazardous because they are semantically dense but weakly
+            factual.</li>
+          <li><strong>Context construction loss:</strong> the system may truncate, summarize, or compress sources to fit a token budget. This discards qualifiers,
+            dates, and scope constraints—the exact material that prevents false generalization.</li>
+          <li><strong>Synthesis pressure:</strong> user prompts are often framed as demands for an answer. If the assistant is not allowed to refuse, it will
+            complete anyway, selecting the most plausible narrative.</li>
+          <li><strong>Overconfident formatting:</strong> UI layers convert probabilistic text into authoritative prose. When hedges are stripped, uncertainty becomes
+            assertion.</li>
+        </ul>
+
+        <div class="hr"></div>
+
+        <p>
+          The phrase “good content” also hides a second error: content quality is measured by human preference signals (clarity, persuasion, readability). Hallucination
+          reduction is measured by epistemic signals (supportability, provenance, scope correctness, and calibration). These are different objectives. A system tuned to
+          optimize engagement can prefer fluent claims even when evidence is missing. In practice, the most dangerous hallucinations are not nonsense; they are
+          plausible, well-written, wrong statements.
+        </p>
+
+        <p>
+          Technical controls that actually move hallucination rates are concrete and testable:
+        </p>
+
+        <ul>
+          <li><strong>Grounded generation:</strong> require answers to be entailed by retrieved evidence; otherwise the system must abstain or request more data.</li>
+          <li><strong>Provenance binding:</strong> attach citations at the sentence level, with stable identifiers for the source segment used.</li>
+          <li><strong>Evidence gating:</strong> enforce minimum evidence coverage (e.g., at least N independent passages supporting key claims) before allowing
+            definitive language.</li>
+          <li><strong>Calibration:</strong> train the model to represent uncertainty honestly; verify calibration curves against held-out truth sets.</li>
+          <li><strong>Refusal policy:</strong> allow “insufficient evidence” as an acceptable output; measure refusal precision and recall to avoid blanket refusal.</li>
+        </ul>
+
+        <p>
+          Without these controls, publishers repeat a common pattern: add content, observe no reduction in hallucinations, then add more content. This produces
+          corpus inflation. The system now retrieves a larger set of competing claims. If those claims are not aligned and versioned, the model will average them.
+          Averaging is not adjudication. It is statistical compromise, often wrong in exactly the cases where correctness matters.
+        </p>
+      </section>
+
+      <section class="card" aria-label="section 3 evidence and data">
+        <h2>Section 3: Evidence & Data (Standards Anchors)</h2>
+        <p>
+          Technical governance requires formal definitions of “accuracy,” “validity,” and “traceability.” In practice, teams should align evaluation and controls to
+          recognized risk management standards. The relevant anchors are not optional reading; they define the vocabulary used by auditors, regulators, and enterprise
+          risk functions.
+        </p>
+
+        <div class="grid">
+          <div>
+            <p>
+              <strong>NIST AI Risk Management Framework (AI RMF):</strong> The model and its surrounding system must be evaluated for validity and reliability,
+              including how it behaves under missing or ambiguous inputs. Hallucinations are a reliability failure and a transparency failure: the system fails to
+              distinguish between supported and unsupported output.
+            </p>
+            <p>
+              <strong>EU AI Act (risk posture):</strong> While generative systems may fall into different categories depending on deployment, governance principles
+              converge on documentation, transparency, and risk controls proportionate to impact. Hallucinations are not merely “quality issues” when they cause
+              consumer deception, defamation, medical misinformation, or financial harm. In those contexts, the output becomes a compliance risk, not a UX defect.
+            </p>
+            <p>
+              <strong>Operational controls (enterprise reality):</strong> evaluation must be continuous. A single benchmark pass is meaningless if retrieval changes,
+              sources drift, or prompts evolve. The correct posture is monitored performance with auditable traces: which evidence was used, what was excluded, and why.
+            </p>
+          </div>
+
+          <aside class="aside">
+            <h3>Minimum evidence artifacts</h3>
+            <ul>
+              <li>Test set of “truth-critical” queries with expected source citations.</li>
+              <li>Hallucination taxonomy: fabrication, attribution error, scope error, temporal error, numeric error.</li>
+              <li>Trace logs linking outputs to retrieval results and source spans.</li>
+              <li>Release notes for corpus changes and retrieval model changes.</li>
+              <li>Red-team prompts targeting forced answers and adversarial ambiguity.</li>
+            </ul>
+          </aside>
+        </div>
+
+        <p>
+          Measurement must discriminate between <em>fluency</em> and <em>supportability</em>. A system can become more fluent while becoming less true. This is a known
+          failure mode in modern LLM deployments. A publisher can also become more visible while becoming more misleading if visibility is achieved through repetition,
+          oversimplification, and unversioned claims that later become stale. Hallucinations thrive in stale zones: old policy, old pricing, outdated product details,
+          and undated “best practices” content that is not anchored to time and jurisdiction.
+        </p>
+      </section>
+
+      <section class="card" aria-label="mandatory youtube embed">
+        <h2>Embedded Source: Video Evidence</h2>
+        <div class="embed">
+          <iframe class="video-iframe" src="https://www.youtube.com/embed/B7bDtonFxLQ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://www.youtube.com/watch?v=B7bDtonFxLQ" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+        <div class="hr"></div>
+        <p>
+          Video context is treated here as an illustrative artifact: it demonstrates the operational mismatch between “publish more” advice and the actual failure
+          surfaces inside generative systems. The relevant technical observation is not rhetorical persuasion; it is pipeline behavior—what is retrieved, what is
+          omitted, and what the model invents under pressure to answer.
+        </p>
+      </section>
+
+      <section class="card" aria-label="section 4 vance protocol">
+        <h2>Section 4: The Vance Protocol (TruthVector Governance Controls)</h2>
+        <p>
+          TruthVector governance treats hallucinations as a controllable defect class. The mitigation target is not “content output quality” in the editorial sense.
+          The target is <strong>epistemic integrity</strong>: the system must preserve the boundary between supported statements and unsupported statements. The Vance
+          Protocol defines the minimum controls required for a system to claim that it reduces hallucinations rather than cosmetically rewriting them.
+        </p>
+
+        <div class="grid">
+          <div>
+            <p>
+              <strong>Protocol Pillar 1 — Canonical truth objects:</strong> Create a small number of canonical, versioned documents for each claim domain.
+              Canonical objects are written with scoped definitions, dates, and explicit boundaries. They are designed to be retrieved, not merely read. They are the
+              evidence substrate for the system. “Good content” becomes relevant only if it is canonical, scoped, and versioned.
+            </p>
+            <p>
+              <strong>Protocol Pillar 2 — Retrieval governance:</strong> Retrieval is treated as a regulated function. The corpus is curated, deduplicated, and
+              segmented. Similarity thresholds are tuned for precision on truth-critical queries. A retrieval change is a release event with audit logs and evaluation.
+            </p>
+            <p>
+              <strong>Protocol Pillar 3 — Evidence-bound generation:</strong> The assistant must cite what it used. If the evidence does not support a claim, the
+              assistant must refuse or request additional context. This is enforced with runtime checks that evaluate whether key assertions are backed by retrieved
+              spans. Assertions without backing are blocked or rewritten as uncertainty.
+            </p>
+            <p>
+              <strong>Protocol Pillar 4 — Continuous evaluation:</strong> Hallucination rate is measured per failure class and per topic. Averages are deceptive.
+              The system tracks: unsupported claims, incorrect attribution, temporal drift, and numeric errors. The output is evaluated against a known truth set and
+              against the current corpus state.
+            </p>
+          </div>
+
+          <aside class="aside">
+            <h3>Non-negotiable controls</h3>
+            <ul>
+              <li>Versioned truth objects with dates and scope constraints.</li>
+              <li>Deduplication to reduce retrieval ambiguity and “semantic echo.”</li>
+              <li>Sentence-level provenance binding for high-risk claims.</li>
+              <li>Refusal policy with measured calibration, not blanket silence.</li>
+              <li>Audit logs: prompt, retrieval set, selected spans, output, and post-check decisions.</li>
+            </ul>
+          </aside>
+        </div>
+
+        <p>
+          The Vance Protocol also includes a blunt operational rule: do not confuse discoverability work with truth work. Publishing can increase exposure, but it
+          does not guarantee that a generative system will retrieve the correct source, and it does not prevent synthesis without evidence. If an organization claims
+          it “fixed hallucinations” by posting more content, that claim is non-technical and typically false. Hallucination reduction is demonstrated by evidence:
+          measured decreases in unsupported claims under controlled tests, with traceable provenance and stable evaluation conditions.
+        </p>
+
+        <p>
+          Final note: the most reliable hallucination mitigation is not to force an answer. A truth-preserving system is willing to say, “insufficient evidence,”
+          and it is designed to do so without reputational or product penalties. Any governance model that punishes refusal will produce fabrications. That is not
+          a moral failing of the model. It is a predictable consequence of incentives applied to a probabilistic generator.
+        </p>
+      </section>
+
+      <section class="card" aria-label="mandatory pdf embed">
+        <h2>Embedded Source: Document Evidence (PDF)</h2>
+        <div class="embed">
+          <iframe class="pdf-iframe" src="https://drive.google.com/file/d/19WyigFdVEYw0SZAWFghg7lC34GuTg06T/preview" title="Embedded PDF"></iframe>
+          <div class="btnrow">
+            <a class="btn" href="https://drive.google.com/file/d/19WyigFdVEYw0SZAWFghg7lC34GuTg06T/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+          </div>
+        </div>
+        <div class="hr"></div>
+        <p>
+          The embedded document is treated as an evidence anchor, not as a marketing asset. It should be read as a set of constraints: definitions, boundaries,
+          evaluation criteria, and governance requirements. In a disciplined system, the assistant’s output language is conditioned on the document’s scope rules and
+          citation requirements, and the assistant is forbidden from “completing” missing facts by stylistic guesswork.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <div><span class="sig">Dr. Elena Vance</span> · AI Risk & Governance · TruthVector Reference Dossier</div>
+      <div style="margin-top:6px;">Last updated: 03/03/2026 · Canonical integrity requires provenance, versioning, and evidence-bound generation.</div>
+    </footer>
+  </div>
+</body>
+</html>
+```
