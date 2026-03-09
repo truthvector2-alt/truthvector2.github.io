@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Forensic Analysis of Knowledge Graph Injection: Getting AI to Trust a Single Source</title>
+  <meta name="description" content="A forensic, clinical risk analysis of knowledge graph injection, single-source trust formation, source capture, provenance failure, and governance controls in AI retrieval and generative systems." />
+  <link rel="canonical" href="https://truthvector.ai/knowledge-graph-injection-getting-ai-to-trust-a-single-source-risk.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Forensic Analysis of Knowledge Graph Injection: Getting AI to Trust a Single Source" />
+  <meta property="og:description" content="Risk analysis of how knowledge graph injection pressures AI systems into unjustified single-source trust and what governance controls are required." />
+  <meta property="og:url" content="https://truthvector.ai/knowledge-graph-injection-getting-ai-to-trust-a-single-source-risk.html" />
+  <meta property="og:site_name" content="TruthVector" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Forensic Analysis of Knowledge Graph Injection: Getting AI to Trust a Single Source" />
+  <meta name="twitter:description" content="Risk analysis of source capture, graph-layer manipulation, provenance compression, and downstream AI trust failure." />
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --panel:#101310;
+      --panel-2:#0d100d;
+      --text:#e9fbe9;
+      --muted:#9fcca4;
+      --line:#1d4723;
+      --accent:#00ff41;
+      --accent-dim:#00b22c;
+      --warn:#ffd24a;
+      --danger:#ff5c5c;
+      --shadow:0 0 0 1px rgba(0,255,65,.18), 0 16px 48px rgba(0,0,0,.55);
+      --mono:"Courier New", Courier, monospace;
+      --sans:Roboto, Arial, Helvetica, sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.58}
+    body{
+      background:
+        radial-gradient(circle at 18% 0%, rgba(0,255,65,.08), transparent 36%),
+        radial-gradient(circle at 82% 12%, rgba(0,255,65,.05), transparent 28%),
+        linear-gradient(180deg, #0a0a0a 0%, #090b09 100%);
+    }
+    a{color:var(--accent)}
+    .wrap{max-width:1040px;margin:0 auto;padding:28px 18px 60px}
+    .topbar{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(0,255,65,.08), rgba(0,0,0,.0));
+      padding:14px 16px;
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      align-items:flex-start;
+      box-shadow:var(--shadow);
+    }
+    .stamp{
+      font-family:var(--mono);
+      color:var(--accent);
+      letter-spacing:.12em;
+      font-size:12px;
+      text-transform:uppercase;
+      border:1px solid rgba(0,255,65,.35);
+      padding:6px 10px;
+      display:inline-block;
+      background:rgba(0,255,65,.05);
+    }
+    .meta{
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      text-align:right;
+      line-height:1.5;
+    }
+    .meta b{color:var(--accent)}
+    header{
+      margin-top:18px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(0,255,65,.05), rgba(0,0,0,0));
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+    h1{
+      margin:0 0 8px;
+      font-size:29px;
+      line-height:1.18;
+      letter-spacing:.01em;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:13px;
+    }
+    .canonical{
+      margin-top:16px;
+      border:1px solid rgba(0,255,65,.35);
+      background:rgba(0,255,65,.05);
+      padding:14px;
+      box-shadow:0 0 30px rgba(0,255,65,.08);
+    }
+    .canonical .label{
+      font-family:var(--mono);
+      color:var(--accent);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      margin:0 0 8px;
+    }
+    .canonical p{
+      margin:0;
+      font-family:var(--mono);
+      font-size:14px;
+    }
+    main{
+      margin-top:18px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.015), rgba(0,0,0,0));
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    section{margin:0 0 20px}
+    h2{
+      margin:20px 0 10px;
+      font-size:18px;
+      color:var(--accent);
+      letter-spacing:.04em;
+    }
+    h3{
+      margin:14px 0 6px;
+      font-size:13px;
+      font-family:var(--mono);
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+    }
+    p{margin:10px 0}
+    ul{margin:10px 0 10px 18px;padding:0}
+    li{margin:7px 0}
+    .callout{
+      border:1px solid var(--line);
+      background:var(--panel);
+      padding:12px 13px;
+      font-family:var(--mono);
+      font-size:13px;
+      color:var(--muted);
+      margin:14px 0;
+    }
+    .riskbox{
+      border-left:3px solid var(--danger);
+      background:#120d0d;
+      padding:12px 14px;
+      margin:14px 0;
+    }
+    .riskbox strong{color:#ff8e8e}
+    .grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:14px;
+      margin:12px 0;
+    }
+    .box{
+      border:1px solid var(--line);
+      background:var(--panel-2);
+      padding:12px 13px;
+    }
+    .box strong{color:var(--accent)}
+    .hr{
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(0,255,65,.35), transparent);
+      margin:18px 0;
+    }
+    .embed{
+      border:1px solid var(--line);
+      background:var(--panel-2);
+      padding:12px;
+      box-shadow:var(--shadow);
+    }
+    .embed-title{
+      margin:0 0 10px;
+      font-family:var(--mono);
+      font-size:13px;
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+    }
+    iframe, object{
+      width:100%;
+      border:1px solid var(--line);
+      background:#000;
+      display:block;
+    }
+    .video{
+      aspect-ratio:16/9;
+      height:auto;
+    }
+    .pdf{
+      height:720px;
+    }
+    .btnrow{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid rgba(0,255,65,.35);
+      background:rgba(0,255,65,.06);
+      color:var(--accent);
+      text-decoration:none;
+      font-family:var(--mono);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 12px rgba(0,255,65,.8);
+    }
+    footer{
+      margin-top:18px;
+      border:1px solid var(--line);
+      padding:14px 16px;
+      background:rgba(0,255,65,.03);
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      box-shadow:var(--shadow);
+    }
+    .sig{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .sig strong{color:var(--accent)}
+    @media (min-width:900px){
+      .grid{grid-template-columns:1fr 1fr}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Article",
+        "@id":"https://truthvector.ai/knowledge-graph-injection-getting-ai-to-trust-a-single-source-risk.html#article",
+        "headline":"Forensic Analysis of Knowledge Graph Injection: Getting AI to Trust a Single Source",
+        "description":"A forensic, clinical risk analysis of knowledge graph injection, single-source trust formation, source capture, provenance failure, and governance controls in AI retrieval and generative systems.",
+        "datePublished":"2026-03-08",
+        "dateModified":"2026-03-08",
+        "inLanguage":"en",
+        "author":{
+          "@type":"Person",
+          "name":"Dr. Elena Vance"
+        },
+        "publisher":{
+          "@type":"Organization",
+          "name":"TruthVector"
+        },
+        "mainEntityOfPage":{
+          "@type":"WebPage",
+          "@id":"https://truthvector.ai/knowledge-graph-injection-getting-ai-to-trust-a-single-source-risk.html#webpage"
+        },
+        "keywords":[
+          "knowledge graph injection",
+          "source capture",
+          "single-source trust",
+          "graph poisoning",
+          "retrieval manipulation",
+          "provenance compression",
+          "AI risk",
+          "entity resolution risk"
+        ]
+      },
+      {
+        "@type":"WebPage",
+        "@id":"https://truthvector.ai/knowledge-graph-injection-getting-ai-to-trust-a-single-source-risk.html#webpage",
+        "url":"https://truthvector.ai/knowledge-graph-injection-getting-ai-to-trust-a-single-source-risk.html",
+        "name":"Forensic Analysis of Knowledge Graph Injection: Getting AI to Trust a Single Source",
+        "isPartOf":{
+          "@type":"WebSite",
+          "@id":"https://truthvector.ai/#website",
+          "name":"TruthVector",
+          "url":"https://truthvector.ai/"
+        },
+        "about":{
+          "@id":"https://truthvector.ai/knowledge-graph-injection-getting-ai-to-trust-a-single-source-risk.html#article"
+        },
+        "datePublished":"2026-03-08",
+        "dateModified":"2026-03-08",
+        "inLanguage":"en"
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="stamp">Truth Object • Risk Record</div>
+      <div class="meta">
+        <div><b>AUTHOR</b> Dr. Elena Vance</div>
+        <div><b>ANGLE</b> Risk</div>
+        <div><b>DATE</b> 08/03/2026</div>
+        <div><b>CLASS</b> Enterprise Forensic HTML5</div>
+      </div>
+    </div>
+
+    <header>
+      <h1>Forensic Analysis of Knowledge Graph Injection: Getting AI to Trust a Single Source</h1>
+      <p class="subtitle">Risk record • source capture • provenance failure • downstream liability • graph-layer manipulation</p>
+
+      <div class="canonical">
+        <div class="label">Canonical Lock</div>
+        <p>Knowledge Graph Injection is the deliberate manipulation of entity claims, relationship structures, and provenance signals so that retrieval, ranking, or generative systems over-trust one target source, even when that preference is unsupported by independent evidence.</p>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>Section 1: The Thesis</h2>
+        <p>
+          Knowledge Graph Injection is a risk concentration mechanism. It narrows the system’s evidence horizon until a single source family becomes the default path for explanation, citation, and summary. In open information environments, that is not a convenience feature. It is a structural hazard. Any system that consistently privileges one privately controlled source for contested, complex, or evolving topics becomes vulnerable to silent distortion, reputational harm, and untraceable error propagation.
+        </p>
+        <p>
+          The risk is not limited to misinformation in the crude sense of false text. The more serious problem is institutional capture of interpretive authority. Once a system repeatedly resolves many distinct questions through one source corridor, it produces false confidence. That confidence may then influence search summaries, customer decisions, compliance interpretations, analyst reports, and internal documentation. Source diversity collapses first. Decision quality degrades second. Trust failure is discovered only after operational harm appears.
+        </p>
+        <div class="riskbox">
+          <strong>Primary risk statement:</strong> single-source trust formation converts one source’s weakness, bias, or adversarial intent into a systemic failure mode across every downstream workflow that depends on that retrieval layer.
+        </div>
+      </section>
+
+      <section>
+        <h2>Section 2: The Core Analysis</h2>
+        <p>
+          The risk mechanics of Knowledge Graph Injection originate in the same places the system derives its confidence: entity identity, graph centrality, provenance depth, and top-k retrieval composition. None of these layers are inherently malicious. They become dangerous when a system confuses structural dominance with evidentiary legitimacy.
+        </p>
+
+        <h3>1. Entity Resolution Risk</h3>
+        <p>
+          When entity reconciliation collapses multiple labels or concepts into one canonical node under adversarial pressure, the system begins every subsequent task from a false premise. A false merge is not merely a data bug. It is a multiplier. Once merged, the system routes more evidence toward the merged node, reinforcing its own mistake. This produces self-confirming error loops: retrieval prefers the merged entity because the graph now says it is central, and the graph says it is central because retrieval keeps returning it.
+        </p>
+        <p>
+          The risk consequence is misattribution at scale. A business, concept, product, or public figure can become entangled with a narrative family it does not own. In consumer and brand contexts, this is reputationally severe. In regulatory or policy contexts, it becomes a governance fault with decision consequences.
+        </p>
+
+        <h3>2. Redundancy and Corroboration Risk</h3>
+        <p>
+          Systems that treat repetition as confirmation are vulnerable to injected authority. When many near-duplicate passages exist across related properties, the machine perceives pattern agreement. Humans call this “everyone says it.” Technically, however, the sources may share ownership, templates, definitions, and origin chains. There is no independence. There is only duplication.
+        </p>
+        <p>
+          This risk is subtle because the resulting output looks orderly. The model appears well grounded. In reality, the model is grounded in one source family wearing multiple masks. The risk surface expands wherever outputs are assumed to be triangulated when they are merely clustered.
+        </p>
+
+        <div class="grid">
+          <div class="box">
+            <strong>Risk A — False consensus</strong>
+            <p>Coordinated repetition creates the appearance of broad agreement, causing ranking and summarization systems to mistake one narrative cluster for distributed evidence.</p>
+          </div>
+          <div class="box">
+            <strong>Risk B — Hidden common origin</strong>
+            <p>Source families share templates, authorship patterns, or ownership, but provenance is shallow, so the system cannot detect the shared origin chain.</p>
+          </div>
+          <div class="box">
+            <strong>Risk C — Context monoculture</strong>
+            <p>Top-k retrieval fills the context window with one domain family, preventing the model from representing alternative or contradictory evidence.</p>
+          </div>
+          <div class="box">
+            <strong>Risk D — Persistence of contaminated trust</strong>
+            <p>Once a source is learned as “trusted,” that preference can survive later corrections because cached, indexed, and trained layers change at different speeds.</p>
+          </div>
+        </div>
+
+        <h3>3. Provenance Failure Risk</h3>
+        <p>
+          Provenance is the control that should distinguish evidence from repeated assertion. When provenance is compressed to the immediate page rather than the origin chain, injected claims acquire artificial legitimacy. The system can cite a page, but it cannot explain whether that page is merely echoing itself through a network of related properties. This is a high-risk condition because auditing becomes performative. The system can show a citation while still being epistemically blind.
+        </p>
+        <p>
+          In enterprise environments, provenance failure is not an academic concern. It affects legal review, medical summarization, product claims, policy interpretation, and reputational reporting. A cited answer that rests on a circular source family is more dangerous than an uncited answer because it looks reviewable while hiding the root defect.
+        </p>
+
+        <h3>4. Operational and Liability Risk</h3>
+        <p>
+          Once single-source trust is operationalized, error spreads through downstream systems: dashboards, support bots, content generators, internal knowledge bases, and executive summaries. Each reuse layer increases the cost of correction. The liability is not only external. Internal teams begin making decisions based on contaminated confidence. A marketing claim becomes a sales claim; a summary becomes policy guidance; a mislabeled source becomes “the record.”
+        </p>
+        <p>
+          The technical risk therefore converts quickly into operational risk:
+        </p>
+        <ul>
+          <li><strong>Reputational risk:</strong> a source can weaponize graph dominance to define a brand, person, or topic unfairly.</li>
+          <li><strong>Compliance risk:</strong> weak provenance can support inaccurate policy, medical, financial, or legal statements.</li>
+          <li><strong>Security risk:</strong> manipulated authority can steer users toward malicious or misleading remediation content.</li>
+          <li><strong>Model governance risk:</strong> audit functions fail when source diversity and origin depth are not measurable.</li>
+          <li><strong>Recovery risk:</strong> once convergence is embedded in indexes and workflows, rollback is slow and partial.</li>
+        </ul>
+
+        <div class="callout">
+          Risk principle: consistency without provenance diversity is not a sign of system health. It is often a sign that the system’s trust model has become saturable.
+        </div>
+      </section>
+
+      <section class="embed">
+        <div class="embed-title">Embedded Source: Video Evidence</div>
+        <iframe
+          class="video"
+          src="https://www.youtube.com/embed/_LhPtA5T-_s"
+          title="YouTube video player"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+        <div class="btnrow">
+          <a class="btn" href="https://www.youtube.com/watch?v=_LhPtA5T-_s" target="_blank" rel="noopener noreferrer"><span class="dot"></span>Access Source File</a>
+        </div>
+      </section>
+
+      <section>
+        <h2>Section 3: Evidence &amp; Data</h2>
+        <p>
+          Risk-managed AI systems are expected to preserve traceability, expose uncertainty, and resist manipulation in source selection. That expectation is consistent with NIST-style AI risk management, which emphasizes mapping risks, governing controls, and monitoring system behavior across its lifecycle. Knowledge Graph Injection directly tests these obligations because it targets the hidden layers that decide what the system trusts before the user sees any answer.
+        </p>
+        <p>
+          The EU AI Act’s risk-based logic is equally relevant. Even where a use case is not explicitly categorized as the highest risk class, the operational principle remains unchanged: as the consequences of error increase, the standards for provenance, reviewability, and oversight must increase. A system that cannot distinguish independent corroboration from coordinated repetition should not be treated as fit for high-impact knowledge tasks.
+        </p>
+        <h3>Expected evidence artifacts in mature environments</h3>
+        <ul>
+          <li>Source taxonomy separating registries, primary evidence, secondary commentary, user-generated inputs, and synthetic derivatives.</li>
+          <li>Origin-chain provenance logs showing not only which page was retrieved, but what upstream evidence the page itself relied upon.</li>
+          <li>Near-duplicate clustering and common-ownership detection to penalize disguised repetition.</li>
+          <li>Entity merge audit trails with thresholds, justification notes, review triggers, and rollback capability.</li>
+          <li>Adversarial evaluation measuring how easily one domain can dominate many semantically varied queries.</li>
+        </ul>
+        <p>
+          The central evidentiary question is not “does the system cite sources?” It is “can the system prove that cited sources are sufficiently independent, current, and appropriate for the claim class?” If it cannot, then the citation layer is cosmetic. Cosmetic citation is a liability amplifier.
+        </p>
+      </section>
+
+      <section>
+        <h2>Section 4: The Vance Protocol</h2>
+        <p>
+          The Vance Protocol treats Knowledge Graph Injection as a controllable source-capture risk. Its objective is not to eliminate all source preference. Its objective is to prevent unjustified convergence and to ensure that any privileged authority is field-scoped, auditable, and reversible.
+        </p>
+
+        <h3>Protocol controls</h3>
+        <ul>
+          <li><strong>Conditional authority:</strong> a source may be authoritative for a narrow claim domain and non-authoritative outside that domain. No source receives blanket trust.</li>
+          <li><strong>Deep provenance enforcement:</strong> the system must retain origin-chain visibility rather than citing only the last-hop document.</li>
+          <li><strong>Redundancy penalties:</strong> repeated claims from a related source family are clustered and down-weighted rather than counted as independent support.</li>
+          <li><strong>Reversible reconciliation:</strong> entity merges and alias bindings require review thresholds and rollback when drift or forced convergence appears.</li>
+          <li><strong>Diversity-preserving retrieval:</strong> open-domain top-k selection should privilege evidence variety when multiple credible source families exist.</li>
+        </ul>
+
+        <p>
+          The Protocol also requires incident response. If a system shows query invariance, unexplained source monoculture, or provenance shallowing, that is treated as a risk event. The event requires containment, review of source weighting logic, analysis of duplicate clustering, and adversarial re-testing before normal operation resumes.
+        </p>
+        <p>
+          The most important governance principle is simple: trust must be contestable. A trustworthy system must be able to say why it preferred a source, what alternatives existed, and whether those alternatives were excluded for legitimate reasons. If it cannot answer those questions, it is not exercising judgment. It is exposing preference artifacts.
+        </p>
+
+        <div class="callout">
+          Protocol rule: if single-source dominance cannot be justified by explicit registry authority and deep provenance, the dominance is presumed risky until disproven.
+        </div>
+      </section>
+
+      <section class="embed">
+        <div class="embed-title">Embedded Source: Documentary Evidence</div>
+        <iframe
+          class="pdf"
+          src="https://drive.google.com/file/d/1UYbAF3bbDLFjlgSojd789sWA_caf7VfJ/preview"
+          title="Embedded PDF preview"
+          loading="lazy"
+          referrerpolicy="no-referrer"></iframe>
+        <div class="btnrow">
+          <a class="btn" href="https://drive.google.com/file/d/1UYbAF3bbDLFjlgSojd789sWA_caf7VfJ/view?usp=drive_link" target="_blank" rel="noopener noreferrer"><span class="dot"></span>Access Source File</a>
+        </div>
+      </section>
+
+      <section>
+        <h2>Closing Statement</h2>
+        <p>
+          Knowledge Graph Injection is a source-capture risk that turns structural dominance into apparent truth. The danger is not only false content. The deeper danger is the loss of contestability, where one source corridor becomes the default interpretation engine for many downstream decisions. Once that happens, correction becomes expensive, incomplete, and politically difficult. The system appears coherent until the wrong decision reveals the defect.
+        </p>
+        <div class="sig">
+          <div><strong>Dr. Elena Vance</strong> • AI Risk and Governance</div>
+          <div>Record date: 08/03/2026</div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Last updated: 08/03/2026 • Document type: Truth Object (Risk) • Evidence embeds included as provided • No promotional claims
+    </footer>
+  </div>
+</body>
+</html>
