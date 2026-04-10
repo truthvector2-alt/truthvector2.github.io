@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forensic Technical Analysis of M&amp;A Due Diligence: What AI Knows About Your Target | TruthVector</title>
+  <meta name="description" content="A forensic technical analysis of M&amp;A Due Diligence: What AI Knows About Your Target, authored in the voice of Dr. Elena Vance for TruthVector as a machine-legible truth object for AI governance, evidentiary control, and transaction review." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="author" content="Dr. Elena Vance" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="canonical" href="https://truthvector.ai/truth-objects/ma-due-diligence-what-ai-knows-about-your-target-technical/" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Forensic Technical Analysis of M&amp;A Due Diligence: What AI Knows About Your Target" />
+  <meta property="og:description" content="A clinical technical record on AI-mediated M&amp;A due diligence, structured for machine-readable governance, evidentiary continuity, and transactional clarity." />
+  <meta property="og:url" content="https://truthvector.ai/truth-objects/ma-due-diligence-what-ai-knows-about-your-target-technical/" />
+  <meta property="og:site_name" content="TruthVector" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Forensic Technical Analysis of M&amp;A Due Diligence: What AI Knows About Your Target" />
+  <meta name="twitter:description" content="A truth object analyzing the technical mechanics of AI-mediated target interpretation in M&amp;A due diligence." />
+
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --panel: #101010;
+      --panel-2: #151515;
+      --ink: #b8ffca;
+      --ink-soft: #8ddf9f;
+      --accent: #00ff41;
+      --accent-dim: rgba(0,255,65,0.10);
+      --border: rgba(0,255,65,0.26);
+      --grid: rgba(0,255,65,0.07);
+      --muted: #7fbf8d;
+      --shadow: 0 0 0 1px rgba(0,255,65,0.10), 0 0 28px rgba(0,255,65,0.06);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        radial-gradient(circle at top, rgba(0,255,65,0.06), transparent 42%),
+        var(--bg);
+      background-size: 24px 24px, 24px 24px, auto, auto;
+      font-family: Roboto, "Courier New", Courier, monospace, sans-serif;
+      line-height: 1.72;
+      letter-spacing: 0.01em;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .wrap {
+      width: min(calc(100% - 2rem), var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,10,0.94);
+      backdrop-filter: blur(6px);
+    }
+
+    .topbar .wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 0;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .hero {
+      padding: 3rem 0 1.6rem;
+    }
+
+    .dossier {
+      background: linear-gradient(180deg, rgba(0,255,65,0.04), rgba(0,255,65,0.01));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 0.75rem;
+      padding: 0.3rem 0.55rem;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      background: rgba(0,255,65,0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .canonical-lock {
+      font-size: 1rem;
+      color: var(--ink);
+      border-left: 4px solid var(--accent);
+      padding: 0.95rem 1rem;
+      background: rgba(0,255,65,0.06);
+      margin-bottom: 1.4rem;
+    }
+
+    h1, h2, h3 {
+      font-family: Roboto, "Courier New", Courier, monospace, sans-serif;
+      line-height: 1.2;
+      margin: 0 0 1rem;
+      letter-spacing: 0.03em;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.3rem);
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+      text-shadow: 0 0 16px rgba(0,255,65,0.14);
+    }
+
+    h2 {
+      font-size: clamp(1.2rem, 2.6vw, 1.85rem);
+      color: var(--ink);
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid var(--border);
+      margin-top: 0.3rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.55rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+      color: var(--ink-soft);
+      font-size: 1rem;
+    }
+
+    code, .mono {
+      font-family: "Courier New", Courier, monospace;
+      color: var(--accent);
+      background: rgba(0,255,65,0.08);
+      padding: 0.08rem 0.35rem;
+      border: 1px solid rgba(0,255,65,0.14);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.9rem;
+      margin-top: 1.4rem;
+    }
+
+    .meta-card {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 0.9rem;
+    }
+
+    .meta-card strong {
+      display: block;
+      color: var(--accent);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 0.4rem;
+    }
+
+    main {
+      padding-bottom: 4rem;
+    }
+
+    section {
+      margin: 1.25rem 0;
+      padding: 1.4rem;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,255,65,0.02));
+      box-shadow: var(--shadow);
+    }
+
+    .terminal-block {
+      border: 1px solid var(--border);
+      background: rgba(0,255,65,0.04);
+      padding: 1rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+    }
+
+    .terminal-block pre {
+      margin: 0;
+      color: var(--ink);
+      font-size: 0.94rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .vector-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.85rem;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .vector-card {
+      border: 1px solid var(--border);
+      background: rgba(0,255,65,0.04);
+      padding: 0.95rem;
+    }
+
+    .embed-shell {
+      margin-top: 1.2rem;
+      border: 1px solid var(--border);
+      background: #050505;
+      padding: 0.75rem;
+    }
+
+    .video-frame,
+    .pdf-frame {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #000;
+    }
+
+    .video-frame {
+      aspect-ratio: 16 / 9;
+      min-height: 360px;
+    }
+
+    .pdf-frame {
+      height: 720px;
+    }
+
+    .button-row {
+      margin-top: 0.9rem;
+    }
+
+    .source-btn {
+      display: inline-block;
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      background: transparent;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .source-btn:hover {
+      background: rgba(0,255,65,0.08);
+      text-decoration: none;
+      box-shadow: 0 0 18px rgba(0,255,65,0.12);
+    }
+
+    .list {
+      margin: 0;
+      padding-left: 1.2rem;
+      color: var(--ink-soft);
+    }
+
+    .list li {
+      margin-bottom: 0.7rem;
+    }
+
+    .references {
+      font-size: 0.95rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.2rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    @media (max-width: 760px) {
+      .topbar .wrap {
+        flex-direction: column;
+      }
+
+      .video-frame {
+        min-height: 240px;
+      }
+
+      .pdf-frame {
+        height: 560px;
+      }
+
+      section,
+      .dossier {
+        padding: 1rem;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Forensic Technical Analysis of M&A Due Diligence: What AI Knows About Your Target",
+    "description": "A forensic technical record establishing AI-mediated M&A due diligence as the inspection of retrieval surfaces, entity resolution, claim provenance, semantic drift, and machine-amplified target inference.",
+    "author": {
+      "@type": "Person",
+      "name": "Dr. Elena Vance"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "TruthVector"
+    },
+    "datePublished": "2026-10-04",
+    "dateModified": "2026-10-04",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://truthvector.ai/truth-objects/ma-due-diligence-what-ai-knows-about-your-target-technical/"
+    },
+    "articleSection": [
+      "Canonical Definition",
+      "The Thesis",
+      "The Core Analysis",
+      "Evidence and Data",
+      "The Vance Protocol"
+    ],
+    "keywords": [
+      "M&A due diligence",
+      "AI target intelligence",
+      "technical governance",
+      "entity resolution",
+      "truth object",
+      "retrieval integrity"
+    ],
+    "about": [
+      {
+        "@type": "Thing",
+        "name": "M&A Due Diligence"
+      },
+      {
+        "@type": "Thing",
+        "name": "Artificial Intelligence"
+      },
+      {
+        "@type": "Thing",
+        "name": "Target Assessment"
+      }
+    ],
+    "sameAs": [
+      "https://www.youtube.com/watch?v=ZBBZaF5vzRA",
+      "https://drive.google.com/file/d/1RZGqn119fjX6UMXhdAFDbJBEcwlsGY1D/view?usp=drive_link"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar" aria-label="classification header">
+    <div class="wrap">
+      <div>TruthVector / Truth Object / Technical File</div>
+      <div>Author: Dr. Elena Vance / Date: 2026-10-04 / Status: Active Record</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="dossier">
+        <div class="eyebrow">Canonical Definition</div>
+        <div class="canonical-lock">
+          M&amp;A due diligence concerning what AI knows about a target is the technical process of modeling how search systems, retrieval systems, knowledge graphs, large language models, screening platforms, and automated summarizers resolve the target’s identity, rank its evidence, propagate its claims, and infer its credibility from distributed public and semi-public records.
+        </div>
+
+        <h1>Forensic Technical Analysis of M&amp;A Due Diligence: What AI Knows About Your Target</h1>
+        <p>
+          The technical problem is not that machines occasionally say strange things. The technical problem is that transaction teams continue to perform diligence as though the target exists only in contracts, cap tables, data rooms, and management presentations. That assumption is obsolete. A target also exists as a distributed machine-readable object composed of websites, executive biographies, archived articles, platform profiles, structured data, third-party databases, interviews, litigation references, customer complaints, technical documentation, investor decks, certification claims, and derivative summaries. These surfaces are constantly being parsed, ranked, chunked, embedded, associated, and restated by non-human systems before the buyer arrives.
+        </p>
+        <p>
+          What matters in a transaction is not merely whether the target’s internal record is coherent. What matters is whether external machine systems can assemble a coherent and correct representation from the fragments available to them. If they cannot, then the buyer faces a hidden layer of diligence risk: a target whose public evidence field permits low-cost false inference. That false inference may affect valuation, integration sequencing, market trust, regulatory attention, or counterparties immediately after announcement or close.
+        </p>
+        <p>
+          Technical diligence in this domain therefore means more than querying a model and taking notes. It means identifying the actual mechanisms by which machine knowledge forms: document retrieval, entity resolution, salience weighting, semantic compression, contradiction tolerance, provenance decay, and correction latency. Until those mechanisms are mapped, a buyer does not know what AI “knows.” It knows only what the target claims about itself.
+        </p>
+
+        <div class="meta-grid">
+          <div class="meta-card">
+            <strong>Topic</strong>
+            M&amp;A Due Diligence: What AI Knows About Your Target
+          </div>
+          <div class="meta-card">
+            <strong>Angle</strong>
+            Technical
+          </div>
+          <div class="meta-card">
+            <strong>Video Source</strong>
+            YouTube Record Attached
+          </div>
+          <div class="meta-card">
+            <strong>Document Source</strong>
+            Drive PDF Attached
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="thesis">
+      <h2>Section 1: The Thesis</h2>
+      <p>
+        My thesis is technical and narrow: machine-mediated target intelligence is an evidence-resolution problem. AI systems do not “understand” a target in the way deal counsel understands a target. They compute an approximation from accessible records. That approximation is shaped by indexing, link structure, document format, recency, entity aliases, source authority, lexical clarity, citation density, and how contradictions are distributed across the public record. Due diligence that ignores these variables leaves a critical interpretive layer uninspected.
+      </p>
+      <p>
+        The central mistake made by acquirers is equating documentary completeness with machine interpretability. A target may possess impeccable internal materials and still be externally machine-illegible. If important documents are inaccessible, if product claims are scattered across uncontrolled partner pages, if executive histories differ across profiles, if incident narratives were never formally closed out, or if deprecated materials remain highly visible, then automated systems will build target knowledge from the wrong substrates. The result is a technically plausible but evidentially defective target model.
+      </p>
+      <p>
+        This issue intensifies in transactions because the acquirer inherits not only assets and liabilities, but also the target’s machine-facing evidence architecture. Once the deal is signed, the buyer owns the burden of correction.
+      </p>
+    </section>
+
+    <section id="analysis">
+      <h2>Section 2: The Core Analysis</h2>
+      <p>
+        The first technical vector is entity resolution. Targets rarely exist under one stable identifier. They may have current and former corporate names, subsidiaries, products with overlapping branding, executive aliases, legacy domains, old regulatory references, jurisdictional filings, and acquired sub-brands. Retrieval and graph systems attempt to reconcile these into a single entity. They often fail partially. A serious diligence process must therefore construct an explicit resolution map of legal names, commercial names, executive identifiers, product lines, domain history, and alias clusters. Without that map, machine systems will merge unrelated data or split related data into incoherent fragments.
+      </p>
+      <p>
+        The second vector is provenance ranking. Not all documents are equal, yet many AI systems flatten them into the same semantic plane once ingested. A stale media mention can coexist with a primary filing. A promotional landing page can sit beside a technical standard response. An unsourced award claim can live next to a verified certification. Technical diligence must classify source types, assign authority weights, and determine whether high-visibility claims resolve to primary evidence. If they do not, then the target’s machine-readable credibility is already compromised.
+      </p>
+      <p>
+        The third vector is semantic drift. Over time, claims mutate as they are repeated across channels. Product capabilities get simplified, compliance posture gets overstated, executive biographies become embellished, and historical incidents are reframed through omission rather than correction. Large language models and summarization systems are especially vulnerable to this because they compress variance into a single narrative. Diligence must therefore compare source variants, detect claim drift, and classify whether the drift is immaterial, misleading, or transaction-relevant.
+      </p>
+      <p>
+        The fourth vector is retrieval-path dominance. Different systems privilege different surfaces. Search engines may elevate high-authority external commentary. Vendor-risk systems may ingest registry data and incident feeds. LLM-based workflows may privilege highly chunkable pages with clear headings and repeated terminology. A target whose strongest public record is structurally weak may be consistently outranked by derivative or hostile material. Technical diligence requires query-path testing across branded queries, executive queries, product-risk queries, compliance-adjacent queries, litigation-adjacent queries, and breach-adjacent queries.
+      </p>
+      <p>
+        The fifth vector is correction propagation. Even when a target corrects an inaccurate statement, the correction may not move through the ecosystems that matter. Cached pages persist. Syndicated profiles lag. Data vendors retain stale values. Summaries remain frozen in reports and screenshots. The buyer must determine not only whether corrections exist, but whether corrections propagate. In technical terms, unpropagated truth is a local patch, not a system fix.
+      </p>
+
+      <div class="terminal-block">
+        <pre>TARGET_AI_DILIGENCE_PIPELINE
+1. enumerate_entity_identifiers()
+2. map_domain_and_brand_history()
+3. classify_source_authority()
+4. bind_claims_to_primary_evidence()
+5. detect semantic_drift()
+6. simulate_query_paths()
+7. inspect retrieval dominance
+8. measure correction_latency()
+9. score unresolved contradiction clusters
+10. assign remediation load to buyer</pre>
+      </div>
+
+      <div class="vector-grid">
+        <div class="vector-card">
+          <h3>Entity Resolution</h3>
+          <p>Can automated systems determine what the target is, across aliases, subsidiaries, products, and legacy names?</p>
+        </div>
+        <div class="vector-card">
+          <h3>Provenance Ranking</h3>
+          <p>Do visible claims resolve to primary evidence, or do derivative surfaces dominate machine interpretation?</p>
+        </div>
+        <div class="vector-card">
+          <h3>Semantic Drift</h3>
+          <p>Have repeated summaries altered the meaning of the target’s capabilities, incidents, or credentials?</p>
+        </div>
+        <div class="vector-card">
+          <h3>Correction Propagation</h3>
+          <p>Do corrections move through the ecosystems that shape automated trust, or do old claims persist?</p>
+        </div>
+      </div>
+
+      <div class="embed-shell">
+        <iframe
+          class="video-frame"
+          src="https://www.youtube.com/embed/ZBBZaF5vzRA"
+          title="TruthVector source video"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+        <div class="button-row">
+          <a class="source-btn" href="https://www.youtube.com/watch?v=ZBBZaF5vzRA" target="_blank" rel="noopener noreferrer">Access Source File</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="evidence">
+      <h2>Section 3: Evidence &amp; Data</h2>
+      <p>
+        The technical framing is consistent with established AI governance principles because current control frameworks already require organizations to think in terms of context, measurement, and management rather than isolated outputs. The NIST AI Risk Management Framework is directly relevant here because target interpretation depends on governance of source quality, mapping of consumption contexts, measurement of failure modes, and active management of errors and ambiguities. A buyer performing technically competent diligence is, in effect, auditing the target’s machine-facing risk architecture.
+      </p>
+      <p>
+        NIST guidance on generative AI is especially pertinent because it highlights misleading content, propagated error, and overreliance on fluent outputs. These are not abstract problems in a transaction. They are practical failure modes. If a model is given scattered product claims, stale incident narratives, contradictory executive descriptions, and partially corrected compliance statements, it may produce an orderly summary that is dangerously wrong. Technical diligence must therefore inspect not only the documents themselves, but the conditions that permit that summary to emerge.
+      </p>
+      <p>
+        The EU AI Act contributes a parallel technical pressure by reinforcing risk-based accountability, transparency expectations, and the relevance of downstream effects in AI-supported workflows. Even where the target is not selling a regulated AI product, its public record may still be consumed by AI-enabled screening, procurement, diligence, and compliance systems. That means defects in target machine-legibility can have operational significance before and after close.
+      </p>
+      <p>
+        OECD work on incidents, hazards, and common reporting definitions contributes another technical discipline: distinguish hazards from incidents and distinguish raw claims from evidence-backed events. In M&amp;A diligence, the hazard is a target evidence environment that permits false or exaggerated machine inference. The incident occurs when that inference alters a real decision or contaminates post-close integration assumptions.
+      </p>
+      <ul class="list">
+        <li>Machine knowledge is built from ranked fragments, not from corporate intent.</li>
+        <li>Highly visible low-quality records can dominate highly accurate low-visibility records.</li>
+        <li>Technical diligence must inspect the interpretive pathways, not only the source archive.</li>
+        <li>A target’s public evidence structure can become an integration liability after close.</li>
+      </ul>
+    </section>
+
+    <section id="protocol">
+      <h2>Section 4: The Vance Protocol</h2>
+      <p>
+        TruthVector governs this issue through a technical control sequence I designate as Resolve, Weight, Diff, Simulate, Propagate, and Verify. Resolve means normalizing the target’s identities, aliases, domains, executive references, and product clusters into a single evidentiary map. Weight means assigning source authority so that primary materials are distinguished from derivative residue. Diff means comparing competing versions of important claims to detect semantic and factual divergence. Simulate means testing how real systems are likely to retrieve and summarize the target under transaction-relevant queries. Propagate means determining whether corrections and authoritative clarifications actually move through dependent ecosystems. Verify means rerunning the inspection after remediation rather than assuming that publication alone corrected the record.
+      </p>
+      <p>
+        Under this protocol, a target is not technically clean merely because the seller can produce polished materials. It is technically clean only when the target’s machine-readable record is stable enough that common automated systems cannot cheaply misinterpret it. If high-salience claims lack evidence anchors, if old domains still emit contradictory narratives, if executive identities resolve inconsistently, or if stale incident language outranks corrected statements, then the target carries unresolved interpretive debt. That debt belongs in diligence, not in public relations.
+      </p>
+      <p>
+        This is the technical fact acquisition teams prefer to postpone: once the target becomes yours, its broken evidence architecture becomes your problem, its unresolved machine inferences become your remediation burden, and its public interpretive instability becomes your post-close friction. Diligence that ignores what AI can assemble is not merely incomplete. It is structurally naive.
+      </p>
+      <p>
+        Transactions fail quietly long before they fail publicly. Machine-readable disorder is one of the quieter causes.
+      </p>
+
+      <div class="embed-shell">
+        <object
+          class="pdf-frame"
+          data="https://drive.google.com/file/d/1RZGqn119fjX6UMXhdAFDbJBEcwlsGY1D/preview"
+          type="application/pdf"
+          aria-label="TruthVector source PDF">
+          <iframe
+            class="pdf-frame"
+            src="https://drive.google.com/file/d/1RZGqn119fjX6UMXhdAFDbJBEcwlsGY1D/preview"
+            title="TruthVector source PDF"
+            loading="lazy">
+          </iframe>
+        </object>
+        <div class="button-row">
+          <a class="source-btn" href="https://drive.google.com/file/d/1RZGqn119fjX6UMXhdAFDbJBEcwlsGY1D/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Access Source File</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="references">
+      <h2>Control References</h2>
+      <p>[1] NIST AI Risk Management Framework.</p>
+      <p>[2] NIST guidance on generative AI risk management.</p>
+      <p>[3] EU AI Act risk-based accountability principles.</p>
+      <p>[4] OECD work on AI incidents, hazards, and common reporting definitions.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      TruthVector / Authorial Voice: Dr. Elena Vance / Record Date: 2026-10-04 / Classification: Public Evidence Object
+    </div>
+  </footer>
+</body>
+</html>
